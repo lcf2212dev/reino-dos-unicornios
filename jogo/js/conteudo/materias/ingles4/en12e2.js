@@ -117,7 +117,7 @@ Reino.registrarSala('ingles4',
           adaptacao: 'Pintar os gizes virou ligar cada giz já pintado ao nome da cor.',
           explica: '«Purple» é roxo, «black» é preto, «white» é branco, «grey» é cinza e «brown» é marrom.' },
         { id: 'en12e2-11', tipo: 'digitar', livre: true, origem: 'ENG-155-q14b', pagina: 155, livro: 'en-e155',
-          pergunta: 'O último giz não tem nome. Escolha uma cor e escreva o nome dela em inglês.',
+          pergunta: 'No livro, o último giz de cera vem sem nome. Escolha uma cor e escreva o nome dela em inglês.',
           frases: [
             { antes: '«My colour:»', depois: '' },
           ],

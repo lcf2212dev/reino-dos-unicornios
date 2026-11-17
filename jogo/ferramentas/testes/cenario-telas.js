@@ -4,6 +4,9 @@
 //   prova:<id>:<n>  a questão n da prova, a mesma tela das imagens prova-<id>-qNN do e2e
 //   decorar         dentro da casa, com o kit Sala de Estar só na memória, o painel do modo decorar (casa.md §9.3)
 //   decorar:colocar o mesmo, já no modo colocar com o sofá (o fantasma e a barra)
+//   mochila         com itens de exemplo (save de teste) e 3 peças vestidas, a tela da Mochila (itens.md §13)
+//   mochila:cartao  o mesmo, com o cartão da 1ª pilha de poções aberto
+//   guardados       dentro da casa, com itens na mochila e no baú, a tela do Baú de Guardados
 const { mostrarDesafio } = require('./referencias-cenas');
 
 // relógio congelado: anda aos poucos até a condição valer (o IndexedDB responde fora do relógio)
@@ -54,6 +57,36 @@ async function decorar(c, colocar) {
   if (colocar) { await c.js("document.querySelector('.tela-decorar .decorar-peca').click()"); await espera(c, "!!document.querySelector('.decorar-barra')"); await c.avancar(400); }
 }
 
+// itens de exemplo (Reino.Itens.ganhar grava no save de TESTE); veste capacete, armadura e botas
+const ITENS = ['espada-gelo', 'escudo-concha', 'capacete-cavaleira', 'armadura-folhas', 'botas-vento', 'chapeu-coroa',
+  'espada-dragao', 'pocao-pequena', 'pocao-pequena', 'pocao-pequena', 'pocao-grande', 'comida-maca', 'comida-maca', 'botas-cristal'];
+async function itensExemplo(c, bau) {
+  await c.js(`(function () {
+    var I = Reino.Itens, ids = ${JSON.stringify(ITENS)};
+    if (I.pecas().length) return;
+    var u = {}; ids.forEach(function (id) { var r = I.ganhar(id); if (r && !u[id]) u[id] = r.uid; });
+    ['capacete-cavaleira', 'armadura-folhas', 'botas-vento'].forEach(function (id) { I.vestir(u[id]); });
+    if (${bau ? 'true' : 'false'}) I.guardar([u['espada-dragao'], u['chapeu-coroa'], u['botas-cristal']]);
+  })()`);
+}
+async function itens(c, nome) {
+  if (nome === 'guardados') {
+    await c.ir('casa');
+    await itensExemplo(c, true);
+    await c.js('void Reino.UI.telaGuardados()');
+    await espera(c, "!!document.querySelector('.tela-guardados .guard-colunas')");
+  } else {
+    await itensExemplo(c, false);
+    await c.js('void Reino.UI.telaMochila()');
+    await espera(c, "!!document.querySelector('.tela-mochila .moch-grade')");
+    if (nome === 'mochila:cartao') {
+      await c.js("document.querySelector('.tela-mochila .itens-espaco[data-id=\"pocao-pequena\"]').click()");
+      await espera(c, "!!document.querySelector('.tela-mochila-item')");
+    }
+  }
+  await c.avancar(400);
+}
+
 // devolve true se a tela é uma destas (senão o cenário segue com as telas simples)
 async function telaEspecial(c, nome) {
   const p = nome.split(':');
@@ -65,6 +98,7 @@ async function telaEspecial(c, nome) {
     return true;
   }
   if (p[0] === 'decorar' && (p.length === 1 || p[1] === 'colocar')) { await decorar(c, p[1] === 'colocar'); return true; }
+  if (['mochila', 'mochila:cartao', 'guardados'].includes(nome)) { await itens(c, nome); return true; }
   if (p[0] === 'prova' && p.length === 3) { await questaoDaProva(c, p[1], Number(p[2])); return true; }
   return false;
 }

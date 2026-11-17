@@ -104,9 +104,13 @@ perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], c
 ### 6.1 O desafio do ET (`viagem-desafio`)
 - Ação `{ tipo: 'viagem-desafio', materia }` no ET com um problema (Rubi: a nave quebrou; «Sky»: quer praticar inglês).
 - Painel (`Reino.UI.telaDesafioET(npc, materia)`) com `config.viagem.desafioPerguntas` perguntas de
-  `Reino.Viagem.perguntas`, uma por vez, com o card de `Reino.Desafios.render` (o mesmo da pergunta surpresa).
+  `escolha` e `vf` das salas que valem sozinhas (`Reino.avulsa`; as das salas que ela já fez primeiro, sorteio de
+  `U.embaralhar`; com o "📖 Leia antes" de `quarto-bimestre.md` §12.1), uma por vez, com o card de `Reino.Desafios.render` (o mesmo da pergunta surpresa).
   Cada Conferir conta na Aura (`Reino.Aura.contar(ok)`); acerto de primeira vale `estrelasPorAcertoET` estrela;
-  errada mostra a certa e a explicação e segue. Terminar (acertando ou não) faz do ET um amigo.
+  errada mostra a certa e a explicação e segue. Responder a última (acertando ou não) faz do ET um amigo, mesmo se
+  ela fechar antes do "Terminar"; sem nenhuma pergunta, ele vira amigo do mesmo jeito.
+- A `materia` da ação é a do 3º bimestre (arquivada): vale a nova do mesmo prédio (`Reino.Bimestres.ativa`,
+  `bimestres.md`), aqui e nos portais do voo (`Reino.Viagem.perguntas`).
 - Falas do ET no desafio: as do módulo (`falas()`), na voz do ET (`npc-<id>`), texto exato.
 - Save: `etsAmigos: { <npcId>: true }` (uniao, `novoCiclo: 'mantem'`).
 
@@ -118,11 +122,13 @@ perguntas(materia, n, chave) → [{ id, materia, sala, texto, opcoes: [texto], c
   planeta); amigo em cores, ainda não = silhueta com "?". No cartão de um amigo: "Levar comigo" (§6.3).
 
 ### 6.3 O ET que acompanha
-- `Reino.Viagem.companheiro() → id | null`, `escolherCompanheiro(id | null)` (só amigo). Save: `etCompanheiro:
+- `Reino.Viagem.companheiro() → id | null`, `escolherCompanheiro(id | null)` (só amigo; não mexe no monstro equipado,
+  que vai junto: `monstros.md` §3). Save: `etCompanheiro:
   { mariana: { id, em } }` (carimbo, `novoCiclo: 'mantem'`).
 - Camada de desenho (`registrarModulo` com `camada`): o ET flutua um pouco atrás da Mariana, no mapa e nos
   interiores, seguindo o caminho dela (rastro próprio; recomeça ao trocar de cena), balançando devagar (parado sem
-  Animações). Não conversa nem bloqueia nada. Número em `config.viagem.companheiroDistancia`.
+  Animações). Não conversa nem bloqueia nada. Números em `config.viagem.companheiroDistancia` e, com um monstro
+  equipado junto, `etAtrasDoMonstro` (o ET vai atrás dele).
 
 ### 6.4 Capacete de astronauta (Loja)
 - Enfeite do unicórnio no encaixe `cabeca` (receita `docs/receitas/enfeite-novo.md`), tema espaço (`espaco: true`).

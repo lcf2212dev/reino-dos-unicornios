@@ -20,6 +20,11 @@ Reino.registrarSala('portugues4',
           modelo: 'Ela pediu que ele levasse a vaquinha até a cidade e a vendesse.',
           explica: 'A mãe pediu que João fosse até a cidade e vendesse a vaquinha, o único bem que ainda tinham.' },
         { id: 'lp10a7-03', tipo: 'escrever', origem: 'APR-28-q3', pagina: 28, livro: 'lp-a27b',
+          avulsa: { carta: null },
+          apoio: { titulo: 'João e o pé de feijão', partes: [
+            { texto: 'No caminho, ele conheceu um homem que lhe fez a seguinte proposta:' },
+            { texto: '— Criança, dê-me a sua vaquinha, que lhe dou estes sete grãos de feijão. É uma boa troca, porque são mágicos.' },
+          ] },
           pergunta: 'Quem João encontrou no caminho? E o que essa pessoa propôs a ele?',
           linhas: 3, minFrases: 1,
           chaves: [['homem', 'senhor', 'moco', 'velho', 'velhinho'], ['feijao', 'feijoes', 'graos', 'sementes', 'troca', 'trocar', 'trocasse']],
@@ -32,7 +37,7 @@ Reino.registrarSala('portugues4',
           modelo: 'Ela ficou furiosa e jogou os feijões pela janela.',
           explica: 'A mãe ficou furiosa e jogou os feijões pela janela.' },
         { id: 'lp10a7-05', tipo: 'escrever', origem: 'APR-28-q5', pagina: 28, livro: 'lp-a27c',
-          pergunta: 'Qual foi a consequência da ação da mãe de João?',
+          pergunta: 'Qual foi a consequência da ação da mãe de João, que jogou os feijões pela janela?',
           linhas: 4, minFrases: 1,
           chaves: [['pe', 'nasceu', 'cresceu', 'germinaram', 'arvore', 'planta', 'fome', 'brotou', 'brotaram']],
           modelo: 'Os grãos germinaram e, no dia seguinte, nasceu um enorme pé de feijão no quintal.',
@@ -42,7 +47,7 @@ Reino.registrarSala('portugues4',
           cores: [{ nome: 'Marcadores temporais', cor: '#ffd34d' }, { nome: 'Marcadores espaciais', cor: '#5fb4ff' }],
           texto: '{Era uma vez|0} uma viúva e seu único filho, João. Viviam {na roça|1}, {numa casinha bem simples|1}.\n' +
             'Enfrentavam tempos difíceis, já que os dois não tinham dinheiro para comprar comida.\n' +
-            '— Querido, acabou o arroz, o feijão e todos os mantimentos. Pegue a nossa vaquinha, vá {até a cidade|1} e venda o único bem que ainda temos.\n' +
+            '— Querido, acabou o arroz, o feijão e todos os mantimentos. Pegue a nossa vaquinha, vá {até a cidade|1} e venda o único bem que {ainda|0?} temos.\n' +
             'João ficou bem triste, mas não havia outro jeito de se alimentarem. {No caminho|1}, ele conheceu um homem que lhe fez a seguinte proposta:\n' +
             '— Criança, dê-me a sua vaquinha, que lhe dou estes sete grãos de feijão. É uma boa troca, porque são mágicos.\n' +
             'O menino acreditou, fez a troca e voltou {para casa|1} com as sementes.',
@@ -52,7 +57,7 @@ Reino.registrarSala('portugues4',
           pergunta: 'No texto, pinte de amarelo os marcadores temporais e de azul os marcadores espaciais. (2ª parte do texto)',
           cores: [{ nome: 'Marcadores temporais', cor: '#ffd34d' }, { nome: 'Marcadores espaciais', cor: '#5fb4ff' }],
           texto: '{Quando a mãe descobriu|0?} o que havia acontecido, ficou furiosa e jogou os feijões {pela janela|1}.\n' +
-            '{Naquele mesmo dia|0}, os dois foram dormir com fome, pois já não tinham nada para comer.\n' +
+            '{Naquele mesmo dia|0}, os dois foram dormir com fome, pois {já|0?} não tinham nada para comer.\n' +
             '{Pela manhã|0}, {após o galo cantar|0}, João se levantou, olhou {pela janela do quarto|1} e viu uma enorme árvore, que {antes|0} não existia {no quintal|1}.\n' +
             'O menino correu {até lá|1}. Os grãos germinaram, e {ali|1} nascera um enorme pé de feijão.\n' +
             'O tronco era espesso; as raízes eram grossas; e os galhos se entrelaçavam.\n' +

@@ -9,7 +9,8 @@ Reino.registrarSala('ciencias4',
       intro: 'Vamos descobrir para que servem o caule, as folhas, as flores, os frutos e as sementes!',
       desafios: [
         { id: 'ci11a2-01', tipo: 'ligar', origem: 'APR-19-q1', pagina: 19, livro: 'ci-a19',
-          pergunta: 'Recorte as imagens da aba e cole as partes das plantas nos locais corretos. Ligue cada figura ao nome da parte.',
+          avulsa: { carta: 'ci-a15' },
+          pergunta: 'Ligue cada figura ao nome da parte da planta.',
           pares: [
             [{ img: 'ci:11-raiz', alt: 'raiz fina com ramificações' }, { t: 'Raiz' }],
             [{ img: 'ci:11-caule', alt: 'ramo verde comprido' }, { t: 'Caule' }],

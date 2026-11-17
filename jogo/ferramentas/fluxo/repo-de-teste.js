@@ -11,14 +11,14 @@
 //                       vozes.js (npm run vozes: grava o "áudio" no vozes-cache, anota em <pasta>/vozes.log;
 //                       fala com REPROVA = conferência reprovada) de mentira, sem rede
 //   <pasta>/remoto.git  o "origin" (bare), para o --push
-// As worktrees das frentes nascem ao lado da principal (<pasta>/reino-<tema>), como no repositório real.
+// As worktrees das frentes nascem em <pasta>/principal/worktrees/reino-<tema>, como no repositório real.
 const fs = require('fs');
 const path = require('path');
 const C = require('./comum');
 
 // e2e.js de mentira (mesmas opções que o integrar usa do de verdade)
 const E2E = `const fs = require('fs'); const path = require('path');
-const base = path.resolve(__dirname, '../../../..'); const a = process.argv.slice(2);
+let base = path.resolve(__dirname, '../../..'); while (!fs.existsSync(path.join(base, 'remoto.git'))) base = path.dirname(base); const a = process.argv.slice(2);
 if (a[0] === '--testar') {
   fs.appendFileSync(path.join(base, 'test.log'), 'test\\n');
   const ok = !fs.existsSync(path.join(base, 'test-exige-base')) || /^@$/m.test(fs.readFileSync(path.join(__dirname, 'base-referencia.txt'), 'utf8'));
@@ -62,7 +62,7 @@ fs.readdirSync(V).filter((a) => !pac[a.replace(/\\.js$/, '')]).forEach((a) => fs
 Object.keys(pac).forEach((p) => { const o = {}; Object.keys(pac[p]).sort().forEach((k) => { o[k] = pac[p][k]; }); fs.writeFileSync(path.join(V, p + '.js'), 'Reino.Voz.registrar(' + JSON.stringify(p) + ',' + JSON.stringify(o) + ');\\n'); });
 `;
 const VOZES = VOZES_COMUM + `const { execFileSync } = require('child_process');
-fs.appendFileSync(path.join(raiz, '..', 'vozes.log'), 'vozes\\n');
+fs.appendFileSync(path.join(raiz.split(path.sep + 'principal')[0], 'vozes.log'), 'vozes\\n');
 execFileSync(process.execPath, [path.join(__dirname, 'listar-falas.js')]);
 const { vozes, falas } = ler(path.join(G, 'falas.json')); const indice = ler(path.join(G, 'vozes-indice.json'), {}); const novas = [];
 falas.forEach((f) => { const rel = f.voz + '/' + hash(vozes[f.voz], f.fala) + '.mp3'; const arq = path.join(G, 'vozes-cache', rel);
@@ -113,7 +113,7 @@ function criarRepo(prefixo = 'fluxo', op = {}) {
     escrever(principal, 'jogo/ferramentas/vozes/vozes.js', VOZES);
     escrever(principal, 'jogo/falas/comeco.txt', 'c0|Olá, Mariana!\n');
   }
-  escrever(principal, '.gitignore', 'node_modules\n');
+  escrever(principal, '.gitignore', 'node_modules\nworktrees/\n');
   escrever(principal, 'jogo/manifesto.txt', ['a', 'b', 'c', 'd', 'e', 'f', 'g'].join('\n') + '\n');
   escrever(principal, 'CLAUDE.md', '# Regras\n- Skills: gravar-vozes, validar-tudo.\n');
   escrever(principal, 'jogo/ferramentas/testes/base-referencia.txt', '# Commit BASE das referências do e2e.\n# 1234567 = a primeira.\n1234567\n');
@@ -126,14 +126,14 @@ function criarRepo(prefixo = 'fluxo', op = {}) {
   git(principal, 'remote', 'add', 'origin', remoto);
   git(principal, 'push', '-q', 'origin', 'main');
   return {
-    base, principal, remoto,
+    base, principal, remoto, mae: path.join(principal, 'worktrees'),
     escrever: (rel, texto, raiz = principal) => escrever(raiz, rel, texto),
     ler: (rel, raiz = principal) => fs.readFileSync(path.join(raiz, rel), 'utf8'),
     git,
     linhas: (arq) => (fs.existsSync(path.join(base, arq)) ? fs.readFileSync(path.join(base, arq), 'utf8').split('\n').filter(Boolean) : []),
-    // frente: worktree <base>/reino-<tema> na branch feat/<tema>
+    // frente: worktree <mae>/reino-<tema> na branch feat/<tema>
     frente(tema) {
-      const p = path.join(base, `reino-${tema}`);
+      const p = path.join(principal, 'worktrees', `reino-${tema}`);
       git(principal, 'worktree', 'add', '-q', p, '-b', `feat/${tema}`, 'main');
       return p;
     },

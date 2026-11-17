@@ -1,0 +1,117 @@
+/* Vila Arco-Íris: a pergunta do lojista (js/ui/vila-pergunta.js) e a tela das 4 lojas, com a grade, o carrinho e o
+   rodapé do total (js/ui/vila-loja.js). docs/contratos/vila.md §4, §5. */
+
+/* ---------- a pergunta antes da conversa ---------- */
+.tela-vila-pergunta .painel { max-width: 600px; }
+/* os tipos grandes da sala (ligar, tabela, desenho…): painel mais largo, como a pergunta do Bosque */
+.tela-vila-pergunta .painel:has(.desafio:not(.desafio-escolha, .desafio-vf, .desafio-varias)) { max-width: 900px; }
+.vila-cabeca { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+.vila-cabeca canvas { flex: none; }
+.vila-fala {
+  flex: 1; min-width: 0; margin: 0; padding: 8px 12px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+  font-size: var(--texto); line-height: var(--entrelinha);
+}
+.vila-retorno { margin-top: 10px; padding: 8px 12px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel); }
+.vila-retorno h3 { margin: 0 0 4px; }
+.vila-retorno p + p { margin-top: 6px; }
+.vila-botoes { display: flex; justify-content: flex-end; gap: 10px; padding: 10px 16px 14px; }
+.vila-contexto { margin-bottom: 10px; }
+.vila-contexto > summary { cursor: pointer; padding: 4px 0 14px; font-size: var(--texto); }
+.vila-contexto > .livro-carta.vila-carta { max-height: 34vh; overflow-y: auto; padding: 10px 12px; border-width: var(--borda-fina); }
+.vila-carta.carta-rica > h3 { font-size: var(--texto); margin: 4px 0 8px; }
+.livro-carta.vila-carta.carta-rica > .carta-livro { margin-top: -10px; }
+
+/* ---------- a loja ---------- */
+.tela-vila-loja .painel { width: min(960px, 100%); }
+.vila-topo { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 16px; margin-bottom: 10px; }
+.vila-saldo { flex: 1 1 auto; margin: 0; font-size: var(--texto); }
+.vila-abas { display: flex; gap: 6px; }
+.vila-aba {
+  min-height: 44px; padding: 6px 14px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  font: inherit; font-size: var(--texto); color: inherit; cursor: pointer;
+}
+.vila-aba[aria-selected="true"] { background: var(--roxo-claro); border-color: var(--roxo); }
+.vila-recado {
+  margin: 0 0 10px; padding: 6px 12px; font-size: var(--texto-aux); line-height: var(--entrelinha);
+  border: var(--borda-fina) solid var(--certo); border-radius: var(--canto); background: var(--certo-fundo);
+}
+.vila-corpo { display: flex; align-items: flex-start; gap: 12px; }
+.vila-grade { flex: 1 1 auto; min-width: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 8px; }
+.vila-vazio { grid-column: 1 / -1; margin: 16px 0; text-align: center; font-size: var(--texto); color: var(--tinta-suave); }
+
+.vila-cartao {
+  position: relative; min-height: 48px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 6px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel);
+  font: inherit; color: inherit; text-align: center; cursor: pointer;
+  box-shadow: var(--sombra-pequena); --degrau: 2px;
+}
+.vila-cartao[class*="rar-"] { border-top: var(--borda-grossa) solid var(--rar-desenho); }
+.vila-cartao.no-carrinho { background: var(--certo-fundo); border-color: var(--certo); }
+.vila-cartao-desenho { display: flex; align-items: center; justify-content: center; min-height: 40px; }
+.vila-cartao-desenho .ckit-capa.vila-capa { max-width: 72px; max-height: 72px; width: auto; height: auto; }
+.vila-cartao-nome { font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); }
+.vila-cartao-rar { font-size: var(--texto-aux); color: var(--rar-texto); }
+.vila-cartao-atrib { display: flex; flex-direction: column; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); color: var(--tinta-suave); }
+.vila-cartao-tem { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.vila-cartao-preco { margin-top: auto; font-size: var(--texto-aux); color: var(--tinta); }
+.vila-cartao-qtd {
+  position: absolute; top: -6px; right: -6px; min-width: 24px; height: 24px; padding: 0 4px;
+  display: flex; align-items: center; justify-content: center;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--redondo); background: var(--certo); color: var(--papel);
+  font-size: var(--texto-aux);
+}
+
+.vila-carrinho {
+  flex: 0 0 280px; position: sticky; top: 0;
+  padding: 8px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+}
+.vila-carrinho-titulo { margin: 0 0 6px; font-size: var(--texto); }
+.vila-carrinho-vazio { margin: 4px 0; font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--tinta-suave); }
+.vila-linha {
+  display: grid; grid-template-columns: auto 1fr auto; grid-template-areas: "des nome nome" "des qtd preco" "todas todas todas";
+  align-items: center; gap: 2px 6px; padding: 6px 0; border-top: var(--borda-fina) dashed var(--borda);
+}
+.vila-linha:first-child { border-top: 0; }
+.vila-linha-desenho { grid-area: des; display: flex; }
+.vila-linha-desenho .ckit-capa.vila-capa { max-width: 32px; max-height: 32px; }
+.vila-linha-nome { grid-area: nome; font-size: var(--texto-aux); line-height: var(--entrelinha-titulo); }
+.vila-linha-qtd { grid-area: qtd; display: flex; align-items: center; gap: 6px; }
+.vila-linha-qtd .btn-icone { width: 44px; height: 44px; min-width: 44px; font-size: var(--texto); }
+.vila-linha-qtd b { min-width: 24px; text-align: center; }
+.vila-linha-preco { grid-area: preco; font-size: var(--texto-aux); white-space: nowrap; }
+.vila-todas { grid-area: todas; justify-self: start; min-height: 44px; padding: 4px 10px; font-size: var(--texto-aux); }
+
+.vila-rodape { display: flex; align-items: center; justify-content: flex-end; gap: 12px; padding: 10px 16px 14px; }
+.vila-rodape-texto { flex: 1 1 auto; min-width: 0; }
+.vila-total { margin: 0; font-size: var(--texto); }
+.vila-aviso { margin: 2px 0 0; font-size: var(--texto-aux); color: var(--erro); }
+.vila-botao-total { flex: none; }
+
+/* tablet em pé e celular: o carrinho embaixo da grade */
+@media (max-width: 860px) {
+  .vila-corpo { flex-direction: column; align-items: stretch; }
+  .vila-carrinho { flex: none; position: static; order: -1; max-height: 30vh; overflow-y: auto; }
+  .vila-carrinho.vazio { display: none; }
+}
+/* celular: grade de 2, rodapé em coluna, pergunta mais justa */
+@media (max-width: 480px) {
+  .vila-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .vila-cartao { padding: 6px 4px; }
+  .vila-topo { gap: 6px; }
+  .vila-abas { width: 100%; }
+  .vila-aba { flex: 1; padding: 6px 8px; }
+  .vila-rodape { flex-direction: column; align-items: stretch; gap: 6px; padding: 8px 12px 12px; }
+  .vila-botao-total { width: 100%; }
+  .vila-cabeca { gap: 8px; margin-bottom: 6px; }
+  .vila-fala { padding: 6px 10px; }
+  .vila-botoes .btn-grande { flex: 1; }
+  .vila-contexto > .livro-carta.vila-carta { padding: 8px; }
+  .livro-carta.vila-carta.carta-rica > .carta-livro { margin-top: -8px; }
+}
+@media (max-height: 500px) {
+  .vila-botoes .btn-grande { flex: 1; }
+}

@@ -228,8 +228,26 @@
     });
   }
 
-  N.interagir = function (npc, ctx) {
+  // a porteira de um módulo (porteira(npc) → null | Promise<bool>): a primeira que responder decide
+  function porteira(npc) {
+    var ms = Reino.modulos || [];
+    for (var i = 0; i < ms.length; i++) {
+      if (typeof ms[i].porteira !== 'function') continue;
+      try { var p = ms[i].porteira(npc); if (p) return p; } catch (e) { console.error(e); }
+    }
+    return null;
+  }
+  N.interagir = function (npc, ctx, liberado) {
     if (emConversa) return emConversa;
+    var pt = liberado ? null : porteira(npc);
+    if (pt) {
+      // a conversa só começa se a porteira deixar (a pergunta da loja certa)
+      emConversa = Promise.resolve(pt).then(function (ok) {
+        emConversa = null;
+        return ok ? N.interagir(npc, ctx, true) : null;
+      }, function (e) { console.error(e); emConversa = null; return null; });
+      return emConversa;
+    }
     var a = npc.acao || {};
     if (Reino.Bimestres.acaoEmEspera(a)) {
       emConversa = Promise.resolve(Reino.Bimestres.avisar({ nome: npc.nome, voz: npc.voz, retrato: N.retrato(npc, 0) }))

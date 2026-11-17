@@ -80,4 +80,4 @@ async function segurar(c, texto) {
   await c.avancar(200);
 }
 
-module.exports = { arrastar, segurar };
+module.exports = { arrastar, segurar, dedo };

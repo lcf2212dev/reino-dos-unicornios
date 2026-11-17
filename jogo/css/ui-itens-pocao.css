@@ -1,0 +1,30 @@
+/* A poção na luta (js/ui/itens-pocao.js; docs/contratos/itens.md §9): botão redondo (canto em degrau do pixel), fixo
+   embaixo à direita, logo acima do botão da espada (css/ui-bosque.css: 80 px, 72 no celular), com o número de poções
+   no canto. Apagado (aria-disabled): o indisponível de sempre (ui-base.css), continua focável. Sem animação. */
+.itens-pocao {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 16px + 12px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 80px + 12px);
+  pointer-events: none;
+}
+#hud > .itens-pocao { pointer-events: none; }
+.itens-pocao[hidden] { display: none; }
+.btn-tela-cheia.btn-itens-pocao {
+  position: relative; width: 56px; height: 56px; padding: 0;
+  border-width: var(--borda-grossa); border-radius: var(--canto-grande);
+  background: var(--papel-quente);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: auto; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+.itens-pocao-icone { display: flex; }
+.itens-pocao-icone canvas { display: block; }
+.itens-pocao-n {
+  position: absolute; right: -8px; bottom: -8px; min-width: 24px; padding: 4px 5px;
+  font-size: var(--texto-p); line-height: 1; text-align: center;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); color: var(--tinta);
+  --degrau: 2px;
+}
+
+@media (max-width: 480px) {
+  .itens-pocao { right: calc(env(safe-area-inset-right, 0px) + 16px + 8px); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 72px + 10px); }
+}

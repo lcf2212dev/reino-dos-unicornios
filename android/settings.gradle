@@ -1,0 +1,18 @@
+// O app da Play Store: uma Trusted Web Activity (o Chrome abre https://reino-dos-unicornios.vercel.app em tela cheia,
+// sem barra de endereço). README.md desta pasta; build: npm run android (na raiz).
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+rootProject.name = 'reino-dos-unicornios'
+include ':app'

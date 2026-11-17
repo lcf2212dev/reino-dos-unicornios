@@ -8,7 +8,7 @@ desafio, livro e salas em geral: `conteudo.md`. Prédio e andares: `interiores.m
 ## Índice
 1. Onde está no código · 2. Matéria do 4º bimestre · 3. Sala de livro (`ordem: 'livro'`) · 4. Cartas ricas ·
 5. Vozes por capítulo · 6. Rastreio do inventário (`origem`) · 7. No prédio da matéria · 8. Produções salvas ·
-9. Banco para a Revisão · 10. Matéria seguinte (receita curta) · 11. Antes de mexer · 12. Tipos de desafio do livro ·
+9. Banco para a Revisão · 10. Matéria seguinte (receita curta) · 11. Antes de mexer · 12. Tipos de desafio do livro (12.1 A pergunta sozinha) ·
 13. Etapas da sala de livro · 14. Trilha perfeita (prêmio lendário)
 
 ## 1. Onde está no código
@@ -165,6 +165,7 @@ node jogo/ferramentas/validar/validar-conteudo.js
 node jogo/ferramentas/validar/cobertura-4bim.js portugues4
 node jogo/ferramentas/vozes/listar-falas.js
 npm run unidade -- --so quarto-bimestre   # suíte de aceite: casa, questões, salas inteiras, persistência, save antigo, regressão
+npm run varredura -- --materias <m>       # layout de cada questão nos 3 tamanhos, na sala e sozinha (jogo/ferramentas/CLAUDE.md, "Ver o jogo")
 npm test
 ```
 
@@ -183,6 +184,18 @@ fileira de acentos); resposta digitada vale sem diferença de maiúsculas, espa�
 | caça-palavras | `cacaPalavras` | `grade: ['GATOX', …]` (letras maiúsculas), `palavras: ['GATO', …]` (horizontal ou vertical, achadas na grade) |
 | desenho | `desenho` (existente) | `guardar: true` guarda em `producoes` e mostra de volta |
 | marcar X, ligar, numerar, classificar, completar com quadro | `escolha`, `vf`, `varias`, `vfLista`, `ligar`, `ordenar`, `separar`, `completar` | os de sempre (`conteudo.md` §3); opção com `img` em `escolha`/`varias` |
+
+### 12.1 A pergunta sozinha (`avulsa`)
+Toda pergunta conferível do bimestre também sai sozinha, fora da sala e sem as questões de antes: no Bosque e nas
+arenas ("Hora da pergunta!", `ui/bosque-pergunta.js`), nos lojistas da Vila (`ui/vila-pergunta.js`), na pergunta
+surpresa, nos portais da viagem e no desafio do ET (`ui/et-desafio.js`). Ali o "📖 Leia antes" é a carta `livro` inteira, e depois vêm `apoio`, `figura` e o
+enunciado. Pedido do Leandro (2026-11-07, "perguntas muito estranhas"): sozinha, ela tem de fazer sentido.
+1. Dado que a pergunta usa (tabela, preços, texto-base) vem na carta, no `apoio` ou na `figura`; nada de "a atividade
+   anterior", "o gráfico" ou "a resposta que você deu" que não esteja na tela.
+2. `avulsa: { carta: '<id>' }`: a carta do "Leia antes" quando sozinha (a `livro` fala de outra atividade ou só manda
+   pintar/recortar); `avulsa: { carta: null }`: sem carta (o `apoio` basta). Na sala, nada muda.
+3. `avulsa: false`: só na sala (depende de verdade da questão anterior). `Reino.avulsa(d)` filtra os sorteios;
+   `Reino.cartaAvulsa(materia, d)` dá a carta (`nucleo/registros.js`). `validar-conteudo` confere o formato.
 
 ## 13. Etapas da sala de livro
 Por quê: uma sala inteira (até 13 cartas e 14 desafios) é longa demais de uma vez para a Mariana (TDAH e autismo

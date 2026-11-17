@@ -200,7 +200,12 @@
       solido: function (tx, ty) { return !g.dentro(tx, ty) || g.solido[ty][tx]; },
       portaEm: function () { return null; },
       saidaEm: function (tx, ty) { return II.gatilhoEm(E, tx, ty); },
-      caminho: function (a, b) { var c = caminhoNa(g, a, b); if (c) delete c.custo; return c; },
+      // com água (def.agua): destino em terra vai primeiro por terra (a água como sólido); sem caminho, nadando
+      caminho: function (a, b) {
+        var c = agua && b && !cena.agua(b.x, b.y) ? caminhoNa(gradeSeca(), a, b) : null;
+        if (!c) c = caminhoNa(g, a, b);
+        if (c) delete c.custo; return c;
+      },
       maisPerto: function (x, y, de) {
         var melhor = null, dist = 1e9;
         de = de || { x: x, y: y };
@@ -278,6 +283,19 @@
       _temEstatico: function () { return !!estatico; },
     };
     E.cena = cena;
+    // água andável (interiores.md §3: def.agua = { tile(tx, ty), fundura(wx, wy) }): ela nada como no lago do mapa
+    // (cena-e-motor.md §10). Sem def.agua, a cena não tem agua nem fundura (= sem água, como sempre)
+    var agua = def.agua && typeof def.agua.tile === 'function' ? def.agua : null, seca = null;
+    if (agua) {
+      cena.agua = function (tx, ty) { return g.dentro(tx, ty) && !!agua.tile(tx, ty); };
+      cena.fundura = function (wx, wy) { return typeof agua.fundura === 'function' ? agua.fundura(wx, wy) : (cena.agua(Math.floor(wx / T), Math.floor(wy / T)) ? T : -T); };
+    }
+    // a grade com a água sólida (só para o caminho por terra), refeita quando a grade muda
+    function gradeSeca() {
+      if (seca && seca.de === g) return seca;
+      seca = { de: g, w: g.w, h: g.h, solido: g.solido.map(function (l, y) { return l.map(function (s, x) { return s || cena.agua(x, y); }); }) };
+      return seca;
+    }
     var vistaFundo = {}, vistaItens = {};
     // caixa de cada animado e de cada móvel alto (px do jogo): o sprite com o alcance da animação
     function caixa(it, F) { return { x0: it.px - 2 - F, y0: it.py - it.topo - F, x1: it.px + it.W + 2 + F, y1: it.base + 2 + F }; }

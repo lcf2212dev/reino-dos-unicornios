@@ -6,7 +6,9 @@
 // - os pacotes de voz (js/voz/*.js) ficam soltos (carregam sob demanda); o resto de js/ (CLAUDE.md) não vai.
 // Monta também o app instalável (PWA): manifesto e ícones de pwa/, as imagens de abertura do iOS (geradas aqui), o
 // sw.js com a lista { caminho: hash } de tudo (o jogo inteiro funciona sem rede) e, no index.html, o manifesto e o
-// registro do service worker. A API (api/) é a do servidor de casa (jogo/servidor/servidor.js) sobre Postgres:
+// registro do service worker. E o que o app da Play Store (android/) pede ao site, de loja/, fora do sw.js:
+// /.well-known/assetlinks.json (a prova de que o app é deste site) e /privacidade.html (a política de privacidade).
+// A API (api/) é a do servidor de casa (jogo/servidor/servidor.js) sobre Postgres:
 // lib/banco.js.
 // Uso: node montar.js [--saida <pasta>]   (npm run build em vercel/; --ajuda mostra isto)
 //   a saída (apagada e refeita) é vercel/public/ ou uma pasta dentro de /tmp/reino-testes/ (REINO_TESTES; os testes)
@@ -20,6 +22,9 @@ if (require.main === module) require(path.join(JOGO, 'ferramentas', 'ajuda.js'))
 const { conferirPastaTmp } = require(path.join(JOGO, 'ferramentas', 'testes', 'guardas.js'));
 const PUBLICO = path.join(__dirname, 'public');
 const PWA = path.join(__dirname, 'pwa');
+const LOJA = path.join(__dirname, 'loja');
+// loja/<arquivo> → caminho publicado (depois do sw.js: não entram no jogo sem rede)
+const DA_LOJA = { 'assetlinks.json': '.well-known/assetlinks.json', 'privacidade.html': 'privacidade.html' };
 // cor do app (theme-color): Reino.config.paleta.noite; o jogo troca para a grama com o mapa aberto (arte.md §8)
 const COR = /\bnoite:\s*'(#[0-9a-f]{6})'/i.exec(fs.readFileSync(path.join(JOGO, 'js', 'nucleo', 'config.js'), 'utf8'))[1];
 // o que o build lê do repositório (o plano B, jogo/ferramentas/fluxo/vercel.js, exporta só isto)
@@ -110,17 +115,30 @@ function pngLiso(L, A, fundo, s, escala) {
 
 // registra o sw.js; o novo baixa as vozes em segundo plano depois de ativo, e a aba lembra a ele de continuar
 // (o navegador para um service worker parado; cada mensagem o acorda por alguns minutos): a cada minuto, até o
-// "guardado" de quem controla a aba (o de um novo ainda instalando não conta; versão nova no controle = recomeça)
-const REGISTRO = '<script>if ("serviceWorker" in navigator) addEventListener("load", function () {'
-  + ' var sw = navigator.serviceWorker, pronto = false;'
+// "guardado" de quem controla a aba (o de um novo ainda instalando não conta; versão nova no controle = recomeça).
+// A conferência da versão publicada (o sw.js muda a cada deploy) é feita ao abrir, quando a aba volta a ficar visível
+// e a cada minuto com a aba visível (registration.update(); sem rate-limit extra: repetir é inofensivo). Quando o
+// sw.js novo instala (o núcleo inteiro, ANTES do skipWaiting) e assume a aba (controllerchange), a página é que está
+// velha: o versao.js avisa/grava/recarrega parada no mapa; se o jogo ainda não entrou (ou o módulo não existe), a
+// recarga é na hora — a versão nova já está inteira no cache. O primeiro controle (instalação nova, com a página já
+// atual) não conta como troca.
+const REGISTRO = '<script>if ("serviceWorker" in navigator) (function () {'
+  + ' var sw = navigator.serviceWorker, pronto = false, tinhaControle = !!sw.controller;'
   + ' function seguir() { if (!pronto && sw.controller) sw.controller.postMessage({ reino: "continuar" }); }'
+  + ' function procurar() { sw.getRegistration().then(function (r) { return r && r.update(); }).catch(function () {}); }'
   + ' sw.addEventListener("message", function (e) {'
   + ' if (e.data && e.data.reino === "guardado" && sw.controller && e.source === sw.controller) pronto = true; });'
-  + ' sw.addEventListener("controllerchange", function () { pronto = false; seguir(); });'
-  + ' setInterval(seguir, 60000); seguir();'
-  + ' sw.register("sw.js").then(function (r) {'
-  + ' document.addEventListener("visibilitychange", function () { if (!document.hidden) { seguir(); r.update().catch(function () {}); } });'
-  + ' }).catch(function () {}); });</script>';
+  + ' sw.addEventListener("controllerchange", function () { pronto = false; seguir();'
+  + ' if (!tinhaControle) { tinhaControle = true; return; }'
+  + ' var V = window.Reino && Reino.Versao;'
+  + ' if (V && V.novaVersao && V.novaVersao() === true) return;'
+  + ' location.reload(); });'
+  + ' addEventListener("load", function () { tinhaControle = !!sw.controller; seguir();'
+  + ' sw.register("sw.js").then(function () { procurar();'
+  + ' document.addEventListener("visibilitychange", function () { if (!document.hidden) { seguir(); procurar(); } });'
+  + ' setInterval(function () { seguir(); if (!document.hidden) procurar(); }, 60000);'
+  + ' }).catch(function () {}); });'
+  + ' })();</script>';
 
 // a pasta que o build apaga e refaz: só vercel/public/ ou dentro da pasta de testes (nunca o jogo, nunca a raiz)
 function conferirSaida(saida) {
@@ -193,6 +211,10 @@ function montar(saida) {
   const sw = fs.readFileSync(path.join(PWA, 'sw.js'), 'utf8');
   if (!sw.includes('__ARQUIVOS__')) throw new Error('pwa/sw.js sem __ARQUIVOS__');
   fs.writeFileSync(path.join(saida, 'sw.js'), sw.replace('__ARQUIVOS__', JSON.stringify(ordenados)));
+  Object.entries(DA_LOJA).forEach(([de, para]) => {
+    fs.mkdirSync(path.dirname(path.join(saida, para)), { recursive: true });
+    fs.copyFileSync(path.join(LOJA, de), path.join(saida, para));
+  });
   return { arquivos: ordenados, lotes, css };
 }
 

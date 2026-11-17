@@ -18,7 +18,7 @@ Reino.registrarSala('ciencias4',
           adaptacao: 'A conversa oral virou escolher os seres vivos da foto.',
           explica: 'Na foto do Jardim Botânico só tem plantas: árvores, palmeiras, plantas baixinhas e grama.' },
         { id: 'ci10a1-02', tipo: 'vfLista', origem: 'APR-03-qB', pagina: 3, livro: 'ci-a03',
-          pergunta: 'Explique, com suas palavras, o que são plantas. Assinale V para o que for verdadeiro e F para o que for falso.',
+          pergunta: 'O que são plantas? Assinale V para o que for verdadeiro e F para o que for falso.',
           itens: [
             { t: 'As plantas são seres vivos.', v: true },
             { t: 'As plantas nascem e crescem.', v: true },

@@ -11,6 +11,10 @@ https://reino-dos-unicornios.vercel.app (projeto `reino-dos-unicornios` do time 
   que ele lê do repositório (o plano B exporta só isso).
 - `api/progresso.js` e `api/jogadores.js` (+ `lib/banco.js`): as mesmas rotas, respostas e regras de
   `jogo/servidor/servidor.js` (§12 de `docs/contratos/save-e-mescla.md`), sobre Postgres. As tabelas nascem sozinhas.
+- `api/juntos.js` e `api/presenca.js` (+ `lib/juntos.js`, `lib/presenca.js`): "Jogar com amigos"
+  (`docs/contratos/juntos.md`), como no PKXD. Quem cria um servidor recebe um código (`juntos`) e quem entra nele
+  aparece para os outros com o nome, o lugar e a posição (`presenca`). As duas tabelas nascem sozinhas e não encostam em
+  `progresso`/`jogadores`. Sem senha: a presença é pública dentro do servidor e não tem nada do save.
 - `pwa/`: o app instalável. `montar.js` copia o manifesto e os ícones, gera o `sw.js` com o hash de cada arquivo (o
   jogo inteiro fica no aparelho; um deploy novo só baixa o que mudou) e registra os dois no `index.html`. O `sw.js`
   instala em duas fases: o núcleo (index, lotes, CSS, fonte, ícones, manifesto, versão) na instalação, e o jogo já
@@ -19,6 +23,9 @@ https://reino-dos-unicornios.vercel.app (projeto `reino-dos-unicornios` do time 
   Testes: `montar-lotes.navegador.test.js` (lotes, e a foto do mapa igual à do `jogo/`) e `sw-nucleo.navegador.test.js`
   (o SW de antes dos lotes passando para o novo, e a instalação do zero, as duas sem rede no fim), com o
   `jogo/ferramentas/testes/servidor-estatico.js`.
+- `loja/`: o que o app da Play Store (`android/README.md`) pede ao site, publicado pelo `montar.js` fora do `sw.js`:
+  `/.well-known/assetlinks.json` (as impressões das chaves que assinam o app; nova só por `npm run android --
+  --impressao`) e `/privacidade.html` (a política de privacidade da página da loja).
 - Publicar: sozinho. O projeto está ligado ao GitHub e cada push na `main` vira publicação de produção, se o jogo mudou
   (`ignorar-build.sh`, o "Ignored Build Step" do `vercel.json`: preview nunca, porque as variáveis do banco valem também
   em preview; `git.deploymentEnabled` só na `main`). Conferir: `npm run vercel -- --conferir` (a mesma regra do

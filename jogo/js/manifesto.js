@@ -50,13 +50,27 @@
       'css/ui-bau-casa.css',
       'css/ui-casa-kits.css',
       'css/ui-casa-moveis.css',
+      'css/ui-bosque.css',
+      'css/ui-itens.css',
+      'css/ui-itens-pocao.css',
+      'css/ui-monstros.css',
+      'css/ui-vila.css',
+      'css/ui-treinadores.css',
+      'css/ui-cursiva.css',
+      'css/ui-parquinho.css',
+      'css/ui-parquinho-areia.css',
       'css/ui-moedas-festa.css',
       'css/ui-casa-decorar.css',
       'css/ui-tempo-celular.css',
+      'css/ui-juntos.css',
     ],
     scripts: [
       { js: 'js/nucleo/congelar.js', grupo: 'nucleo' },
       { js: 'js/nucleo/config.js', grupo: 'nucleo', node: true },
+      { js: 'js/nucleo/config-itens.js', grupo: 'nucleo', node: true }, // números dos itens (Reino.config.itens; itens.md §12): logo depois do config.js
+      { js: 'js/nucleo/config-vila.js', grupo: 'nucleo', node: true }, // Vila Arco-Íris: números das lojas e da Teleportadora (Reino.config.vila; vila.md)
+      { js: 'js/nucleo/config-monstros.js', grupo: 'nucleo', node: true }, // Treinadores de Monstros: MonsterBall, captura, monstro que segue e ajuda (Reino.config.monstros; monstros.md)
+      { js: 'js/nucleo/config-cursiva.js', grupo: 'nucleo', node: true }, // Letra cursiva: frases por bola, inclinação, tolerância do dedo (Reino.config.cursiva; cursiva.md)
       { js: 'js/nucleo/registros.js', grupo: 'nucleo', node: true },
       { js: 'js/sistemas/bimestres.js', grupo: 'nucleo', node: true },
       { js: 'js/nucleo/modulos.js', grupo: 'nucleo', node: true },
@@ -81,6 +95,8 @@
       { js: 'js/arte/icones/portugues-salas.js', grupo: 'icones', node: true },
       { js: 'js/arte/icones/livros.js', grupo: 'icones', node: true }, // 📗 dos livros da escola (4º bimestre)
       { js: 'js/arte/desenho.js', grupo: 'arte', node: true }, // desenho.js antes da pixel art: Reino.Desenho (paleta e helpers) é a fonte das cores do PA.cor
+      { js: 'js/arte/portal.js', grupo: 'arte', node: true }, // o portal mágico em qualquer cor (Reino.Portal: o do Bosque e os das outras arenas; arenas.md)
+      { js: 'js/arte/teleportadora.js', grupo: 'arte', node: true }, // a Teleportadora, unicórnio de aura arco-íris (Reino.TeleportadoraArte; vila.md)
       { js: 'js/arte/pixelart.js', grupo: 'pixelart' }, // pixelart.js (base) primeiro: cria window.PA e PA._interno, que as outras partes usam
       { js: 'js/arte/pixelart-unicornio-moldes.js', grupo: 'pixelart' },
       { js: 'js/arte/enfeites-novidades.js', grupo: 'pixelart', node: true },
@@ -88,6 +104,7 @@
       { js: 'js/arte/pixelart-personagens.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-mariana-visual.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-menino-moldes.js', grupo: 'pixelart' },
+      { js: 'js/arte/itens-vestir.js', grupo: 'pixelart' }, // itens: cabeça, armadura e botas no desenho dela, espada e escudo (PA._interno.aplicarVestes, PA.espadaItem/escudoItem; itens.md §8)
       { js: 'js/arte/pixelart-ovos.js', grupo: 'pixelart' },
       { js: 'js/arte/pixelart-icones.js', grupo: 'pixelart' },
       { js: 'js/conteudo/laboratorio/atividades.js', grupo: 'conteudo', node: true },
@@ -343,6 +360,17 @@
       { js: 'js/conteudo/casa/kits-a.js', grupo: 'conteudo', node: true }, // casa: kits estar, jantar e cozinha (casa.md §3)
       { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
       { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 42 móveis avulsos, um à escolha por sala feita (casa.md §12)
+      { js: 'js/conteudo/casa/moveis-loja.js', grupo: 'conteudo', node: true }, // casa: os 50 enfeites da loja Casa Bonita da Vila, 30 estrelas cada (loja: true; vila.md)
+      { js: 'js/conteudo/itens/catalogo.js', grupo: 'conteudo', node: true }, // itens dos monstros: o catálogo (Reino.ItensCatalogo; itens.md §3, §4)
+      { js: 'js/conteudo/itens/vestes-a.js', grupo: 'conteudo', node: true }, // itens: moldes da cabeça (Reino.VESTES; itens.md §8)
+      { js: 'js/conteudo/itens/vestes-b.js', grupo: 'conteudo', node: true }, // itens: moldes de armaduras, botas, espadas e escudos
+      { js: 'js/conteudo/itens/icones-a.js', grupo: 'icones', node: true }, // itens: ícones item:<id> de espadas, escudos, capacetes e chapéus
+      { js: 'js/conteudo/itens/icones-b.js', grupo: 'icones', node: true }, // itens: ícones de armaduras, botas, poções e bau-guardados
+      { js: 'js/conteudo/itens/icones-monstros.js', grupo: 'icones', node: true }, // Treinadores de Monstros: o ícone da MonsterBall (item:bola-monster)
+      { js: 'js/conteudo/itens/loja-moldes.js', grupo: 'conteudo', node: true }, // Vila: moldes e ícones gerados das 100 peças das lojas (vila.md)
+      { js: 'js/conteudo/itens/loja-armas.js', grupo: 'conteudo', node: true }, // Vila: as 20 espadas da Forja
+      { js: 'js/conteudo/itens/loja-cabecas.js', grupo: 'conteudo', node: true }, // Vila: os 20 capacetes e 20 chapéus
+      { js: 'js/conteudo/itens/loja-armaduras.js', grupo: 'conteudo', node: true }, // Vila: as 20 armaduras e 20 botas
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -411,6 +439,7 @@
       { js: 'js/mundo/cidade-desenho.js', grupo: 'mundo' },
       { js: 'js/mundo/cidade-pecas.js', grupo: 'mundo' },
       { js: 'js/mundo/cofre-desenho.js', grupo: 'mundo' },
+      { js: 'js/mundo/teleportadora.js', grupo: 'mundo' }, // a Teleportadora na praça da cidade (objeto do mapa, camada e toque; vila.md)
       { js: 'js/mundo/contorno.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas.js', grupo: 'mundo' },
       { js: 'js/mundo/fachadas-kit.js', grupo: 'mundo' },
@@ -421,6 +450,7 @@
       { js: 'js/personagens/jogador.js', grupo: 'personagens' },
       { js: 'js/personagens/jogador-desenho.js', grupo: 'personagens' },
       { js: 'js/atividades/desafios.js', grupo: 'atividades', node: true }, // node: true: o validador e as falas usam os ganchos dos tipos (no carregamento, nada de document)
+      { js: 'js/atividades/desafios/quebra.js', grupo: 'atividades', node: true }, // quebra de linha dos desafios: opção colada e hifenizada, sinal e "R$" presos, rótulo que desce um degrau
       { js: 'js/atividades/desafios/campo-texto.js', grupo: 'atividades', node: true }, // caixa de digitar com acentos (helpers dos tipos do 4º bimestre)
       { js: 'js/atividades/desafios/marcar.js', grupo: 'atividades', node: true }, // tipos do livro do 4º bimestre: circular/sublinhar/pintar, completar escrevendo, resposta escrita
       { js: 'js/atividades/desafios/digitar.js', grupo: 'atividades', node: true },
@@ -453,6 +483,7 @@
       { js: 'js/ui/cuidados.js', grupo: 'ui' },
       { js: 'js/ui/hud.js', grupo: 'ui' },
       { js: 'js/ui/hud-fotos.js', grupo: 'ui' },
+      { js: 'js/ui/juntos.js', grupo: 'ui' }, // Jogar juntos: o botão 👥 do HUD e a tela "Quem está no reino" (juntos.md §8)
       { js: 'js/ui/hud-aura.js', grupo: 'ui' },
       { js: 'js/ui/foguete.js', grupo: 'ui' },
       { js: 'js/ui/et-desafio.js', grupo: 'ui' },
@@ -512,6 +543,24 @@
       { js: 'js/ui/bau-casa.js', grupo: 'ui' }, // o baú da casa do jogador ao entrar no Reino (UI.abrirBauCasa; casa.md §9)
       { js: 'js/ui/casa-kits.js', grupo: 'ui' }, // a escolha do kit de móveis da casa (UI.escolherKitCasa, UI.casaKitsPendentes)
       { js: 'js/ui/casa-moveis.js', grupo: 'ui' }, // a escolha do móvel avulso de uma sala feita (UI.escolherMovelCasa, UI.casaMoveisPendentes)
+      { js: 'js/ui/bosque-hud.js', grupo: 'ui' }, // Bosque dos Fantasmas: chip do HUD, botão da espada e o painel (UI.telaBosque; bosque.md §5)
+      { js: 'js/ui/bosque-nivel.js', grupo: 'ui' }, // Bosque dos Fantasmas: prêmio da espada e o ponto de nível (UI.telaEspadaBosque, UI.subirNivelBosque)
+      { js: 'js/ui/bosque-bau.js', grupo: 'ui' }, // Bosque dos Fantasmas: o baú do móvel surpresa, da pergunta e do nível (UI.bauBosque)
+      { js: 'js/ui/bosque-pergunta.js', grupo: 'ui' }, // Bosque dos Fantasmas: a pergunta do bloco de 10 inimigos e o prêmio (UI.perguntaFantasma)
+      { js: 'js/ui/hud-mochila.js', grupo: 'ui' }, // itens: o botão 🎒 do HUD, com o brilhinho de item novo (itens.md §13)
+      { js: 'js/ui/itens-aviso.js', grupo: 'ui' }, // itens: o aviso pequeno no alto quando cai um item (UI.avisoItem; itens.md §13)
+      { js: 'js/ui/mochila-item.js', grupo: 'ui' }, // itens: o cartão de um item (vestir, tirar, usar, dar, jogar fora; Reino._itensTelas)
+      { js: 'js/ui/mochila.js', grupo: 'ui' }, // itens: a tela da Mochila, 20 espaços e a figura vestida (UI.telaMochila; itens.md §6)
+      { js: 'js/ui/guardados.js', grupo: 'ui' }, // itens: a tela do Baú de Guardados da casa (UI.telaGuardados; itens.md §7)
+      { js: 'js/ui/vila-pergunta.js', grupo: 'ui' }, // Vila: a pergunta do 4º bimestre antes de falar com o lojista (UI.perguntaVila)
+      { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
+      { js: 'js/ui/treinadores-loja.js', grupo: 'ui' }, // Treinadores de Monstros: a loja das MonsterBalls (UI.telaTreinadores; monstros.md)
+      { js: 'js/ui/cursiva.js', grupo: 'ui' }, // Letra cursiva: a tela de escrever, que só pinta no sentido certo (UI.telaCursiva; cursiva.md)
+      { js: 'js/ui/itens-pocao.js', grupo: 'ui' }, // itens: o botão rápido da poção na arena (itens.md §9)
+      { js: 'js/ui/monstros.js', grupo: 'ui' }, // Treinadores de Monstros: a tela Meus monstros e o aviso da bola (UI.telaMonstros; monstros.md)
+      { js: 'js/ui/monstros-bola.js', grupo: 'ui' }, // Treinadores de Monstros: o botão da MonsterBall na arena (monstros.md §4)
+      { js: 'js/ui/parquinho.js', grupo: 'ui' }, // Parquinho: a tela do que falta (portal dormindo, presentes; UI.telaParquinho)
+      { js: 'js/ui/parquinho-areia.js', grupo: 'ui' }, // Parquinho: a caixa de areia de perto (UI.telaParquinhoAreia; parquinho.md)
       { js: 'js/sistemas/versao.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/aura.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem.js', grupo: 'sistemas', node: true },
@@ -520,6 +569,7 @@
       { js: 'js/sistemas/viagem-desafio.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/viagem-amigos.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro.js', grupo: 'sistemas', node: true },
+      { js: 'js/sistemas/monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: coleção, monstro equipado, campos monstros/monstroCompanheiro (Reino.Monstros; monstros.md)
       { js: 'js/sistemas/quimica.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/quimica-andar2.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/cartoes.js', grupo: 'sistemas', node: true }, // cartões de experiência do Laboratório: derivados das salas feitas (quimica.md §10)
@@ -533,6 +583,7 @@
       { js: 'js/motor/interiores-placas.js', grupo: 'motor', node: true },
       { js: 'js/motor/interiores-toque.js', grupo: 'motor', node: true },
       { js: 'js/motor/interiores-cena.js', grupo: 'motor', node: true },
+      { js: 'js/motor/interiores-arena.js', grupo: 'motor', node: true }, // arenas (mapas de luta): Reino.registrarArena, registrarDesenhoInimigo, Reino.Arenas e o layout (Reino.Interiores.arena; arenas.md)
       { js: 'js/personagens/npcs.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-corpo.js', grupo: 'personagens', node: true },
       { js: 'js/personagens/npcs-cabeca.js', grupo: 'personagens', node: true },
@@ -727,12 +778,90 @@
       { js: 'js/interiores/casa/moveis-salas-quarto.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do jogador
       { js: 'js/interiores/casa/moveis-salas-quarto-et.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) do Quarto do ET
       { js: 'js/interiores/casa/moveis-salas-quarto-uni.js', grupo: 'interiores', node: true }, // casa: móveis avulsos (por sala) de Quarto do unicórnio
+      { js: 'js/interiores/casa/moveis-loja-a.js', grupo: 'interiores', node: true }, // casa: desenhos dos enfeites da loja da Vila (casa-movel-<id>)
+      { js: 'js/interiores/casa/moveis-loja-b.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/moveis-loja-c.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/guardados.js', grupo: 'interiores', node: true }, // o Baú de Guardados da casa e a ação 'guardados' (itens.md §7)
       { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/icones.js', grupo: 'interiores', node: true }, // Bosque dos Fantasmas (bosque.md): ícones, o interior de céu aberto, o portal no mapa e o lugar (o último prédio)
+      { js: 'js/interiores/bosque/fundo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/portal-vila.js', grupo: 'interiores', node: true }, // o portal para a Vila Arco-Íris, no centro-direita (vila.md)
+      { js: 'js/interiores/bosque/bosque.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/portais.js', grupo: 'interiores', node: true }, // os portais novos dentro do Bosque (Orvalho, Neblina, Lua Cheia; arenas.md §8)
+      { js: 'js/interiores/bosque/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/bosque/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/brincar.js', grupo: 'interiores', node: true }, // Parquinho (parquinho.md): a brincadeira (Reino.ParquinhoBrincar), o chão, os brinquedos, as poses, o interior, o portal na praça e o lugar
+      { js: 'js/interiores/parquinho/fundo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses-balanco.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/balanco.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/poses-areia.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/areia-caixa.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/areia-desenho.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/parquinho.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/fora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/parquinho/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/falas.js', grupo: 'interiores', node: true }, // Pântano das Rãs Resmungonas (arenas.md): a arena 2, modelo dos mapas novos (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/pantano/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/pantano.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/pantano/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/falas.js', grupo: 'interiores', node: true }, // Montanha Gelada (arenas.md): a arena 3 (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/gelo/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/gelo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/gelo/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/dunas/falas.js', grupo: 'interiores', node: true }, // Dunas dos Escorpiões (arenas.md): a arena 4 (falas, objetos, inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/dunas/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/dunas/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/dunas/dunas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/dunas/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/falas.js', grupo: 'interiores', node: true }, // Caverna de Cristal (arenas.md): a arena 5 (falas, objetos, inimigos, chão/teto e interior, portal e lugar)
+      { js: 'js/interiores/cristal/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/cristal.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/cristal/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/falas.js', grupo: 'interiores', node: true }, // Vulcão dos Dragõezinhos (arenas.md): a arena 6 (falas, objetos, ícone e inimigos, chão/céu e interior, portal e lugar)
+      { js: 'js/interiores/vulcao/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/vulcao.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vulcao/lugar.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/falas.js', grupo: 'interiores', node: true }, // Vila Arco-Íris (vila.md): falas e lojistas, céu e chão, objetos, a Teleportadora, a praça e as 4 lojas
+      { js: 'js/interiores/vila/treinadores-falas.js', grupo: 'interiores', node: true }, // Treinadores de Monstros (monstros.md): a Treinadora Kiara e as falas do prédio
+      { js: 'js/interiores/vila/fundo.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/treinadores-objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/teleportadora.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/vila.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/lojas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/treinadores.js', grupo: 'interiores', node: true },
+      // Bosques de dentro do Bosque (arenas.md §8): no fim do grupo interiores (as fotos das cenas de antes do e2e não mudam);
+      // depois do Bosque, que carrega antes, para chamarem Reino._predios.bosque.portalNovo
+      { js: 'js/interiores/orvalho/falas.js', grupo: 'interiores', node: true }, // Bosque do Orvalho (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/orvalho/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/orvalho/orvalho.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/falas.js', grupo: 'interiores', node: true }, // Bosque da Neblina (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/neblina/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/neblina/neblina.js', grupo: 'interiores', node: true },
+      // Bosque da Lua Cheia (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
+      { js: 'js/interiores/lua/falas.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/objetos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/inimigos.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/lua/lua.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/padrao.js', grupo: 'interiores', node: true }, // padrao.js por último entre os prédios: monta o interior das matérias que não têm um próprio
       { js: 'js/sistemas/banho.js', grupo: 'sistemas' },
       { js: 'js/sistemas/banho-desenho.js', grupo: 'sistemas' },
@@ -744,6 +873,27 @@
       { js: 'js/sistemas/casa-usos-poses-b.js', grupo: 'sistemas' }, // casa: poses banho, chuveiro e cozinhar
       { js: 'js/sistemas/vida-mapa.js', grupo: 'sistemas', node: true },
       { js: 'js/sistemas/et-companheiro-desenho.js', grupo: 'sistemas' },
+      { js: 'js/sistemas/monstros-desenho.js', grupo: 'sistemas' }, // Treinadores de Monstros: o monstro que segue, o pulo da ajuda e a MonsterBall voando
+      { js: 'js/sistemas/bosque-falas.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: falas do Claude (Reino.BosqueFalas; bosque.md §6)
+      { js: 'js/sistemas/bosque.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: regras, campos bosque/bosquePontos, placar de mortos, migração e os prêmios de móvel (Reino.Bosque; bosque.md §4, §5)
+      { js: 'js/sistemas/bosque-combate.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: combate dos 4 tipos, com a mosca (Reino.BosqueCombate, camada; bosque.md §5)
+      { js: 'js/sistemas/bosque-alvo.js', grupo: 'sistemas', node: true }, // Bosque dos Fantasmas: clicar no fantasma ataca sozinho até vencer (BosqueCombate.mirar; bosque.md §5)
+      { js: 'js/sistemas/bosque-combate-monstros.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: ferir e capturar no combate (BosqueCombate.ferir/capturar; monstros.md §5)
+      { js: 'js/sistemas/monstros-bola.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: jogar a MonsterBall (Monstros.podeJogar/jogar)
+      { js: 'js/sistemas/monstros-ajuda.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: o monstro equipado ataca junto na arena
+      { js: 'js/sistemas/bosque-desenho.js', grupo: 'sistemas' }, // Bosque dos Fantasmas: desenho dos fantasmas e da mosca, da espada, do golpe e do desmaio
+      { js: 'js/sistemas/itens.js', grupo: 'sistemas', node: true }, // itens: Mochila, Baú de Guardados, vestido e o campo itens (Reino.Itens; itens.md §6, §10)
+      { js: 'js/sistemas/itens-drop.js', grupo: 'sistemas', node: true }, // itens: o que cai do inimigo vencido, gravado na hora (Reino.ItensDrop; itens.md §5)
+      { js: 'js/sistemas/itens-chao.js', grupo: 'sistemas', node: true }, // itens: o item no chão da arena, salta e voa até ela (só desenho; itens.md §5)
+      { js: 'js/sistemas/vila-lojas.js', grupo: 'sistemas', node: true }, // Vila: as 4 lojas, comprar e vender vários, a pergunta do 4º bimestre (Reino.VilaLojas; vila.md)
+      { js: 'js/sistemas/treinadores.js', grupo: 'sistemas', node: true }, // Treinadores de Monstros: comprar MonsterBalls, a pergunta antes da Kiara (Reino.Treinadores; monstros.md)
+      { js: 'js/sistemas/cursiva.js', grupo: 'sistemas', node: true }, // Letra cursiva: o caminho das palavras e o dedo só no sentido certo (Reino.Cursiva; cursiva.md)
+      { js: 'js/conteudo/cursiva-letras.js', grupo: 'conteudo', node: true }, // Letra cursiva: o desenho de cada letra, na ordem do traço (depois do Reino.Cursiva)
+      { js: 'js/conteudo/cursiva-frases.js', grupo: 'conteudo', node: true }, // Letra cursiva: o banco de frases da loja da Kiara
+      { js: 'js/sistemas/teleportadora.js', grupo: 'sistemas', node: true }, // Vila: a Teleportadora leva entre as praças (Reino.Teleportadora; vila.md)
+      { js: 'js/sistemas/parquinho.js', grupo: 'sistemas', node: true }, // Parquinho: a fase (3 matérias com Matemática ou LP; todas) e o módulo da brincadeira (Reino.Parquinho; parquinho.md)
+      { js: 'js/sistemas/juntos.js', grupo: 'sistemas', node: true }, // Jogar juntos: a presença ao vivo (Reino.Juntos, módulo 'juntos'; juntos.md)
+      { js: 'js/sistemas/juntos-desenho.js', grupo: 'sistemas', node: true }, // Jogar juntos: o desenho dos outros jogadores (Reino.JuntosDesenho; juntos.md §7)
       { js: 'js/motor/cena.js', grupo: 'motor' },
       { js: 'js/motor/transicao.js', grupo: 'motor' },
       { js: 'js/motor/camera.js', grupo: 'motor' },

@@ -10,8 +10,10 @@
   var UI = Reino.UI, R = Reino._ui;
   var painel = R.painel;
   // terminação com hífen ("-inho", "→ -zinha"): fica num span que não quebra, o hífen não sobra no fim da linha
+  // e o "R$" preso ao número que vem depois (arte.md §17.4)
   function hifenizar(t) {
-    var partes = String(t).split(/((?:^|(?<=[\s(→–—]))-\p{L}+)/u);
+    t = String(t).replace(/R\$ (?=\d)/g, 'R$\u00a0');
+    var partes = t.split(/((?:^|(?<=[\s(→–—]))-\p{L}+)/u);
     if (partes.length === 1) return R.hifenizar(t);
     return partes.filter(Boolean).map(function (p) { return /^-\p{L}/u.test(p) ? el('span.sem-quebra', p) : R.hifenizar(p); });
   }
@@ -75,6 +77,47 @@
     if (window.ResizeObserver) { ro = new ResizeObserver(medir); ro.observe(caixa); }
     setTimeout(medir, 0);   // a 1ª medida assim que a carta entra na tela (também no jogo congelado, sem quadros)
   }
+  // tabela (arte.md §17): cada palavra inteira na célula. Colunas iguais enquanto cabe; palavra mais larga que a célula
+  // → as colunas na largura do conteúdo (.tabela-solta: a coluna "A" estreita, a de "montanha alta" larga); a tabela
+  // ainda mais larga que a carta → a letra desce um degrau por vez (16, 12); nada disso → o de antes, partindo a
+  // palavra (.tabela-parte). Mede de novo quando a largura muda (girar o aparelho, Letras grandes).
+  // (Letras grandes, onde 16 é o menor: a tabela vira uma ficha por linha, como no celular: .tabela-ficha)
+  var DEGRAUS_TABELA = [['tabela-solta'], ['tabela-solta', 'tabela-degrau-1', '--texto'], ['tabela-solta', 'tabela-degrau-2', '--texto-aux'],
+    ['tabela-ficha'], ['tabela-ficha', 'tabela-degrau-2', '--texto-aux']];
+  function ajustarTabela(t) {
+    var ro = null, pai = null, todas = ['tabela-solta', 'tabela-degrau-1', 'tabela-degrau-2', 'tabela-ficha', 'tabela-parte'];
+    function cabe() {
+      // a tabela tem width: 100% (e max-width): mais larga que o lugar dela na carta = não coube (a margem auto dela
+      // fica negativa quando ela passa: não entra na conta)
+      var p = getComputedStyle(t.parentElement), max = parseFloat(getComputedStyle(t).maxWidth) || Infinity;
+      var lugar = Math.min(max, t.parentElement.clientWidth - parseFloat(p.paddingLeft) - parseFloat(p.paddingRight));
+      if (t.offsetWidth > lugar + 1) return false;
+      return !Array.prototype.some.call(t.querySelectorAll('th, td'), function (c) { return c.scrollWidth > c.clientWidth + 1; });
+    }
+    function medir() {
+      if (!t.isConnected) { if (ro) ro.disconnect(); return; }
+      // a carta também: com as colunas soltas a tabela não encolhe junto com ela (o observador da tabela não veria)
+      if (ro && !pai) { pai = t.parentElement; ro.observe(pai); }
+      // (o resultado só depende da largura e da letra: o tamanho que ele dá não muda mais, o observador para)
+      todas.forEach(function (c) { t.classList.remove(c); });
+      if (cabe()) return;
+      var celula = t.querySelector('td, th'), letra = celula ? parseFloat(getComputedStyle(celula).fontSize) : 0;
+      var raiz = getComputedStyle(document.documentElement);
+      var ok = DEGRAUS_TABELA.some(function (g) {
+        if (g[2] && !(parseFloat(raiz.getPropertyValue(g[2])) < letra)) return false;   // só degrau abaixo da letra de agora
+        todas.forEach(function (c) { t.classList.remove(c); });
+        g.forEach(function (c) { if (c.charAt(0) !== '-') t.classList.add(c); });
+        return cabe();
+      });
+      if (!ok) { todas.forEach(function (c) { t.classList.remove(c); }); t.classList.add('tabela-parte'); }
+    }
+    if (window.ResizeObserver) { ro = new ResizeObserver(function () { medir(); }); ro.observe(t); }
+    (function esperar(n) {   // mede quando a carta já está na tela (a 1ª vez também no jogo congelado, sem quadros)
+      if (!t.isConnected) { if (n < 20) setTimeout(function () { esperar(n + 1); }, 0); return; }
+      medir();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(medir);
+    })(0);
+  }
   var BLOCOS = {
     texto: function (b) { return el('p.bloco-texto', hifenizar(b.texto)); },
     // travessão de diálogo em destaque; quem fala fica só no dado (as questões do livro perguntam quem disse)
@@ -102,11 +145,13 @@
     // de 3 colunas em diante, no celular cada linha vira uma caixinha "Cabeçalho: valor" (data-cab, no CSS)
     tabela: function (b) {
       var cab = b.cab || [], larga = (b.linhas[0] || []).length >= 3;
-      return el('table.bloco-tabela' + (larga ? '.tabela-larga' : ''),
+      var t = el('table.bloco-tabela' + (larga ? '.tabela-larga' : ''),
         cab.length ? el('thead', el('tr', cab.map(function (t) { return el('th', { scope: 'col' }, hifenizar(t)); }))) : null,
         el('tbody', b.linhas.map(function (l) {
-          return el('tr', l.map(function (t, k) { return el('td', { 'data-cab': cab[k] || null }, hifenizar(t)); }));
+          return el('tr', l.map(function (x, k) { return el('td', { 'data-cab': cab[k] || null }, hifenizar(x)); }));
         })));
+      ajustarTabela(t);
+      return t;
     },
     figuras: function (b) {
       return el('div.bloco-figuras', b.itens.map(function (f) {
@@ -129,7 +174,7 @@
     var L = R.livroEscolar(m, c.livroOrigem), pag = typeof c.pagina === 'number';
     if (!L && !pag) return null;
     return el('div.carta-livro', L ? L.emoji : null, el('span.carta-livro-texto', L ? L.nome + ' ' : null,
-      pag ? el('span.carta-livro-pag', (L ? '• ' : '') + (c.pagina === 0 ? 'página sem número' : 'p.\u00a0' + c.pagina)) : null));
+      pag ? el('span.carta-livro-pag' + (c.pagina === 0 ? '.pag-sem-numero' : ''), (L ? (c.pagina === 0 ? '•\u00a0' : '• ') : '') + (c.pagina === 0 ? 'página sem número' : 'p.\u00a0' + c.pagina)) : null));
   }
 
   // desenho de uma carta (o livro pela estante e o resumo antes das questões da sala); materia: opcional (o cabeçalho)

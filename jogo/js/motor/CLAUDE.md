@@ -10,7 +10,8 @@ Contratos: `docs/contratos/cena-e-motor.md` (cena, íris, câmera, pintor, laço
   (números em `config.controles`, lidos na hora de usar; thumbstick em pixel art de `PA.controle`, tamanhos nas variáveis CSS `--cb`/`--cp`/`--px`).
   `main.js`: início do jogo e telas de entrada.
 - `interiores-*.js`: o motor dos interiores, `node: true`, nesta ordem: base, pisos, objetos-parede,
-  objetos-moveis, objetos-enfeites, grade, estatico, placas, toque, cena. Dividem `Reino._interiores`.
+  objetos-moveis, objetos-enfeites, grade, estatico, placas, toque, cena, arena (o registro e o layout das arenas,
+  `docs/contratos/arenas.md`). Dividem `Reino._interiores`.
 
 ## Regras
 - `interiores-*.js` são `node: true` (regra em `jogo/js/CLAUDE.md`).

@@ -54,11 +54,12 @@ test('tabela: todo item de kit e todo móvel avulso tem uso válido, mais o chuv
   const U = R.CasaUsos, usos = U.USOS, cfg = R.config.casa.usos;
   const objetos = [];
   R.kitsCasa.forEach((k) => k.itens.forEach((i) => objetos.push(i.objeto)));
-  R.moveisCasa.forEach((m) => objetos.push(m.objeto));
+  R.moveisCasa.filter((m) => !m.loja).forEach((m) => objetos.push(m.objeto));   // os da loja da Vila: enfeite, sem linha
   assert.ok(R.kitsCasa.length >= 6 && R.moveisCasa.length >= 41, 'kits e móveis de verdade');
   objetos.forEach((t) => assert.ok(usos.indexOf(U.uso(t)) >= 0, 'sem uso: ' + t));
   assert.strictEqual(U.uso('casa-movel-chuveiro'), 'chuveiro');
   const esperados = objetos.concat(['casa-movel-chuveiro']);
+  R.moveisCasa.filter((m) => m.loja).forEach((m) => assert.strictEqual(U.de(m.objeto), null, 'loja da Vila, só enfeite: ' + m.id));
   U.tipos().forEach((t) => assert.ok(esperados.indexOf(t) >= 0, 'uso de objeto que não existe: ' + t));
   U.tipos().forEach((t) => {
     const d = U.de(t);

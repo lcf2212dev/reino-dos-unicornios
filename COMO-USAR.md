@@ -11,6 +11,11 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
     no aparelho). Depois ele abre e joga sem rede; o progresso fica no aparelho e vai para o banco sozinho quando a
     internet volta. Um aparelho que nunca abriu o jogo precisa de internet na primeira vez.
   - O progresso é sincronizado entre os aparelhos e entre abas. Um aparelho novo já abre com o progresso dela.
+  - **Jogar com amigos:** toque em 👥 (no alto da tela) → "Criar servidor". O reino dá um código de 4 letras e um link
+    de convite: mande para os amigos (o botão "Copiar convite" copia o link). Quem abrir o link — ou digitar o código em
+    👥 → "Entrar" — cai no mesmo reino e aparece no mapa com o nome em cima; dá para andar junto, acenar e mandar
+    recados prontos. Cada um continua com o seu progresso. Sem criar nem entrar em servidor nenhum, o jogo é o de sempre,
+    sozinho. O servidor fica aberto enquanto alguém estiver jogando nele.
   - **Entrar:** toda vez que o jogo abre, toque em "Entrar no Reino" e digite a senha. Mariana: login `mariana`,
     senha `unicorlice77` (o login de quem jogou por último já vem preenchido). Outros jogadores usam "Criar conta".
     Para sair: ⚙️ Ajustes → 🚪 Sair.
@@ -81,7 +86,9 @@ Guia de uso para o Leandro. As regras técnicas ficam em `docs/contratos/`.
 
 ## Quando chega uma novidade
 O Claude põe a novidade na main e a Vercel publica sozinha. O progresso da Mariana fica como está.
-- As abas abertas (e o app instalado) se atualizam sozinhas quando ela para no mapa.
+- As abas abertas (e o app instalado) percebem a versão nova sozinhas: na tela de início a página recarrega na hora;
+  com o jogo aberto, ela espera a Mariana parar no mapa, avisa num balão, guarda e recarrega direto no mapa. Não é
+  preciso dar vários reloads (se o aparelho estava com uma versão antiga de antes desta correção, um reload resolve).
 - Se preferir que nada mude enquanto ela joga, peça a novidade num horário em que ela não esteja jogando.
 - **Se algo parecer errado:** não apague nada nem use "Apagar tudo". Deixe o jogo fechado e peça ao Claude para
   olhar.

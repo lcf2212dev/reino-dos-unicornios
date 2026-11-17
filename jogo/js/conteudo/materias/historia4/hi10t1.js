@@ -44,7 +44,7 @@
           explica: 'Que criativo! Pintores, músicos e escritores usam muito a imaginação.' },
         { id: 'hi10t1-05', tipo: 'ligar', origem: 'ATI-02-q3', pagina: 2, livro: 'hi-t02',
           instrucao: 'Ligue cada cena ao trabalho.',
-          pergunta: 'Observe as cenas a seguir e escreva, como souber, quais trabalhos as pessoas estão fazendo.',
+          pergunta: 'Observe as cenas a seguir. Quais trabalhos as pessoas estão fazendo?',
           pares: [
             [{ img: '🧺', alt: 'Cena 1: roupas, bacia e máquina de lavar' }, { t: 'lavar a roupa' }],
             [{ img: '🧹', alt: 'Cena 2: aspirador de pó e esfregão' }, { t: 'limpar a casa' }],
@@ -71,7 +71,7 @@
           ],
           explica: 'O astronauta viaja de foguete!' },
         { id: 'hi10t1-09', tipo: 'varias', origem: 'ATI-04-q2c', pagina: 4, livro: 'hi-t04',
-          pergunta: 'c) Pesquise e escreva o nome de duas outras profissões que também estão relacionadas com o espaço. Toque em TODAS as que são do espaço.',
+          pergunta: 'c) Quais outras profissões também estão relacionadas com o espaço? Toque em TODAS.',
           opcoes: [
             { img: '🔭', t: 'astrônomo', ok: true },
             { img: '🍲', t: 'cozinheiro' },

@@ -17,7 +17,7 @@ virado para onde quiser.
 | desenho nas 4 direções | `Reino.CasaArte.virado` em `js/interiores/casa/virar.js` |
 | dados dos kits | `js/conteudo/casa/kits-a.js` (estar, jantar, cozinha), `kits-b.js` (banheiro, quarto-jogador, quarto-uni) |
 | desenho dos móveis | `js/interiores/casa/moveis-<kit>.js` |
-| o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `casa.js`, `andar2.js`, `fora.js`, `lugar.js`) |
+| o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `guardados.js`, `casa.js`, `andar2.js`, `fora.js`, `lugar.js`) |
 | save, regras, ação da caixa | `js/sistemas/casa.js` (`Reino.Casa`) |
 | motor | `js/motor/interiores-cena.js` (`refazer`, `objetosExtras`), `interiores-placas.js` (`{nome}`, `{uni}`), validador `jogo/ferramentas/validar/validar-interiores.js` (`decoravel`) |
 | telas | `js/ui/bau-casa.js`, `ui/casa-kits.js`, `ui/casa-falas.js` (as falas das duas, `node: true`), `ui/casa-decorar.js` e `ui/casa-decorar-fantasma.js` (+ CSS `ui-bau-casa.css`, `ui-casa-kits.css`, `ui-casa-decorar.css`) |
@@ -31,6 +31,8 @@ virado para onde quiser.
   `config.casa.comodos`.
 - Kits (ordem de `config.casa.kits`): `estar`, `jantar`, `cozinha`, `banheiro`, `quarto-jogador`, `quarto-uni`.
 - Objetos: `casa-<nome>` para os do prédio (ex.: `casa-caixa`, a caixa de mudança); `casa-<kit>-<item>` para os móveis.
+- Baú de Guardados (`casa-guardados`, 2×1, ação `guardados`): fixo na Sala de Estar em (26,3), ao lado da caixa; guarda os
+  itens dos monstros, sem limite (`itens.md` §7). Como objeto fixo, entra na regra do §8 (nenhum móvel fica em cima dele).
 - Peça de um kit (uid): `<kit>.<item>.<n>`, com n de 1 a `qtd` (ex.: `jantar.cadeira.3`).
 - Ação de objeto: `{ tipo: 'casaDecorar', kit: '<kit>' }` (registrada por `sistemas/casa.js`).
 - Telas: `UI.abrirBauCasa()`, `UI.escolherKitCasa()`, `UI.casaKitsPendentes()`, `UI.decorarCasa(opts?)`.
@@ -166,32 +168,46 @@ Qualquer cômodo vale para qualquer kit.
 
 ## 12. Móveis avulsos (um por sala)
 Além do kit por matéria, cada sala feita de uma matéria que conta (§6.4, bimestre >= `desdeBimestre`) dá UM móvel
-avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de ganhar a casa (`casaBau`).
+avulso, escolhido entre `config.casa.moveisOpcoes` (5) sorteados. Só depois de ganhar a casa (`casaBau`). Além das
+salas, o Bosque dos Fantasmas dá móveis surpresa (nível e pergunta certa) com `CasaMoveis.presente`, fora da fila
+(`bosque.md` §4).
 
 | Parte | Onde |
 |---|---|
 | registro | `Reino.registrarMovelCasa({ id, nome, objeto, comodo, direcoes, parede? })` / `Reino.movelCasa(id)` / `Reino.moveisCasa` (`js/nucleo/registros.js`) |
 | dados (50: um por sala do 4º bimestre, 25 de Língua Portuguesa + 13 de Inglês, mais 3 camas, o chuveiro e os 8 do Quarto do ET) | `js/conteudo/casa/moveis-salas.js` |
 | desenho | objeto `casa-movel-<id>` em `js/interiores/casa/moveis-salas-<cômodo>.js` (regras do §5) |
-| save, sorteio, pendentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis`) |
-| tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css` |
+| save, sorteio, pendentes, presentes | `js/sistemas/casa-moveis.js` (`Reino.CasaMoveis.presente`/`guardar`) |
+| tela | `js/ui/casa-moveis.js` (`UI.escolherMovelCasa`, `UI.casaMoveisPendentes`) + `css/ui-casa-moveis.css`; o presente do Bosque abre em `js/ui/bosque-bau.js` (`UI.bauBosque`) |
 
 1. `comodo` é um id de `config.casa.comodos`: a aba do modo decorar. O nome da aba e do cômodo no cartão é o do kit
    dele ou, sem kit, a placa do cômodo (`Casa.nomeComodo`). As abas passam a ser os cômodos com kit ganho ou
    algum móvel avulso (`Casa.abas()`); a aba traz as peças do kit e depois os móveis avulsos daquele cômodo.
-2. Save: `casaMoveis: { <salaId>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. A escolha
-   de uma sala é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.
+2. Save: `casaMoveis: { <chave>: { movel, em } }`, `carimbo`, `novoCiclo: 'mantem'`, `copiaSeguranca: true`. Chave =
+   id da sala, a de uma fonte (item 8) ou um presente do Bosque (`bosque:<nível>` e `bosque:p<bloco>`). A escolha de
+   uma chave é para sempre. Entrada com móvel desconhecido não conta: a sala volta a ficar pendente.
 3. Derivado: quantas peças de cada móvel ela tem = quantas salas o escolheram (`CasaMoveis.qtd`). Peça (uid) =
    `movel.<id>.<n>`, n de 1 a `qtd`; as regras de lugar (§8) e de `casaItens` (§6) são as mesmas das peças de kit.
 4. Sorteio (`CasaMoveis.opcoes(sala)`): fixo por sala (semente = id da sala + `casaBau.em`); os que ela ainda não tem
    primeiro, na ordem sorteada; faltando novos, completa com os que ela tem (ganha mais um igual, "Mais um!").
-5. Pendentes (`CasaMoveis.pendentes()`): as salas que contam, feitas e sem móvel, na ordem das matérias e das salas.
+   O presente (`CasaMoveis.presente(chave)`) sorteia igual, com semente = chave + `casaBau.em` + quantidade de móveis;
+   a chave já com móvel devolve o mesmo, sem sortear de novo.
+5. Pendentes (`CasaMoveis.pendentes()`): as salas que contam, feitas e sem móvel, na ordem das matérias e das salas
+   (`CasaMoveis.salasPendentes()`), depois as chaves das fontes sem móvel (item 8). `CasaMoveis.escolhida(chave)`.
+   Os presentes do Bosque ficam FORA da fila: não aparecem em `pendentes` nem na tela de escolha.
 6. Quando a tela aparece: ao entrar no Reino, depois do baú da casa (`motor/main.js`; quem já tinha salas feitas
    escolhe uma por sala, uma vez só); no fim de uma sala feita pela 1ª vez (antes do kit da matéria completa,
    `atividades/missao.js`); na caixa de mudança e no botão do HUD (antes dos kits e do painel).
-7. Tela: "Escolha um móvel!", "Presente da sala “<nome>”" e "1 de N" na fila; cartões com a capa (`UI.capaCasa`,
+7. Tela: "Escolha um móvel!", o título da chave (`CasaMoveis.titulo`: "Presente da sala “<nome>”" ou o da fonte) e
+   "1 de N" na fila; cartões com a capa (`UI.capaCasa`,
    de `ui/casa-kits.js`), o nome e o cômodo. O toque dá o móvel (festa e fala); "Depois" ou Esc param a fila e a sala
    fica pendente. Falas (`ui/casa-falas.js`): "Escolha um móvel novo!" (só na 1ª da fila) e "Móvel novo na sua casa!".
+8. Outras fontes (`CasaMoveis.registrarFonte({ id, chaves(), titulo(chave), soNovos? })`, na ordem do registro):
+   chaves próprias que não colidem com ids de sala; `soNovos`: as opções são só os móveis que ela ainda não tem (sem
+   repetido nem "Mais um!"). Nenhuma hoje. O Bosque usa `CasaMoveis.presente`/`guardar`, fora da fila: `bosque:<nível>`
+   (baú do nível) e `bosque:p<bloco>` (pergunta certa), gravados ANTES do baú abrir; `CasaMoveis.titulo` devolve
+   "Presente do Bosque" para a chave da pergunta. Nível antigo com o ponto pendente ganha o baú ao pôr o ponto
+   (`bosque.md` §4).
 
 
 ## 13. Os móveis funcionam (`Reino.CasaUsos`)

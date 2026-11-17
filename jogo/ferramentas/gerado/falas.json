@@ -288,6 +288,11 @@
    "velocidade": "-4%",
    "tom": "+8Hz"
   },
+  "npc-teleportadora": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+16%",
+   "tom": "+30Hz"
+  },
   "npc-lab-cavaleira": {
    "voz": "en-US-EmmaMultilingualNeural",
    "velocidade": "+0%",
@@ -552,6 +557,31 @@
    "voz": "en-US-AvaMultilingualNeural",
    "velocidade": "+12%",
    "tom": "+24Hz"
+  },
+  "npc-lavanda": {
+   "voz": "pt-BR-FranciscaNeural",
+   "velocidade": "+2%",
+   "tom": "+12Hz"
+  },
+  "npc-bigorna": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "-4%",
+   "tom": "-34Hz"
+  },
+  "npc-plumita": {
+   "voz": "pt-BR-ThalitaMultilingualNeural",
+   "velocidade": "-12%",
+   "tom": "-12Hz"
+  },
+  "npc-ferrolho": {
+   "voz": "pt-BR-AntonioNeural",
+   "velocidade": "+10%",
+   "tom": "-18Hz"
+  },
+  "npc-kiara": {
+   "voz": "en-US-AvaMultilingualNeural",
+   "velocidade": "+6%",
+   "tom": "+8Hz"
   }
  },
  "falas": [
@@ -5431,8 +5461,7 @@
    "voz": "narradora",
    "texto": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a2"
+    "matematica4-livro-11"
    ],
    "fala": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal."
   },
@@ -5459,7 +5488,8 @@
    "voz": "narradora",
    "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília.",
    "pacotes": [
-    "matematica4-livro-11"
+    "matematica4-livro-11",
+    "matematica4-ma11a3"
    ],
    "fala": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília."
   },
@@ -5504,8 +5534,7 @@
    "voz": "narradora",
    "texto": "Em dupla com um colega, use 20 palitos de picolé para esta atividade. Juntos, vocês vão formar grupos com os palitos seguindo as indicações da tabela. Depois, cada um deve completar sua tabela com as informações que estão faltando.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a3"
+    "matematica4-livro-11"
    ],
    "fala": "Em dupla com um colega, use 20 palitos de picolé para esta atividade. Juntos, vocês vão formar grupos com os palitos seguindo as indicações da tabela. Depois, cada um deve completar sua tabela com as informações que estão faltando."
   },
@@ -5739,8 +5768,7 @@
    "voz": "narradora",
    "texto": "Pinte a metade da quantidade de bolas em cada situação. Depois, escreva a divisão correspondente.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a5"
+    "matematica4-livro-11"
    ],
    "fala": "Pinte a metade da quantidade de bolas em cada situação. Depois, escreva a divisão correspondente."
   },
@@ -5758,8 +5786,7 @@
    "voz": "narradora",
    "texto": "Pinte a terça parte da quantidade de balões em cada situação. Depois, escreva a divisão correspondente.",
    "pacotes": [
-    "matematica4-livro-11",
-    "matematica4-ma11a5"
+    "matematica4-livro-11"
    ],
    "fala": "Pinte a terça parte da quantidade de balões em cada situação. Depois, escreva a divisão correspondente."
   },
@@ -6452,7 +6479,8 @@
    "voz": "narradora",
    "texto": "10 reais, 10 reais, 10 reais, 2 reais, 2 reais, 2 reais.",
    "pacotes": [
-    "matematica4-livro-11"
+    "matematica4-livro-11",
+    "matematica4-ma11a8"
    ],
    "fala": "10 reais, 10 reais, 10 reais, 2 reais, 2 reais, 2 reais."
   },
@@ -8643,8 +8671,7 @@
    "voz": "narradora",
    "texto": "Escreva na tabela as informações apresentadas no gráfico da atividade anterior.",
    "pacotes": [
-    "matematica4-livro-12",
-    "matematica4-ma12t1"
+    "matematica4-livro-12"
    ],
    "fala": "Escreva na tabela as informações apresentadas no gráfico da atividade anterior."
   },
@@ -8985,13 +9012,13 @@
    "fala": "Agora, conte e escreva no quadro a seguir a quantia que cada um deles recebeu nessa troca."
   },
   {
-   "chave": "0e98c68az",
+   "chave": "74ba7c0c25",
    "voz": "narradora",
-   "texto": "Depois, complete a frase.",
+   "texto": "Complete a frase sobre as quantias que Murilo e Gabriela receberam.",
    "pacotes": [
     "matematica4-ma10a2"
    ],
-   "fala": "Depois, complete a frase."
+   "fala": "Complete a frase sobre as quantias que Murilo e Gabriela receberam."
   },
   {
    "chave": "a246300a3a",
@@ -9219,22 +9246,22 @@
    "fala": "Memória das quantias: ligue cada carta à carta que tem a mesma quantia."
   },
   {
-   "chave": "6ae0d5c53a",
+   "chave": "b20a560e37",
    "voz": "narradora",
-   "texto": "Para cada quantia a seguir, forme o par. Quais grupos têm o mesmo valor da cédula de 20 reais? Marque todos.",
+   "texto": "Forme o par da carta com a cédula de 20 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos.",
    "pacotes": [
     "matematica4-ma10a5"
    ],
-   "fala": "Para cada quantia a seguir, forme o par. Quais grupos têm o mesmo valor da cédula de 20 reais? Marque todos."
+   "fala": "Forme o par da carta com a cédula de 20 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos."
   },
   {
-   "chave": "c80619ba2d",
+   "chave": "080f93e438",
    "voz": "narradora",
-   "texto": "Agora, quais grupos têm o mesmo valor da cédula de 200 reais? Marque todos.",
+   "texto": "Forme o par da carta com a cédula de 200 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos.",
    "pacotes": [
     "matematica4-ma10a5"
    ],
-   "fala": "Agora, quais grupos têm o mesmo valor da cédula de 200 reais? Marque todos."
+   "fala": "Forme o par da carta com a cédula de 200 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos."
   },
   {
    "chave": "9e3918f42o",
@@ -9336,22 +9363,22 @@
    "fala": "a) Quantos reais a tia de Sara gastou nessa compra?"
   },
   {
-   "chave": "b9000a411c",
+   "chave": "2c2adb641m",
    "voz": "narradora",
-   "texto": "b) Quantos reais ela recebeu de troco?",
+   "texto": "b) Quantos reais a tia de Sara recebeu de troco?",
    "pacotes": [
     "matematica4-ma10a6"
    ],
-   "fala": "b) Quantos reais ela recebeu de troco?"
+   "fala": "b) Quantos reais a tia de Sara recebeu de troco?"
   },
   {
-   "chave": "c23db7c02k",
+   "chave": "bc0b45a52k",
    "voz": "narradora",
-   "texto": "Elas compraram 2 baldes de pipoca e 2 algodões doces. Quantos reais elas gastaram?",
+   "texto": "Elas compraram 2 baldes de pipoca e 2 algodões-doces. Quantos reais elas gastaram?",
    "pacotes": [
     "matematica4-ma10a6"
    ],
-   "fala": "Elas compraram 2 baldes de pipoca e 2 algodões doces. Quantos reais elas gastaram?"
+   "fala": "Elas compraram 2 baldes de pipoca e 2 algodões-doces. Quantos reais elas gastaram?"
   },
   {
    "chave": "fb7d53e31u",
@@ -9687,13 +9714,13 @@
    "fala": "50 centavos, 50 centavos, 50 centavos, 50 centavos, 50 centavos, 50 centavos, 1 real, 1 real."
   },
   {
-   "chave": "f9cd6f313v",
+   "chave": "9e7ea3724k",
    "voz": "narradora",
-   "texto": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar o valor indicado no item a?",
+   "texto": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar as moedas que recebeu na troca da cédula de 5 reais?",
    "pacotes": [
     "matematica4-ma10t2"
    ],
-   "fala": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar o valor indicado no item a?"
+   "fala": "b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar as moedas que recebeu na troca da cédula de 5 reais?"
   },
   {
    "chave": "494e4fd25j",
@@ -9786,13 +9813,13 @@
    "fala": "Jorge ganhou do avô 3 cédulas iguais à cédula que está representada ao lado. Quantos reais Jorge ganhou do avô? Escreva uma adição para representar essa situação."
   },
   {
-   "chave": "e707b4961v",
+   "chave": "a94731e53e",
    "voz": "narradora",
-   "texto": "Escreva uma multiplicação para representar essa situação.",
+   "texto": "Jorge ganhou do avô 3 cédulas iguais à cédula ao lado. Escreva uma multiplicação para representar essa situação.",
    "pacotes": [
     "matematica4-ma10t3"
    ],
-   "fala": "Escreva uma multiplicação para representar essa situação."
+   "fala": "Jorge ganhou do avô 3 cédulas iguais à cédula ao lado. Escreva uma multiplicação para representar essa situação."
   },
   {
    "chave": "86aa00fb68",
@@ -9867,6 +9894,33 @@
    "fala": "d) Quantos reais os três irmãos pouparam juntos?"
   },
   {
+   "chave": "fb7c2a51y",
+   "voz": "narradora",
+   "texto": "O que os irmãos pouparam",
+   "pacotes": [
+    "matematica4-ma10t3"
+   ],
+   "fala": "O que os irmãos pouparam"
+  },
+  {
+   "chave": "c18c33f7f",
+   "voz": "narradora",
+   "texto": "Bruno",
+   "pacotes": [
+    "matematica4-ma10t3"
+   ],
+   "fala": "Bruno"
+  },
+  {
+   "chave": "3bc160222k",
+   "voz": "narradora",
+   "texto": "Ana poupou o dobro da quantia de Bruno. Paula poupou o triplo da quantia de Bruno.",
+   "pacotes": [
+    "matematica4-ma10t3"
+   ],
+   "fala": "Ana poupou o dobro da quantia de Bruno. Paula poupou o triplo da quantia de Bruno."
+  },
+  {
    "chave": "4fc371cbp",
    "voz": "claude",
    "texto": "Arrumando o quarto",
@@ -9912,6 +9966,15 @@
    "fala": "Quantos brinquedos Beatriz deve colocar em cada prateleira?"
   },
   {
+   "chave": "030a1d932b",
+   "voz": "narradora",
+   "texto": "Beatriz quer colocar a mesma quantidade de brinquedos em cada prateleira.",
+   "pacotes": [
+    "matematica4-ma11a1"
+   ],
+   "fala": "Beatriz quer colocar a mesma quantidade de brinquedos em cada prateleira."
+  },
+  {
    "chave": "051531b31h",
    "voz": "narradora",
    "texto": "Quantos bichinhos de pelúcia Beatriz doará?",
@@ -9939,13 +10002,13 @@
    "fala": "Quantas caixas ela usará para colocar essas pelúcias?"
   },
   {
-   "chave": "105eb7e41z",
+   "chave": "ccb5fba736",
    "voz": "narradora",
-   "texto": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa.",
+   "texto": "Beatriz quer colocar a mesma quantidade de pelúcias em cada caixa. Quantas pelúcias vão para cada caixa?",
    "pacotes": [
     "matematica4-ma11a1"
    ],
-   "fala": "Trace linhas para ligar cada bichinho de pelúcia a uma caixa."
+   "fala": "Beatriz quer colocar a mesma quantidade de pelúcias em cada caixa. Quantas pelúcias vão para cada caixa?"
   },
   {
    "chave": "0de4a5f51q",
@@ -9993,13 +10056,13 @@
    "fala": "O professor formará quantos grupos?"
   },
   {
-   "chave": "11124d222l",
+   "chave": "188142b315",
    "voz": "narradora",
-   "texto": "Circule os alunos para formar os grupos e responda: Quantos alunos cada grupo terá?",
+   "texto": "Quantos alunos cada grupo terá?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Circule os alunos para formar os grupos e responda: Quantos alunos cada grupo terá?"
+   "fala": "Quantos alunos cada grupo terá?"
   },
   {
    "chave": "709b8d0e11",
@@ -10020,13 +10083,13 @@
    "fala": "Quantas crianças estão jogando?"
   },
   {
-   "chave": "ccdbcd3d30",
+   "chave": "944ac6b81b",
    "voz": "narradora",
-   "texto": "Trace linhas para ligar cada carta a uma criança e responda: Quantas cartas cada criança receberá?",
+   "texto": "Quantas cartas cada criança receberá?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Trace linhas para ligar cada carta a uma criança e responda: Quantas cartas cada criança receberá?"
+   "fala": "Quantas cartas cada criança receberá?"
   },
   {
    "chave": "37d114c05m",
@@ -10056,13 +10119,22 @@
    "fala": "Em quantos pratos ela colocará as rosquinhas?"
   },
   {
-   "chave": "b05dccf43i",
+   "chave": "90ec37452w",
    "voz": "narradora",
-   "texto": "Recorte as rosquinhas da aba. Depois, cole as rosquinhas nos pratos e responda: Há quantas rosquinhas em cada prato?",
+   "texto": "As rosquinhas serão distribuídas igualmente nos 3 pratos. Há quantas rosquinhas em cada prato?",
    "pacotes": [
     "matematica4-ma11a2"
    ],
-   "fala": "Recorte as rosquinhas da aba. Depois, cole as rosquinhas nos pratos e responda: Há quantas rosquinhas em cada prato?"
+   "fala": "As rosquinhas serão distribuídas igualmente nos 3 pratos. Há quantas rosquinhas em cada prato?"
+  },
+  {
+   "chave": "f2b4e2254e",
+   "voz": "narradora",
+   "texto": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal, distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?",
+   "pacotes": [
+    "matematica4-ma11a2"
+   ],
+   "fala": "Beto vai ajudar a mãe a pendurar 12 camisetas no varal, distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?"
   },
   {
    "chave": "ee7d325a14",
@@ -10110,13 +10182,13 @@
    "fala": "Vamos formar grupos iguais com crianças, palitos e tampinhas, e escrever cada divisão!"
   },
   {
-   "chave": "34f69ede41",
+   "chave": "402113df2r",
    "voz": "narradora",
-   "texto": "As crianças a seguir serão divididas em 2 grupos iguais. Circule as crianças para formar esses grupos. a) Quantas crianças são ao todo?",
+   "texto": "As crianças a seguir serão divididas em 2 grupos iguais. a) Quantas crianças são ao todo?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "As crianças a seguir serão divididas em 2 grupos iguais. Circule as crianças para formar esses grupos. a) Quantas crianças são ao todo?"
+   "fala": "As crianças a seguir serão divididas em 2 grupos iguais. a) Quantas crianças são ao todo?"
   },
   {
    "chave": "3ae83b73l",
@@ -10156,13 +10228,22 @@
    "fala": "d) Represente essa situação por meio de uma divisão."
   },
   {
-   "chave": "c40fd3586y",
+   "chave": "46cada461l",
    "voz": "narradora",
-   "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. Faça um tracinho embaixo de cada criança para representar quantos palitos cada uma deve receber. a) Quantos palitos de picolé cada criança deve receber?",
+   "texto": "As crianças serão divididas em 2 grupos iguais.",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. Faça um tracinho embaixo de cada criança para representar quantos palitos cada uma deve receber. a) Quantos palitos de picolé cada criança deve receber?"
+   "fala": "As crianças serão divididas em 2 grupos iguais."
+  },
+  {
+   "chave": "285327ef49",
+   "voz": "narradora",
+   "texto": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. a) Quantos palitos de picolé cada criança deve receber?",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "Doze palitos de picolé serão distribuídos igualmente entre Ana, Luiz, Felipe e Cecília. a) Quantos palitos de picolé cada criança deve receber?"
   },
   {
    "chave": "7bf77b681q",
@@ -10174,13 +10255,40 @@
    "fala": "b) Represente essa situação por meio de uma divisão."
   },
   {
-   "chave": "7c69165f3i",
+   "chave": "17253fa1k",
    "voz": "narradora",
-   "texto": "Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?",
+   "texto": "Os palitos",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "Forme grupos com 10 tampinhas em cada um deles. Em seguida, responda às perguntas. a) Quantas tampinhas são ao todo?"
+   "fala": "Os palitos"
+  },
+  {
+   "chave": "5197c9f539",
+   "voz": "narradora",
+   "texto": "As tampinhas serão separadas em grupos com 10 tampinhas em cada um deles. a) Quantas tampinhas são ao todo?",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "As tampinhas serão separadas em grupos com 10 tampinhas em cada um deles. a) Quantas tampinhas são ao todo?"
+  },
+  {
+   "chave": "bd5eaadem",
+   "voz": "narradora",
+   "texto": "As tampinhas",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "As tampinhas"
+  },
+  {
+   "chave": "5d57bcd92t",
+   "voz": "narradora",
+   "texto": "São 4 fileiras de tampinhas, com 10 tampinhas em cada fileira. Cada grupo tem 10 tampinhas.",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "São 4 fileiras de tampinhas, com 10 tampinhas em cada fileira. Cada grupo tem 10 tampinhas."
   },
   {
    "chave": "fcc2e4dd1q",
@@ -10201,13 +10309,22 @@
    "fala": "Antônio quer dividir igualmente o valor desta cédula entre seus 5 sobrinhos. Para isso, ele deve trocar a cédula por outras de menor valor. a) Quantos reais Antônio quer dividir entre seus sobrinhos?"
   },
   {
-   "chave": "9c18e9101q",
+   "chave": "0b8b677b19",
    "voz": "narradora",
-   "texto": "b) Desenhe a quantia que cada sobrinho deve receber.",
+   "texto": "b) Que cédula cada sobrinho recebe?",
    "pacotes": [
     "matematica4-ma11a3"
    ],
-   "fala": "b) Desenhe a quantia que cada sobrinho deve receber."
+   "fala": "b) Que cédula cada sobrinho recebe?"
+  },
+  {
+   "chave": "13d00a3f58",
+   "voz": "narradora",
+   "texto": "Os palitos de picolé foram separados em grupos, seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Complete a tabela com as informações que estão faltando.",
+   "pacotes": [
+    "matematica4-ma11a3"
+   ],
+   "fala": "Os palitos de picolé foram separados em grupos, seguindo as indicações da tabela. Os grupos devem ter a mesma quantidade. Complete a tabela com as informações que estão faltando."
   },
   {
    "chave": "be6ff1ab3a",
@@ -10282,13 +10399,13 @@
    "fala": "Quantos lápis de cor tem nessa caixa?"
   },
   {
-   "chave": "5f9d93c42u",
+   "chave": "f39a8bb33c",
    "voz": "narradora",
-   "texto": "Contorne os lápis a seguir para indicar a quantidade de lápis que Daniel usou nessa pintura.",
+   "texto": "Quantos lápis a seguir devem ser contornados para indicar a quantidade de lápis que Daniel usou nessa pintura?",
    "pacotes": [
     "matematica4-ma11a4"
    ],
-   "fala": "Contorne os lápis a seguir para indicar a quantidade de lápis que Daniel usou nessa pintura."
+   "fala": "Quantos lápis a seguir devem ser contornados para indicar a quantidade de lápis que Daniel usou nessa pintura?"
   },
   {
    "chave": "eae4be09p",
@@ -10345,13 +10462,31 @@
    "fala": "Vamos pintar a metade e a terça parte, dividir carrinhos e jogar o Bingo da divisão!"
   },
   {
-   "chave": "bc50592b3m",
+   "chave": "f522592a2g",
    "voz": "narradora",
-   "texto": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce.",
+   "texto": "Descubra a metade da quantidade de bolas em cada situação e complete a tabela.",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "Renata usou meia dúzia de ovos para fazer um quindim. Desenhe a quantidade de ovos que Renata usou para fazer esse doce."
+   "fala": "Descubra a metade da quantidade de bolas em cada situação e complete a tabela."
+  },
+  {
+   "chave": "c967fda22e",
+   "voz": "narradora",
+   "texto": "Renata usou meia dúzia de ovos para fazer um quindim. Quantos ovos ela usou?",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Renata usou meia dúzia de ovos para fazer um quindim. Quantos ovos ela usou?"
+  },
+  {
+   "chave": "22134da42m",
+   "voz": "narradora",
+   "texto": "Descubra a terça parte da quantidade de balões em cada situação e complete a tabela.",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Descubra a terça parte da quantidade de balões em cada situação e complete a tabela."
   },
   {
    "chave": "5dca67435g",
@@ -10372,22 +10507,58 @@
    "fala": "Escreva a divisão que representa essa situação."
   },
   {
-   "chave": "2d1d7dc53q",
+   "chave": "43a695cer",
    "voz": "narradora",
-   "texto": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante.",
+   "texto": "Os pães de queijo",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "a) Lucas quer arrumar esses carrinhos. Cole no espaço a seguir a metade desses carrinhos para Lucas colocá-los numa estante."
+   "fala": "Os pães de queijo"
   },
   {
-   "chave": "6e3124173s",
+   "chave": "6e8339e32t",
    "voz": "narradora",
-   "texto": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou.",
+   "texto": "A mãe de Isaque separou a terça parte dos pães de queijo para o lanche de Isaque na escola.",
    "pacotes": [
     "matematica4-ma11a5"
    ],
-   "fala": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Cole no espaço a seguir a quantidade que ele separou."
+   "fala": "A mãe de Isaque separou a terça parte dos pães de queijo para o lanche de Isaque na escola."
+  },
+  {
+   "chave": "f08363813y",
+   "voz": "narradora",
+   "texto": "a) Lucas quer arrumar esses carrinhos. Ele vai colocar a metade desses carrinhos numa estante. Quantos carrinhos vão para a estante?",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "a) Lucas quer arrumar esses carrinhos. Ele vai colocar a metade desses carrinhos numa estante. Quantos carrinhos vão para a estante?"
+  },
+  {
+   "chave": "2877e00b35",
+   "voz": "narradora",
+   "texto": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Quantos carrinhos ele separou?",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "b) Dos carrinhos que sobraram, Lucas separou a terça parte para brincar. Quantos carrinhos ele separou?"
+  },
+  {
+   "chave": "70b51f4bv",
+   "voz": "narradora",
+   "texto": "Os carrinhos de Lucas",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Os carrinhos de Lucas"
+  },
+  {
+   "chave": "1a26f0002x",
+   "voz": "narradora",
+   "texto": "Lucas tem 18 carrinhos. Ele colocou a metade desses carrinhos numa estante. Os outros sobraram.",
+   "pacotes": [
+    "matematica4-ma11a5"
+   ],
+   "fala": "Lucas tem 18 carrinhos. Ele colocou a metade desses carrinhos numa estante. Os outros sobraram."
   },
   {
    "chave": "de083a383j",
@@ -10435,22 +10606,22 @@
    "fala": "Identifique no texto do problema as informações descritas a seguir. Depois, pinte no texto do problema cada informação seguindo as cores indicadas em cada lápis de cor."
   },
   {
-   "chave": "25e0ba663t",
+   "chave": "2419b3083r",
    "voz": "narradora",
-   "texto": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango.",
+   "texto": "A mãe de Vanessa fez 30 cupcakes. A terça parte é de chocolate e o restante é de morango. Quantos cupcakes são de cada sabor?",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "Para resolver esse problema, pinte de marrom as figuras dos cupcakes de chocolate e de rosa as figuras dos cupcakes de morango."
+   "fala": "A mãe de Vanessa fez 30 cupcakes. A terça parte é de chocolate e o restante é de morango. Quantos cupcakes são de cada sabor?"
   },
   {
-   "chave": "e260399d69",
+   "chave": "d757d7014d",
    "voz": "narradora",
-   "texto": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. Desenhe as balas para descobrir quantos doces cada sobrinho ganhou. a) Escreva a divisão que representa essa situação.",
+   "texto": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. a) Escreva a divisão que representa essa situação.",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. Desenhe as balas para descobrir quantos doces cada sobrinho ganhou. a) Escreva a divisão que representa essa situação."
+   "fala": "Carla comprou um pacote com 18 balas e distribuiu igualmente essas balas entre seus 6 sobrinhos. a) Escreva a divisão que representa essa situação."
   },
   {
    "chave": "f194119a2w",
@@ -10507,13 +10678,13 @@
    "fala": "A professora do 2º ano vai dividir a turma em grupos iguais. Cada grupo terá 6 alunos cada um. Observe a quantidade de alunos que estudam nessa turma. a) Quantos alunos tem nessa turma ao todo?"
   },
   {
-   "chave": "c76e5fc32k",
+   "chave": "a1b75b471n",
    "voz": "narradora",
-   "texto": "b) Circule os alunos para formar os grupos e responda: Quantos grupos você formou?",
+   "texto": "b) Quantos grupos de 6 alunos podem ser formados?",
    "pacotes": [
     "matematica4-ma11a6"
    ],
-   "fala": "b) Circule os alunos para formar os grupos e responda: Quantos grupos você formou?"
+   "fala": "b) Quantos grupos de 6 alunos podem ser formados?"
   },
   {
    "chave": "e0822fb31i",
@@ -10570,13 +10741,13 @@
    "fala": "Denise vai distribuir igualmente esta quantidade de giz de cera entre 4 crianças. Quantos gizes de cera cada criança ganhará?"
   },
   {
-   "chave": "c8ad72745i",
+   "chave": "4513b9d152",
    "voz": "narradora",
-   "texto": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa.",
+   "texto": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Quantos bancos vão em cada mesa, um para cada pessoa?",
    "pacotes": [
     "matematica4-ma11a7"
    ],
-   "fala": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Desenhe bancos para representar a quantidade de pessoas em cada mesa."
+   "fala": "Matias convidou 20 pessoas para a festa de aniversário dele. Os convidados serão distribuídos igualmente nestas mesas. Quantos bancos vão em cada mesa, um para cada pessoa?"
   },
   {
    "chave": "2af038881r",
@@ -10660,13 +10831,13 @@
    "fala": "Observe a quantia que Igor tem. a) Quantos reais Igor tem?"
   },
   {
-   "chave": "57b91da65y",
+   "chave": "a7233b7f41",
    "voz": "narradora",
-   "texto": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Desenhe cédulas para representar a quantia que Lucas ganhou de Igor. Toque em todos os jeitos de cédulas que dão a quantia de Lucas.",
+   "texto": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Toque em todos os jeitos de cédulas que dão a quantia de Lucas.",
    "pacotes": [
     "matematica4-ma11a8"
    ],
-   "fala": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Desenhe cédulas para representar a quantia que Lucas ganhou de Igor. Toque em todos os jeitos de cédulas que dão a quantia de Lucas."
+   "fala": "b) Igor trocou as cédulas e deu metade da quantia que tinha para Lucas. Toque em todos os jeitos de cédulas que dão a quantia de Lucas."
   },
   {
    "chave": "dc7905671c",
@@ -10676,6 +10847,24 @@
     "matematica4-ma11a8"
    ],
    "fala": "c) Quantos reais Lucas ganhou de Igor?"
+  },
+  {
+   "chave": "57f089b1r",
+   "voz": "narradora",
+   "texto": "A quantia de Igor",
+   "pacotes": [
+    "matematica4-ma11a8"
+   ],
+   "fala": "A quantia de Igor"
+  },
+  {
+   "chave": "12f9d8b01v",
+   "voz": "narradora",
+   "texto": "O menino Igor deu metade da quantia que tinha para Lucas.",
+   "pacotes": [
+    "matematica4-ma11a8"
+   ],
+   "fala": "O menino Igor deu metade da quantia que tinha para Lucas."
   },
   {
    "chave": "59a3b1594i",
@@ -10694,6 +10883,15 @@
     "matematica4-ma11a8"
    ],
    "fala": "Fabrício gastou a terça parte da quantia representada a seguir na compra de um gibi. Quantos reais sobraram para Fabrício?"
+  },
+  {
+   "chave": "1cc32761v",
+   "voz": "narradora",
+   "texto": "A quantia de Fabrício",
+   "pacotes": [
+    "matematica4-ma11a8"
+   ],
+   "fala": "A quantia de Fabrício"
   },
   {
    "chave": "78db7b04q",
@@ -11002,13 +11200,13 @@
    "fala": "Observando os dados da tabela, foram plantadas ao todo mais de 50 mudas ou menos?"
   },
   {
-   "chave": "4081248566",
+   "chave": "54ee89c87q",
    "voz": "narradora",
-   "texto": "Insira no gráfico abaixo as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada.",
+   "texto": "Insira no gráfico as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada. Quantos quadradinhos você pinta na coluna de cada ano escolar?",
    "pacotes": [
     "matematica4-ma12a1"
    ],
-   "fala": "Insira no gráfico abaixo as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada."
+   "fala": "Insira no gráfico as informações da tabela. Para isso, pinte na malha quadriculada a quantidade de mudas que cada ano escolar plantou. Cada quadradinho pintado deve representar uma muda de árvore plantada. Quantos quadradinhos você pinta na coluna de cada ano escolar?"
   },
   {
    "chave": "e7a0747ap",
@@ -11498,22 +11696,22 @@
    "fala": "e) Quantos alunos ao todo vão a pé à escola, considerando todos os cinco anos escolares?"
   },
   {
-   "chave": "4963acc04e",
+   "chave": "69ae5f8d5n",
    "voz": "narradora",
-   "texto": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos.",
+   "texto": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos. Quantos quadrinhos você pinta em cada barra?",
    "pacotes": [
     "matematica4-ma12a4"
    ],
-   "fala": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos."
+   "fala": "f) Observe as cores da legenda. Em seguida, pinte o gráfico de barras para representar as informações da tabela. Cada quadrinho equivale a 5 alunos. Quantos quadrinhos você pinta em cada barra?"
   },
   {
-   "chave": "aa58a2863s",
+   "chave": "4271160b52",
    "voz": "narradora",
-   "texto": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades.",
+   "texto": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades. Quantos quadrinhos você pinta em cada coluna?",
    "pacotes": [
     "matematica4-ma12a4"
    ],
-   "fala": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades."
+   "fala": "a) Pinte o gráfico para representar a quantidade de gibis e de bonecas doados por turma. Cada quadrinho equivale a 3 unidades. Quantos quadrinhos você pinta em cada coluna?"
   },
   {
    "chave": "6e464f89w",
@@ -11678,22 +11876,22 @@
    "fala": "Qual pergunta a professora e os alunos podem fazer para descobrir as brincadeiras preferidas dos pais ou responsáveis em uma gincana?"
   },
   {
-   "chave": "48ecde811d",
+   "chave": "33a24a131p",
    "voz": "narradora",
-   "texto": "Para quem essa pergunta deve ser feita?",
+   "texto": "Para quem a pergunta dessa pesquisa deve ser feita?",
    "pacotes": [
     "matematica4-ma12a5"
    ],
-   "fala": "Para quem essa pergunta deve ser feita?"
+   "fala": "Para quem a pergunta dessa pesquisa deve ser feita?"
   },
   {
-   "chave": "5245fc882p",
+   "chave": "f7af2e053y",
    "voz": "narradora",
-   "texto": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos.",
+   "texto": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos. Quantos quadrinhos você pinta em cada barra?",
    "pacotes": [
     "matematica4-ma12a5"
    ],
-   "fala": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos."
+   "fala": "Pinte no gráfico de barras as informações da tabela. Cada quadrinho equivale a 3 votos. Quantos quadrinhos você pinta em cada barra?"
   },
   {
    "chave": "a1d81b3az",
@@ -11741,13 +11939,13 @@
    "fala": "Corrida de 3 pernas: 18 votos"
   },
   {
-   "chave": "18e257f61n",
+   "chave": "7fe68ec01n",
    "voz": "narradora",
-   "texto": "Quantos votos teve a brincadeira Corrida de saco?",
+   "texto": "Quantos votos teve a brincadeira Corrida do saco?",
    "pacotes": [
     "matematica4-ma12a5"
    ],
-   "fala": "Quantos votos teve a brincadeira Corrida de saco?"
+   "fala": "Quantos votos teve a brincadeira Corrida do saco?"
   },
   {
    "chave": "aadc303119",
@@ -11968,13 +12166,13 @@
    "fala": "e) Qual atividade artística é preferida por 14 meninas?"
   },
   {
-   "chave": "e89709285d",
+   "chave": "358f86196d",
    "voz": "narradora",
-   "texto": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras a seguir com as informações da tabela. Cada quadrinho equivale a 2 votos.",
+   "texto": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras com as informações da tabela. Cada quadrinho equivale a 2 votos. Quantos quadrinhos você pinta em cada barra?",
    "pacotes": [
     "matematica4-ma12a7"
    ],
-   "fala": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras a seguir com as informações da tabela. Cada quadrinho equivale a 2 votos."
+   "fala": "f) Escolha uma cor para representar as meninas e outra cor para os meninos. Depois, pinte o gráfico de barras com as informações da tabela. Cada quadrinho equivale a 2 votos. Quantos quadrinhos você pinta em cada barra?"
   },
   {
    "chave": "759dedbc1f",
@@ -12247,13 +12445,13 @@
    "fala": "d) Quantos pulos de corda todas as crianças deram sem errar?"
   },
   {
-   "chave": "d520751d53",
+   "chave": "1540e74b3r",
    "voz": "narradora",
-   "texto": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação. Depois, pinte a barra para completar o gráfico.",
+   "texto": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação.",
    "pacotes": [
     "matematica4-ma12a9"
    ],
-   "fala": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação. Depois, pinte a barra para completar o gráfico."
+   "fala": "Foram entrevistados 81 alunos no total. Com essa informação, descubra a quantidade de alunos que não têm animal de estimação."
   },
   {
    "chave": "32b38cbd1e",
@@ -12337,6 +12535,24 @@
    "fala": "e) Escreva uma pergunta que envolva as informações da tabela."
   },
   {
+   "chave": "fc4290e815",
+   "voz": "narradora",
+   "texto": "Alimentos preferidos dos alunos",
+   "pacotes": [
+    "matematica4-ma12a9"
+   ],
+   "fala": "Alimentos preferidos dos alunos"
+  },
+  {
+   "chave": "4a8fd61a2m",
+   "voz": "narradora",
+   "texto": "A tabela da votação da merenda tem as colunas Opção de lanche e Quantidade de votos.",
+   "pacotes": [
+    "matematica4-ma12a9"
+   ],
+   "fala": "A tabela da votação da merenda tem as colunas Opção de lanche e Quantidade de votos."
+  },
+  {
    "chave": "e97316e62t",
    "voz": "narradora",
    "texto": "Agora você já sabe... Para cada item, escolha: Já sei, Preciso saber mais ou Ainda não sei.",
@@ -12417,6 +12633,15 @@
     "matematica4-ma12t1"
    ],
    "fala": "e) Quem ganhou 28 pontos?"
+  },
+  {
+   "chave": "e13a43052d",
+   "voz": "narradora",
+   "texto": "Escreva na tabela as informações apresentadas no gráfico Pontuação no jogo.",
+   "pacotes": [
+    "matematica4-ma12t1"
+   ],
+   "fala": "Escreva na tabela as informações apresentadas no gráfico Pontuação no jogo."
   },
   {
    "chave": "60124b0e54",
@@ -12590,13 +12815,13 @@
    "fala": "e) Quantos alunos preferem xadrez e trilha?"
   },
   {
-   "chave": "35c1dd4b5d",
+   "chave": "59b344b25c",
    "voz": "narradora",
-   "texto": "Pinte as colunas do gráfico para representar as informações da tabela presente na atividade anterior. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?",
+   "texto": "Pinte as colunas do gráfico para representar as informações da tabela Jogos de tabuleiro preferidos. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?",
    "pacotes": [
     "matematica4-ma12t2"
    ],
-   "fala": "Pinte as colunas do gráfico para representar as informações da tabela presente na atividade anterior. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?"
+   "fala": "Pinte as colunas do gráfico para representar as informações da tabela Jogos de tabuleiro preferidos. Cada quadrinho equivale a 2 alunos. Quantos quadrinhos você pinta em cada coluna?"
   },
   {
    "chave": "3418317c1f",
@@ -14940,8 +15165,7 @@
    "voz": "narradora",
    "texto": "Converse com os colegas e o professor sobre como você pode ajudar o trabalho dessas pessoas.",
    "pacotes": [
-    "historia4-livro-12",
-    "historia4-hi12a1"
+    "historia4-livro-12"
    ],
    "fala": "Converse com os colegas e o professor sobre como você pode ajudar o trabalho dessas pessoas."
   },
@@ -14950,8 +15174,7 @@
    "voz": "narradora",
    "texto": "Desenhe três objetos que podem ser descartados em cada uma das lixeiras abaixo.",
    "pacotes": [
-    "historia4-livro-12",
-    "historia4-hi12a1"
+    "historia4-livro-12"
    ],
    "fala": "Desenhe três objetos que podem ser descartados em cada uma das lixeiras abaixo."
   },
@@ -15316,8 +15539,7 @@
    "voz": "narradora",
    "texto": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Depois, pesquise e escreva quais são as possíveis soluções para cada problema.",
    "pacotes": [
-    "historia4-livro-12",
-    "historia4-hi12a3"
+    "historia4-livro-12"
    ],
    "fala": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Depois, pesquise e escreva quais são as possíveis soluções para cada problema."
   },
@@ -15706,13 +15928,13 @@
    "fala": "Leia o poema a seguir. Encontre e circule o nome das profissões citadas no texto."
   },
   {
-   "chave": "b30ac6ab33",
+   "chave": "5286dd5b1z",
    "voz": "narradora",
-   "texto": "Qual será a profissão da prima Célia? Converse com os colegas e o professor e escreva a sua resposta.",
+   "texto": "Qual será a profissão da prima Célia? Escreva a sua resposta.",
    "pacotes": [
     "historia4-hi10a3"
    ],
-   "fala": "Qual será a profissão da prima Célia? Converse com os colegas e o professor e escreva a sua resposta."
+   "fala": "Qual será a profissão da prima Célia? Escreva a sua resposta."
   },
   {
    "chave": "300b5b3ds",
@@ -15796,13 +16018,13 @@
    "fala": "Desenhe um tipo de trabalho em que as pessoas precisam usar mais criatividade."
   },
   {
-   "chave": "69da5b992t",
+   "chave": "ddb3554826",
    "voz": "narradora",
-   "texto": "Observe as cenas a seguir e escreva, como souber, quais trabalhos as pessoas estão fazendo.",
+   "texto": "Observe as cenas a seguir. Quais trabalhos as pessoas estão fazendo?",
    "pacotes": [
     "historia4-hi10t1"
    ],
-   "fala": "Observe as cenas a seguir e escreva, como souber, quais trabalhos as pessoas estão fazendo."
+   "fala": "Observe as cenas a seguir. Quais trabalhos as pessoas estão fazendo?"
   },
   {
    "chave": "2a5b6ff82p",
@@ -15832,13 +16054,13 @@
    "fala": "b) Qual é o meio de transporte usado por esse profissional para realizar seu trabalho?"
   },
   {
-   "chave": "aa800e4441",
+   "chave": "5ae3d5062k",
    "voz": "narradora",
-   "texto": "c) Pesquise e escreva o nome de duas outras profissões que também estão relacionadas com o espaço. Toque em TODAS as que são do espaço.",
+   "texto": "c) Quais outras profissões também estão relacionadas com o espaço? Toque em TODAS.",
    "pacotes": [
     "historia4-hi10t1"
    ],
-   "fala": "c) Pesquise e escreva o nome de duas outras profissões que também estão relacionadas com o espaço. Toque em todas as que são do espaço."
+   "fala": "c) Quais outras profissões também estão relacionadas com o espaço? Toque em todas."
   },
   {
    "chave": "6e66401931",
@@ -15985,13 +16207,13 @@
    "fala": "b) Qual invenção fez com que esse trabalho deixasse de existir?"
   },
   {
-   "chave": "df374eec3u",
+   "chave": "0c0bb8ac3v",
    "voz": "narradora",
-   "texto": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Pinte os quadros a seguir que indicam esses objetos.",
+   "texto": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Toque nos quadros a seguir que indicam esses objetos.",
    "pacotes": [
     "historia4-hi11a2"
    ],
-   "fala": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Pinte os quadros a seguir que indicam esses objetos."
+   "fala": "c) Na imagem, a pessoa está usando dois objetos para realizar seu trabalho. Toque nos quadros a seguir que indicam esses objetos."
   },
   {
    "chave": "76473633y",
@@ -16012,22 +16234,22 @@
    "fala": "Vamos conhecer o lugar de trabalho de cada profissional e lembrar que criança é para brincar e estudar!"
   },
   {
-   "chave": "c7c6f58f34",
+   "chave": "79ebe28c3v",
    "voz": "narradora",
-   "texto": "Escolha uma das profissões da atividade anterior e descreva o ambiente de trabalho desse profissional.",
+   "texto": "Escolha uma das profissões (marceneiro, professor, sapateiro ou relojoeiro) e descreva o ambiente de trabalho desse profissional.",
    "pacotes": [
     "historia4-hi11a3"
    ],
-   "fala": "Escolha uma das profissões da atividade anterior e descreva o ambiente de trabalho desse profissional."
+   "fala": "Escolha uma das profissões (marceneiro, professor, sapateiro ou relojoeiro) e descreva o ambiente de trabalho desse profissional."
   },
   {
-   "chave": "e017f7654q",
+   "chave": "496b202731",
    "voz": "narradora",
-   "texto": "Forme um grupo de até três colegas e conversem sobre por que as crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?",
+   "texto": "As crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?",
    "pacotes": [
     "historia4-hi11a3"
    ],
-   "fala": "Forme um grupo de até três colegas e conversem sobre por que as crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?"
+   "fala": "As crianças não devem trabalhar. O que as crianças precisam fazer para crescer saudáveis e felizes?"
   },
   {
    "chave": "3a6d69a83f",
@@ -16120,13 +16342,13 @@
    "fala": "Como a sua família faz para comprar leite atualmente?"
   },
   {
-   "chave": "8394ac8c3w",
+   "chave": "a8c952573w",
    "voz": "narradora",
-   "texto": "Observe as imagens a seguir. a) Escreva duas diferenças entre os escritórios mostrados nas imagens. Toque em TODAS as verdadeiras.",
+   "texto": "Observe as imagens a seguir. a) Quais são as diferenças entre os escritórios mostrados nas imagens? Toque em TODAS as verdadeiras.",
    "pacotes": [
     "historia4-hi11t1"
    ],
-   "fala": "Observe as imagens a seguir. a) Escreva duas diferenças entre os escritórios mostrados nas imagens. Toque em todas as verdadeiras."
+   "fala": "Observe as imagens a seguir. a) Quais são as diferenças entre os escritórios mostrados nas imagens? Toque em todas as verdadeiras."
   },
   {
    "chave": "e946e50d31",
@@ -16181,6 +16403,24 @@
     "historia4-extra"
    ],
    "fala": "Vamos conhecer quem recolhe o lixo para reciclar e descobrir como cuidar da natureza!"
+  },
+  {
+   "chave": "5cc97cd91l",
+   "voz": "narradora",
+   "texto": "Como você pode ajudar o trabalho dos catadores?",
+   "pacotes": [
+    "historia4-hi12a1"
+   ],
+   "fala": "Como você pode ajudar o trabalho dos catadores?"
+  },
+  {
+   "chave": "b4674d512p",
+   "voz": "narradora",
+   "texto": "Quais objetos podem ser descartados em cada uma das lixeiras: Plástico, Metais e Papel?",
+   "pacotes": [
+    "historia4-hi12a1"
+   ],
+   "fala": "Quais objetos podem ser descartados em cada uma das lixeiras: Plástico, Metais e Papel?"
   },
   {
    "chave": "0e92e934u",
@@ -16246,6 +16486,15 @@
    "fala": "Vamos descobrir soluções para os problemas da natureza e contar como a sua família cuida do planeta!"
   },
   {
+   "chave": "19acc2233o",
+   "voz": "narradora",
+   "texto": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Quais são as possíveis soluções para cada problema?",
+   "pacotes": [
+    "historia4-hi12a3"
+   ],
+   "fala": "Leia a seguir alguns problemas que as pessoas causam ao meio ambiente. Quais são as possíveis soluções para cada problema?"
+  },
+  {
    "chave": "5cd6fbff3l",
    "voz": "narradora",
    "texto": "As ações das pessoas podem ter impactos positivos ou negativos no meio ambiente. Separe cada ação do jogo de tabuleiro.",
@@ -16300,40 +16549,40 @@
    "fala": "Vamos descobrir o que ajuda e o que prejudica a natureza e conhecer a pesca dos caiçaras!"
   },
   {
-   "chave": "60df1b8e2k",
+   "chave": "0b7848c22c",
    "voz": "narradora",
-   "texto": "Observe as imagens a seguir. a) Escreva o que está representado em cada uma delas.",
+   "texto": "Observe as imagens a seguir. a) O que está representado em cada uma delas?",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "Observe as imagens a seguir. a) Escreva o que está representado em cada uma delas."
+   "fala": "Observe as imagens a seguir. a) O que está representado em cada uma delas?"
   },
   {
-   "chave": "fb52eed72w",
+   "chave": "7b0541f42b",
    "voz": "narradora",
-   "texto": "b) Pinte de verde o quadrinho das imagens que representam impactos positivos ao meio ambiente.",
+   "texto": "b) Toque nas imagens que representam impactos positivos ao meio ambiente.",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "b) Pinte de verde o quadrinho das imagens que representam impactos positivos ao meio ambiente."
+   "fala": "b) Toque nas imagens que representam impactos positivos ao meio ambiente."
   },
   {
-   "chave": "1a7e991c2z",
+   "chave": "0678a02b2b",
    "voz": "narradora",
-   "texto": "c) Pinte de vermelho o quadrinho das imagens que representam impactos negativos ao meio ambiente.",
+   "texto": "c) Toque nas imagens que representam impactos negativos ao meio ambiente.",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "c) Pinte de vermelho o quadrinho das imagens que representam impactos negativos ao meio ambiente."
+   "fala": "c) Toque nas imagens que representam impactos negativos ao meio ambiente."
   },
   {
-   "chave": "1a32532d2m",
+   "chave": "d32008b92f",
    "voz": "narradora",
-   "texto": "a) O que é a pesca artesanal? Copie o trecho do texto que explica como ela acontece.",
+   "texto": "a) O que é a pesca artesanal? Qual trecho do texto explica como ela acontece?",
    "pacotes": [
     "historia4-hi12t1"
    ],
-   "fala": "a) O que é a pesca artesanal? Copie o trecho do texto que explica como ela acontece."
+   "fala": "a) O que é a pesca artesanal? Qual trecho do texto explica como ela acontece?"
   },
   {
    "chave": "22309887r",
@@ -17935,7 +18184,8 @@
    "voz": "narradora",
    "texto": "Sabia-se que Jaci, quando se escondia atrás das montanhas, sempre levava consigo algumas jovens e as transformava em estrelas no céu.",
    "pacotes": [
-    "portugues4-livro-10"
+    "portugues4-livro-10",
+    "portugues4-lp10a4"
    ],
    "fala": "Sabia-se que Jaci, quando se escondia atrás das montanhas, sempre levava consigo algumas jovens e as transformava em estrelas no céu."
   },
@@ -19622,8 +19872,7 @@
    "voz": "narradora",
    "texto": "Por que essa música é especial para você? Conte aos colegas e ouça o que eles tem a dizer.",
    "pacotes": [
-    "portugues4-livro-11",
-    "portugues4-lp11a1"
+    "portugues4-livro-11"
    ],
    "fala": "Por que essa música é especial para você? Conte aos colegas e ouça o que eles tem a dizer."
   },
@@ -19807,7 +20056,8 @@
    "voz": "narradora",
    "texto": "Sobre o que é a letra dessa canção?",
    "pacotes": [
-    "portugues4-livro-11"
+    "portugues4-livro-11",
+    "portugues4-lp11a1"
    ],
    "fala": "Sobre o que é a letra dessa canção?"
   },
@@ -23146,13 +23396,13 @@
    "fala": "Quais são os elementos narrativos do conto O Gato de Botas? Ligue cada elemento ao que ele é nesse conto."
   },
   {
-   "chave": "50fe92db2h",
+   "chave": "2f0cf7ad2y",
    "voz": "narradora",
-   "texto": "O que você imagina que vai acontecer no fim da história? Registre sua resposta.",
+   "texto": "O que você imagina que vai acontecer no fim da história do Gato de Botas? Registre sua resposta.",
    "pacotes": [
     "portugues4-lp10a1"
    ],
-   "fala": "O que você imagina que vai acontecer no fim da história? Registre sua resposta."
+   "fala": "O que você imagina que vai acontecer no fim da história do Gato de Botas? Registre sua resposta."
   },
   {
    "chave": "7004b9cep",
@@ -23200,6 +23450,24 @@
    "fala": "Complete as linhas a seguir com um exemplo de cada elemento narrativo do conto O Gato de Botas."
   },
   {
+   "chave": "a5fb1aabp",
+   "voz": "narradora",
+   "texto": "O Gato de Botas",
+   "pacotes": [
+    "portugues4-lp10a2"
+   ],
+   "fala": "O Gato de Botas"
+  },
+  {
+   "chave": "d4d0dd895m",
+   "voz": "narradora",
+   "texto": "Era uma vez um velho moleiro que tinha três filhos. Ao morrer, deixou, como herança, o moinho para o primogênito, um burrinho para o filho do meio e um gato para o caçula, que se pôs a chorar.",
+   "pacotes": [
+    "portugues4-lp10a2"
+   ],
+   "fala": "Era uma vez um velho moleiro que tinha três filhos. Ao morrer, deixou, como herança, o moinho para o primogênito, um burrinho para o filho do meio e um gato para o caçula, que se pôs a chorar."
+  },
+  {
    "chave": "5740fbf13o",
    "voz": "narradora",
    "texto": "O principal objetivo do Gato de Botas era ajudar seu dono. Na sua opinião, ele conseguiu isso no fim da história? Por quê?",
@@ -23236,13 +23504,13 @@
    "fala": "Ponto-final, ponto de interrogação e ponto de exclamação: vamos descobrir para que serve cada um!"
   },
   {
-   "chave": "992a3f593a",
+   "chave": "a488015d3q",
    "voz": "narradora",
-   "texto": "No texto, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz.",
+   "texto": "No texto O Gato de Botas, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz.",
    "pacotes": [
     "portugues4-lp10a3"
    ],
-   "fala": "No texto, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz."
+   "fala": "No texto O Gato de Botas, foram usados alguns sinais, como \"!\" e \"?\". Para que eles servem? Ligue cada sinal ao que ele faz."
   },
   {
    "chave": "23058af934",
@@ -23486,6 +23754,33 @@
     "portugues4-lp10a4"
    ],
    "fala": "Leia as frases sobre a lenda da vitória-régia. Depois, assinale V para o que for verdadeiro e F para o que for falso."
+  },
+  {
+   "chave": "2a3a67deq",
+   "voz": "narradora",
+   "texto": "Trechos da lenda",
+   "pacotes": [
+    "portugues4-lp10a4"
+   ],
+   "fala": "Trechos da lenda"
+  },
+  {
+   "chave": "cc43ce092o",
+   "voz": "narradora",
+   "texto": "Acontece que uma moça [...], a guerreira Naiá, vivia sonhando com esse encontro [...].",
+   "pacotes": [
+    "portugues4-lp10a4"
+   ],
+   "fala": "Acontece que uma moça [...], a guerreira Naiá, vivia sonhando com esse encontro [...]."
+  },
+  {
+   "chave": "0db836735t",
+   "voz": "narradora",
+   "texto": "Jaci, comovida com tão intenso desejo, quis recompensar o sacrifício da bela jovem indígena [...]. Assim, Naiá foi transformada na \"Estrela das Águas\", única e majestosa, que é a vitória-régia [...].",
+   "pacotes": [
+    "portugues4-lp10a4"
+   ],
+   "fala": "Jaci, comovida com tão intenso desejo, quis recompensar o sacrifício da bela jovem indígena [...]. Assim, Naiá foi transformada na \"Estrela das Águas\", única e majestosa, que é a vitória-régia [...]."
   },
   {
    "chave": "1ba73dec2l",
@@ -23830,6 +24125,33 @@
    "fala": "Quem João encontrou no caminho? E o que essa pessoa propôs a ele?"
   },
   {
+   "chave": "bd895ba8v",
+   "voz": "narradora",
+   "texto": "João e o pé de feijão",
+   "pacotes": [
+    "portugues4-lp10a7"
+   ],
+   "fala": "João e o pé de feijão"
+  },
+  {
+   "chave": "f502de9b24",
+   "voz": "narradora",
+   "texto": "No caminho, ele conheceu um homem que lhe fez a seguinte proposta:",
+   "pacotes": [
+    "portugues4-lp10a7"
+   ],
+   "fala": "No caminho, ele conheceu um homem que lhe fez a seguinte proposta:"
+  },
+  {
+   "chave": "4a72dc033b",
+   "voz": "narradora",
+   "texto": "— Criança, dê-me a sua vaquinha, que lhe dou estes sete grãos de feijão. É uma boa troca, porque são mágicos.",
+   "pacotes": [
+    "portugues4-lp10a7"
+   ],
+   "fala": "— Criança, dê… me a sua vaquinha, que lhe dou estes sete grãos de feijão. É uma boa troca, porque são mágicos."
+  },
+  {
    "chave": "05b456342f",
    "voz": "narradora",
    "texto": "Como a mãe de João reagiu quando ele contou sobre a troca que fez no caminho?",
@@ -23839,13 +24161,13 @@
    "fala": "Como a mãe de João reagiu quando ele contou sobre a troca que fez no caminho?"
   },
   {
-   "chave": "363d6b861l",
+   "chave": "90ac8d2b2j",
    "voz": "narradora",
-   "texto": "Qual foi a consequência da ação da mãe de João?",
+   "texto": "Qual foi a consequência da ação da mãe de João, que jogou os feijões pela janela?",
    "pacotes": [
     "portugues4-lp10a7"
    ],
-   "fala": "Qual foi a consequência da ação da mãe de João?"
+   "fala": "Qual foi a consequência da ação da mãe de João, que jogou os feijões pela janela?"
   },
   {
    "chave": "b36cf2a537",
@@ -24119,13 +24441,13 @@
    "fala": "Algumas frases a seguir estão com a pontuação final errada. Circule essas frases. Toque em todas."
   },
   {
-   "chave": "68b2feeb2q",
+   "chave": "cb99e1be2u",
    "voz": "narradora",
-   "texto": "Reescreva as frases que você circulou na questão anterior inserindo a pontuação correta.",
+   "texto": "Reescreva as frases que estavam com a pontuação final errada, inserindo a pontuação correta.",
    "pacotes": [
     "portugues4-lp10t2"
    ],
-   "fala": "Reescreva as frases que você circulou na questão anterior inserindo a pontuação correta."
+   "fala": "Reescreva as frases que estavam com a pontuação final errada, inserindo a pontuação correta."
   },
   {
    "chave": "344f47ea2n",
@@ -24209,6 +24531,15 @@
    "fala": "Começa o capítulo Quem canta... Hoje tem música, dança e a canção do Rei da Floresta!"
   },
   {
+   "chave": "255e52e81f",
+   "voz": "narradora",
+   "texto": "Por que essa música é especial para você?",
+   "pacotes": [
+    "portugues4-lp11a1"
+   ],
+   "fala": "Por que essa música é especial para você?"
+  },
+  {
    "chave": "71eec3af3w",
    "voz": "narradora",
    "texto": "Leia a letra da canção e, depois, cante junto com muito ritmo e animação! Coloque estes versos na ordem em que aparecem na canção.",
@@ -24226,15 +24557,6 @@
     "portugues4-lp11a2"
    ],
    "fala": "Rei da Floresta"
-  },
-  {
-   "chave": "60541b352c",
-   "voz": "narradora",
-   "texto": "Converse com os colegas e o professor. Sobre o que é a letra dessa canção?",
-   "pacotes": [
-    "portugues4-lp11a1"
-   ],
-   "fala": "Converse com os colegas e o professor. Sobre o que é a letra dessa canção?"
   },
   {
    "chave": "4d566d61q",
@@ -24502,13 +24824,13 @@
    "fala": "c) O cachorrinho Tom estava assustado com o barulho dos fogos."
   },
   {
-   "chave": "d996b0ca33",
+   "chave": "7339345f2v",
    "voz": "narradora",
-   "texto": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra da aba recortável no espaço correto.",
+   "texto": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra do quadro no espaço correto.",
    "pacotes": [
     "portugues4-lp11a4"
    ],
-   "fala": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra da aba recortável no espaço correto."
+   "fala": "Qual é o aumentativo das palavras a seguir? Coloque cada palavra do quadro no espaço correto."
   },
   {
    "chave": "9bf7b681h",
@@ -24583,13 +24905,13 @@
    "fala": "Hora de criar! Vamos inventar uma paródia musical e depois testar tudo o que aprendemos no capítulo."
   },
   {
-   "chave": "b10a96cb3e",
+   "chave": "1466c8ae2g",
    "voz": "narradora",
-   "texto": "Junto aos colegas e ao professor, selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.",
+   "texto": "Selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.",
    "pacotes": [
     "portugues4-lp11a6"
    ],
-   "fala": "Junto aos colegas e ao professor, selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo."
+   "fala": "Selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo."
   },
   {
    "chave": "0eaf84fd25",
@@ -24871,13 +25193,13 @@
    "fala": "Quais são as palavras que você consegue ler na imagem acima? Toque em todas."
   },
   {
-   "chave": "2879768c54",
+   "chave": "1f4566d74n",
    "voz": "narradora",
-   "texto": "Que tal criar um animal letrado, como o que você viu na página anterior? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas.",
+   "texto": "Que tal criar um animal letrado, como o jacaré letrado? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas.",
    "pacotes": [
     "portugues4-lp12a1"
    ],
-   "fala": "Que tal criar um animal letrado, como o que você viu na página anterior? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas."
+   "fala": "Que tal criar um animal letrado, como o jacaré letrado? Escreva várias vezes dentro da imagem o nome do animal formado. Aqui, escreva o nome nas três caixas."
   },
   {
    "chave": "a57fa66d1k",
@@ -24916,13 +25238,13 @@
    "fala": "c) Existe uma letra que se repete no poema. Qual letra é essa?"
   },
   {
-   "chave": "45f77b3f24",
+   "chave": "3ca2e6f430",
    "voz": "narradora",
-   "texto": "O que a letra que se repete tem a ver com imagem formada no poema?",
+   "texto": "A letra O se repete no poema. O que a letra que se repete tem a ver com a imagem formada no poema?",
    "pacotes": [
     "portugues4-lp12a1"
    ],
-   "fala": "O que a letra que se repete tem a ver com imagem formada no poema?"
+   "fala": "A letra O se repete no poema. O que a letra que se repete tem a ver com a imagem formada no poema?"
   },
   {
    "chave": "99f91eba1r",
@@ -24934,13 +25256,13 @@
    "fala": "Complete as frases a seguir com as palavras corretas."
   },
   {
-   "chave": "620649a33e",
+   "chave": "28e62ec63f",
    "voz": "narradora",
-   "texto": "Leia novamente os poemas visuais das páginas anteriores. Como esses poemas usam as palavras para formar imagens?",
+   "texto": "Leia novamente os poemas visuais jacaré letrado e um ovo. Como esses poemas usam as palavras para formar imagens?",
    "pacotes": [
     "portugues4-lp12a1"
    ],
-   "fala": "Leia novamente os poemas visuais das páginas anteriores. Como esses poemas usam as palavras para formar imagens?"
+   "fala": "Leia novamente os poemas visuais jacaré letrado e um ovo. Como esses poemas usam as palavras para formar imagens?"
   },
   {
    "chave": "c3445b0849",
@@ -25312,13 +25634,13 @@
    "fala": "Complete as frases a seguir. Lembre de usar letra maiúscula e letra minúscula nos lugares corretos."
   },
   {
-   "chave": "8fb136b43o",
+   "chave": "da436e375c",
    "voz": "narradora",
-   "texto": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário.",
+   "texto": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário. Aqui, contorne as palavras que precisam de letra maiúscula.",
    "pacotes": [
     "portugues4-lp12a4"
    ],
-   "fala": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário."
+   "fala": "As frases a seguir foram escritas com letras minúsculas. Reescreva as frases usando a letra maiúscula onde for necessário. Aqui, contorne as palavras que precisam de letra maiúscula."
   },
   {
    "chave": "b681835cn",
@@ -25393,13 +25715,13 @@
    "fala": "Releia o seu poema visual e responda às perguntas: Sim, Não ou Pode melhorar?"
   },
   {
-   "chave": "8142699e42",
+   "chave": "f2e1b1243p",
    "voz": "narradora",
-   "texto": "Produza a versão final do seu poema. Considere os comentários do seu colega. Aqui, desenhe a imagem que as palavras do seu poema formam.",
+   "texto": "Produza a versão final do seu poema. Considere a sua avaliação. Aqui, desenhe a imagem que as palavras do seu poema formam.",
    "pacotes": [
     "portugues4-lp12a5"
    ],
-   "fala": "Produza a versão final do seu poema. Considere os comentários do seu colega. Aqui, desenhe a imagem que as palavras do seu poema formam."
+   "fala": "Produza a versão final do seu poema. Considere a sua avaliação. Aqui, desenhe a imagem que as palavras do seu poema formam."
   },
   {
    "chave": "a471fe4419",
@@ -25456,22 +25778,22 @@
    "fala": "Leia o poema visual. a) O que as palavras formam no poema?"
   },
   {
-   "chave": "59f29fd21w",
+   "chave": "702fddad20",
    "voz": "narradora",
-   "texto": "b) Escreva a seguir a frase se repete nas pétalas da flor.",
+   "texto": "b) Escreva a seguir a frase que se repete nas pétalas da flor.",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "b) Escreva a seguir a frase se repete nas pétalas da flor."
+   "fala": "b) Escreva a seguir a frase que se repete nas pétalas da flor."
   },
   {
-   "chave": "12049ca13z",
+   "chave": "bed02ea24p",
    "voz": "narradora",
-   "texto": "Essa frase é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?",
+   "texto": "Essa frase (bem me quer mal me quer) é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "Essa frase é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?"
+   "fala": "Essa frase (bem me quer mal me quer) é uma brincadeira antiga. Pesquise como se brinca. Depois, responda: Por que você acha que essa frase aparece nas pétalas?"
   },
   {
    "chave": "e1fd5c50o",
@@ -25510,22 +25832,22 @@
    "fala": "d) O título e as frases desse poema começam com"
   },
   {
-   "chave": "e86989a522",
+   "chave": "f70bb6a84c",
    "voz": "narradora",
-   "texto": "Esse uso está correto de acordo com as regras que você aprendeu?",
+   "texto": "O título e as frases do poema a primavera endoideceu começam com letra minúscula. Esse uso está correto de acordo com as regras que você aprendeu?",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "Esse uso está correto de acordo com as regras que você aprendeu?"
+   "fala": "O título e as frases do poema a primavera endoideceu começam com letra minúscula. Esse uso está correto de acordo com as regras que você aprendeu?"
   },
   {
-   "chave": "f39d47f31v",
+   "chave": "c8b182914j",
    "voz": "narradora",
-   "texto": "O que justifica essa escolha do autor do poema? Explique.",
+   "texto": "No poema a primavera endoideceu, o autor usou letra minúscula no título e no começo das frases. O que justifica essa escolha do autor do poema? Explique.",
    "pacotes": [
     "portugues4-lp12a6"
    ],
-   "fala": "O que justifica essa escolha do autor do poema? Explique."
+   "fala": "No poema a primavera endoideceu, o autor usou letra minúscula no título e no começo das frases. O que justifica essa escolha do autor do poema? Explique."
   },
   {
    "chave": "2ebcbd141h",
@@ -25553,6 +25875,24 @@
     "portugues4-lp12a6"
    ],
    "fala": "Escolha um substantivo próprio e um substantivo comum da atividade anterior. Depois, escreva uma frase que tenha as duas palavras."
+  },
+  {
+   "chave": "cc3abfcd17",
+   "voz": "narradora",
+   "texto": "As palavras da atividade anterior",
+   "pacotes": [
+    "portugues4-lp12a6"
+   ],
+   "fala": "As palavras da atividade anterior"
+  },
+  {
+   "chave": "763e30d73v",
+   "voz": "narradora",
+   "texto": "Loja Melissa – foguete – Rua Costa Barros – água – espada – macarrão – Roraima – Egito – sacola – Rio Negro – lancheira – Marília",
+   "pacotes": [
+    "portugues4-lp12a6"
+   ],
+   "fala": "Loja Melissa – foguete – Rua Costa Barros – água – espada – macarrão – Roraima – Egito – sacola – Rio Negro – lancheira – Marília"
   },
   {
    "chave": "69f743e9l",
@@ -25654,13 +25994,13 @@
    "fala": "Passe cada palavra abaixo para o plural usando a terminação que está ao lado dela."
   },
   {
-   "chave": "d25bcae11n",
+   "chave": "878807541b",
    "voz": "narradora",
-   "texto": "Depois, escreva uma frase com essa palavra: pães.",
+   "texto": "Escreva uma frase com a palavra pães.",
    "pacotes": [
     "portugues4-lp12t1"
    ],
-   "fala": "Depois, escreva uma frase com essa palavra: pães."
+   "fala": "Escreva uma frase com a palavra pães."
   },
   {
    "chave": "f63a2d911i",
@@ -25762,13 +26102,13 @@
    "fala": "domingo é dia de brincar com meu Cachorro pipoca."
   },
   {
-   "chave": "32886fb51s",
+   "chave": "b687fbbb3b",
    "voz": "narradora",
-   "texto": "b) Reescreva as frases fazendo os ajustes necessários.",
+   "texto": "b) Reescreva as frases fazendo os ajustes necessários. Aqui, contorne as palavras com a letra inicial errada.",
    "pacotes": [
     "portugues4-lp12t2"
    ],
-   "fala": "b) Reescreva as frases fazendo os ajustes necessários."
+   "fala": "b) Reescreva as frases fazendo os ajustes necessários. Aqui, contorne as palavras com a letra inicial errada."
   },
   {
    "chave": "0ff325772x",
@@ -28596,13 +28936,13 @@
    "fala": "Observe as imagens e classifique-as de acordo com a origem de cada matéria-prima. Para isso, pinte usando as cores da legenda a seguir."
   },
   {
-   "chave": "7ab16f813c",
+   "chave": "5e92c9313c",
    "voz": "narradora",
-   "texto": "Agora, você vai investigar alguns objetos. Escreva a principal matéria-prima utilizada na produção de cada um.",
+   "texto": "Agora, você vai investigar alguns objetos. Escolha a principal matéria-prima utilizada na produção de cada um.",
    "pacotes": [
     "geografia4-ge10a2"
    ],
-   "fala": "Agora, você vai investigar alguns objetos. Escreva a principal matéria-prima utilizada na produção de cada um."
+   "fala": "Agora, você vai investigar alguns objetos. Escolha a principal matéria-prima utilizada na produção de cada um."
   },
   {
    "chave": "a6e5c68b30",
@@ -28612,6 +28952,24 @@
     "geografia4-ge10a2"
    ],
    "fala": "Qual matéria-prima chamou mais a sua atenção entre os objetos investigados? Explique sua resposta."
+  },
+  {
+   "chave": "07e2bff5x",
+   "voz": "narradora",
+   "texto": "Os objetos investigados",
+   "pacotes": [
+    "geografia4-ge10a2"
+   ],
+   "fala": "Os objetos investigados"
+  },
+  {
+   "chave": "56375e263i",
+   "voz": "narradora",
+   "texto": "Lápis: madeira e grafite. Folha de papel: celulose. Borracha escolar: látex. Mesa de madeira: madeira. Prego: ferro.",
+   "pacotes": [
+    "geografia4-ge10a2"
+   ],
+   "fala": "Lápis: madeira e grafite. Folha de papel: celulose. Borracha escolar: látex. Mesa de madeira: madeira. Prego: ferro."
   },
   {
    "chave": "36073472y",
@@ -28902,22 +29260,22 @@
    "fala": "Agora, imagine que você está no lugar retratado na fotografia. O que você consegue perceber nessa paisagem por meio: a) da sua audição."
   },
   {
-   "chave": "df434966p",
+   "chave": "c32bb02927",
    "voz": "narradora",
-   "texto": "b) do seu tato.",
+   "texto": "O que você consegue perceber nessa paisagem por meio: b) do seu tato.",
    "pacotes": [
     "geografia4-ge11a4"
    ],
-   "fala": "b) do seu tato."
+   "fala": "O que você consegue perceber nessa paisagem por meio: b) do seu tato."
   },
   {
-   "chave": "93c7377er",
+   "chave": "a18c28e929",
    "voz": "narradora",
-   "texto": "c) do seu olfato.",
+   "texto": "O que você consegue perceber nessa paisagem por meio: c) do seu olfato.",
    "pacotes": [
     "geografia4-ge11a4"
    ],
-   "fala": "c) do seu olfato."
+   "fala": "O que você consegue perceber nessa paisagem por meio: c) do seu olfato."
   },
   {
    "chave": "15a20359s",
@@ -29253,13 +29611,13 @@
    "fala": "Marque um X na imagem que mostra uma alteração na paisagem feita pela ação humana."
   },
   {
-   "chave": "ac33e1491i",
+   "chave": "a7b430542h",
    "voz": "narradora",
-   "texto": "Em seguida, escreva qual foi essa alteração.",
+   "texto": "Em seguida, escreva qual foi essa alteração na paisagem feita pela ação humana.",
    "pacotes": [
     "geografia4-ge12a4"
    ],
-   "fala": "Em seguida, escreva qual foi essa alteração."
+   "fala": "Em seguida, escreva qual foi essa alteração na paisagem feita pela ação humana."
   },
   {
    "chave": "4559d6935c",
@@ -29280,13 +29638,13 @@
    "fala": "Desenhe uma ação humana que causa mudanças nas paisagens."
   },
   {
-   "chave": "2514f9ce2v",
+   "chave": "b950d2403n",
    "voz": "narradora",
-   "texto": "Em seguida, descreva os elementos presentes nela que ajudaram você a chegar a essa conclusão.",
+   "texto": "Em seguida, toque nos elementos presentes na paisagem natural bem conservada que ajudaram você a chegar a essa conclusão.",
    "pacotes": [
     "geografia4-ge12a4"
    ],
-   "fala": "Em seguida, descreva os elementos presentes nela que ajudaram você a chegar a essa conclusão."
+   "fala": "Em seguida, toque nos elementos presentes na paisagem natural bem conservada que ajudaram você a chegar a essa conclusão."
   },
   {
    "chave": "27cf4ec9s",
@@ -34490,13 +34848,13 @@
    "fala": "A happy day!"
   },
   {
-   "chave": "7bf4d7e610",
+   "chave": "f9f6ae6710",
    "voz": "narradora",
-   "texto": "Olhe o primeiro quadrinho.",
+   "texto": "Leia o começo da história.",
    "pacotes": [
     "ingles4-en11e1"
    ],
-   "fala": "Olhe o primeiro quadrinho."
+   "fala": "Leia o começo da história."
   },
   {
    "chave": "91c5d758r",
@@ -34590,40 +34948,40 @@
    "fala": "Ligue cada foto à ação em inglês."
   },
   {
-   "chave": "9396104b1l",
+   "chave": "6da281901c",
    "voz": "narradora",
-   "texto": "Na figura, a menina está triste. O que ela faz?",
+   "texto": "Uma menina está triste. O que ela faz?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, a menina está triste. O que ela faz?"
+   "fala": "Uma menina está triste. O que ela faz?"
   },
   {
-   "chave": "13b67a231u",
+   "chave": "fce221181j",
    "voz": "narradora",
-   "texto": "Na figura, as crianças estão animadas. O que elas fazem?",
+   "texto": "As crianças estão animadas. O que elas fazem?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, as crianças estão animadas. O que elas fazem?"
+   "fala": "As crianças estão animadas. O que elas fazem?"
   },
   {
-   "chave": "4a17e07b20",
+   "chave": "2878c7191q",
    "voz": "narradora",
-   "texto": "Na figura, o menino está entediado na carteira. O que ele faz?",
+   "texto": "Um menino está entediado na carteira. O que ele faz?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, o menino está entediado na carteira. O que ele faz?"
+   "fala": "Um menino está entediado na carteira. O que ele faz?"
   },
   {
-   "chave": "c532f8511l",
+   "chave": "a9658e901a",
    "voz": "narradora",
-   "texto": "Na figura, um menino está bravo. O que ele faz?",
+   "texto": "Um menino está bravo. O que ele faz?",
    "pacotes": [
     "ingles4-en11e2"
    ],
-   "fala": "Na figura, um menino está bravo. O que ele faz?"
+   "fala": "Um menino está bravo. O que ele faz?"
   },
   {
    "chave": "7b8f3d62y",
@@ -34887,13 +35245,13 @@
    "fala": "What do you do when a toy breaks?"
   },
   {
-   "chave": "7aa1868a1u",
+   "chave": "4ca60b651m",
    "voz": "narradora",
-   "texto": "Na figura, o brinquedo do menino quebrou. O que ele faz?",
+   "texto": "O brinquedo de um menino quebrou. O que ele faz?",
    "pacotes": [
     "ingles4-en11e3"
    ],
-   "fala": "Na figura, o brinquedo do menino quebrou. O que ele faz?"
+   "fala": "O brinquedo de um menino quebrou. O que ele faz?"
   },
   {
    "chave": "baf4617e19",
@@ -34905,13 +35263,13 @@
    "fala": "What do you do when you go to a party?"
   },
   {
-   "chave": "24ee6b6d1w",
+   "chave": "85ddbc4a1l",
    "voz": "narradora",
-   "texto": "Na figura, as crianças estão numa festa. O que elas fazem?",
+   "texto": "As crianças estão numa festa. O que elas fazem?",
    "pacotes": [
     "ingles4-en11e3"
    ],
-   "fala": "Na figura, as crianças estão numa festa. O que elas fazem?"
+   "fala": "As crianças estão numa festa. O que elas fazem?"
   },
   {
    "chave": "e2d17f9728",
@@ -35459,13 +35817,13 @@
    "fala": "Ligue cada giz de cera ao nome da cor."
   },
   {
-   "chave": "31fb33bf2d",
+   "chave": "838569c12v",
    "voz": "narradora",
-   "texto": "O último giz não tem nome. Escolha uma cor e escreva o nome dela em inglês.",
+   "texto": "No livro, o último giz de cera vem sem nome. Escolha uma cor e escreva o nome dela em inglês.",
    "pacotes": [
     "ingles4-en12e2"
    ],
-   "fala": "O último giz não tem nome. Escolha uma cor e escreva o nome dela em inglês."
+   "fala": "No livro, o último giz de cera vem sem nome. Escolha uma cor e escreva o nome dela em inglês."
   },
   {
    "chave": "19542f64h",
@@ -35659,13 +36017,13 @@
    "fala": "Quem tem cabelo loiro?"
   },
   {
-   "chave": "89abbf682b",
+   "chave": "e3c1474624",
    "voz": "narradora",
-   "texto": "Na foto, Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:",
+   "texto": "A Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:",
    "pacotes": [
     "ingles4-en11p1"
    ],
-   "fala": "Na foto, Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:"
+   "fala": "A Isabela usa boné e óculos, e o cabelo dela é clarinho. Complete:"
   },
   {
    "chave": "bf24b25al",
@@ -35677,13 +36035,13 @@
    "fala": "Isabela has..."
   },
   {
-   "chave": "9b8c2fa623",
+   "chave": "d6bd6d211h",
    "voz": "narradora",
-   "texto": "Hugo é o último menino da foto, de cabelo bem curtinho. Complete:",
+   "texto": "O Hugo tem o cabelo bem curtinho. Complete:",
    "pacotes": [
     "ingles4-en11p1"
    ],
-   "fala": "Hugo é o último menino da foto, de cabelo bem curtinho. Complete:"
+   "fala": "O Hugo tem o cabelo bem curtinho. Complete:"
   },
   {
    "chave": "eba6af80i",
@@ -36274,6 +36632,24 @@
     "ingles4-en12p2"
    ],
    "fala": "Ligue cada comida ao que se faz com ela."
+  },
+  {
+   "chave": "f13a8ee3u",
+   "voz": "narradora",
+   "texto": "Os desenhos do livro",
+   "pacotes": [
+    "ingles4-en12p2"
+   ],
+   "fala": "Os desenhos do livro"
+  },
+  {
+   "chave": "c3a51e954m",
+   "voz": "narradora",
+   "texto": "Embaixo, o livro mostra: um pote de mel, um vidro de ketchup, um vidro de azeite, um pote de geleia vermelha, um ovo frito e um copo de suco cor de laranja.",
+   "pacotes": [
+    "ingles4-en12p2"
+   ],
+   "fala": "Embaixo, o livro mostra: um pote de mel, um vidro de ketchup, um vidro de azeite, um pote de geleia vermelha, um ovo frito e um copo de suco cor de laranja."
   },
   {
    "chave": "60224320r",
@@ -37466,13 +37842,13 @@
    "fala": "As plantas precisam de água e luz do sol. Observe as imagens das plantas 1 e 2."
   },
   {
-   "chave": "7993d3d94i",
+   "chave": "9de0816f4u",
    "voz": "narradora",
-   "texto": "1: um lago coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte..",
+   "texto": "1: um lago ensolarado, coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte..",
    "pacotes": [
     "ciencias4-livro-10"
    ],
-   "fala": "1: um lago coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte.."
+   "fala": "1: um lago ensolarado, coberto de folhas redondas que boiam, com flores lilases., 2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte.."
   },
   {
    "chave": "550a6ebe3n",
@@ -37528,6 +37904,15 @@
     "ciencias4-ci10t1"
    ],
    "fala": "Ligue as partes das plantas usadas como matéria-prima com os produtos que elas ajudam a fazer."
+  },
+  {
+   "chave": "bd789b9c81",
+   "voz": "narradora",
+   "texto": "Nas fotos: a) um algodão aberto no pé; b) flores de camomila secas numa colher de pau; c) toras de madeira empilhadas; d) folhas verdes de hortelã. Do outro lado: uma xícara de chá amarelinho, roupas dobradas, um vidrinho de óleos essenciais com varetas e uma mesinha de madeira.",
+   "pacotes": [
+    "ciencias4-livro-10"
+   ],
+   "fala": "Nas fotos: a) um algodão aberto no pé; b) flores de camomila secas numa colher de pau; c) toras de madeira empilhadas; d) folhas verdes de hortelã. Do outro lado: uma xícara de chá amarelinho, roupas dobradas, um vidrinho de óleos essenciais com varetas e uma mesinha de madeira."
   },
   {
    "chave": "f08e753a34",
@@ -39038,13 +39423,13 @@
    "fala": "Vamos conhecer as plantas e descobrir do que elas precisam para viver!"
   },
   {
-   "chave": "2c57c2443c",
+   "chave": "270db3ed2j",
    "voz": "narradora",
-   "texto": "Explique, com suas palavras, o que são plantas. Assinale V para o que for verdadeiro e F para o que for falso.",
+   "texto": "O que são plantas? Assinale V para o que for verdadeiro e F para o que for falso.",
    "pacotes": [
     "ciencias4-ci10a1"
    ],
-   "fala": "Explique, com suas palavras, o que são plantas. Assinale V para o que for verdadeiro e F para o que for falso."
+   "fala": "O que são plantas? Assinale V para o que for verdadeiro e F para o que for falso."
   },
   {
    "chave": "89ec1d822c",
@@ -39119,13 +39504,13 @@
    "fala": "Vamos fazer um experimento: uma plantinha no sol e outra no escuro. O que será que acontece?"
   },
   {
-   "chave": "c11089672d",
+   "chave": "8a908a101l",
    "voz": "narradora",
-   "texto": "Conversem com os colegas: o que vocês acham que acontecerá com as sementes?",
+   "texto": "O que você acha que acontecerá com as sementes?",
    "pacotes": [
     "ciencias4-ci10a3"
    ],
-   "fala": "Conversem com os colegas: o que vocês acham que acontecerá com as sementes?"
+   "fala": "O que você acha que acontecerá com as sementes?"
   },
   {
    "chave": "5c727cd92c",
@@ -39164,13 +39549,13 @@
    "fala": "Qual foi a planta que ficou mais verde?"
   },
   {
-   "chave": "f704dc2f1d",
+   "chave": "d3f571fd31",
    "voz": "narradora",
-   "texto": "Por que vocês acham que isso aconteceu?",
+   "texto": "A planta do local ensolarado cresceu mais e ficou mais verde. Por que você acha que isso aconteceu?",
    "pacotes": [
     "ciencias4-ci10a3"
    ],
-   "fala": "Por que vocês acham que isso aconteceu?"
+   "fala": "A planta do local ensolarado cresceu mais e ficou mais verde. Por que você acha que isso aconteceu?"
   },
   {
    "chave": "297c8d0dp",
@@ -39354,13 +39739,13 @@
    "fala": "Vamos descobrir para que servem o caule, as folhas, as flores, os frutos e as sementes!"
   },
   {
-   "chave": "897e7c9d3d",
+   "chave": "06cbd0711j",
    "voz": "narradora",
-   "texto": "Recorte as imagens da aba e cole as partes das plantas nos locais corretos. Ligue cada figura ao nome da parte.",
+   "texto": "Ligue cada figura ao nome da parte da planta.",
    "pacotes": [
     "ciencias4-ci11a2"
    ],
-   "fala": "Recorte as imagens da aba e cole as partes das plantas nos locais corretos. Ligue cada figura ao nome da parte."
+   "fala": "Ligue cada figura ao nome da parte da planta."
   },
   {
    "chave": "255037afo",
@@ -39444,13 +39829,13 @@
    "fala": "b) Desenhe uma planta completa com todas as partes. Depois, escreva o nome de cada parte, indicando-as com setas."
   },
   {
-   "chave": "6b0c22a22q",
+   "chave": "08741df11a",
    "voz": "narradora",
-   "texto": "Pinte cada parte da planta de acordo com a legenda. Ligue cada função à parte da planta.",
+   "texto": "Ligue cada função à parte da planta.",
    "pacotes": [
     "ciencias4-ci11a4"
    ],
-   "fala": "Pinte cada parte da planta de acordo com a legenda. Ligue cada função à parte da planta."
+   "fala": "Ligue cada função à parte da planta."
   },
   {
    "chave": "40840d5bq",
@@ -39480,13 +39865,13 @@
    "fala": "Identifique o nome das partes do tomateiro."
   },
   {
-   "chave": "6f0aad0d34",
+   "chave": "934e660d3b",
    "voz": "narradora",
-   "texto": "Observe a imagem da planta a seguir. Depois, escreva onde ficam a raiz, o caule e as folhas da planta.",
+   "texto": "Observe a imagem da planta a seguir. Depois, ligue a raiz, o caule e as folhas ao lugar onde ficam na planta.",
    "pacotes": [
     "ciencias4-ci11t1"
    ],
-   "fala": "Observe a imagem da planta a seguir. Depois, escreva onde ficam a raiz, o caule e as folhas da planta."
+   "fala": "Observe a imagem da planta a seguir. Depois, ligue a raiz, o caule e as folhas ao lugar onde ficam na planta."
   },
   {
    "chave": "da24fb8a32",
@@ -39507,13 +39892,13 @@
    "fala": "Escreva o nome das partes da planta indicadas na imagem a seguir."
   },
   {
-   "chave": "409fdf383p",
+   "chave": "b7777e922o",
    "voz": "narradora",
-   "texto": "Quais são as funções das diferentes partes das plantas? Escreva no quadrado de cada função a letra da parte correspondente.",
+   "texto": "Quais são as funções das diferentes partes das plantas? Ligue cada parte à sua função.",
    "pacotes": [
     "ciencias4-ci11t1"
    ],
-   "fala": "Quais são as funções das diferentes partes das plantas? Escreva no quadrado de cada função a letra da parte correspondente."
+   "fala": "Quais são as funções das diferentes partes das plantas? Ligue cada parte à sua função."
   },
   {
    "chave": "35a7091e1s",
@@ -39615,13 +40000,13 @@
    "fala": "Um beija-flor está com o bico dentro de uma flor amarela e laranja."
   },
   {
-   "chave": "3cd2a7641s",
+   "chave": "25a87a7a1t",
    "voz": "narradora",
-   "texto": "Pinte, a seguir, o que acontece durante a polinização.",
+   "texto": "Toque, a seguir, no que acontece durante a polinização.",
    "pacotes": [
     "ciencias4-ci12a2"
    ],
-   "fala": "Pinte, a seguir, o que acontece durante a polinização."
+   "fala": "Toque, a seguir, no que acontece durante a polinização."
   },
   {
    "chave": "acecca4f2k",
@@ -39813,13 +40198,13 @@
    "fala": "Complete as frases usando as palavras do quadro a seguir."
   },
   {
-   "chave": "c6eef6913l",
+   "chave": "92cbd4423b",
    "voz": "narradora",
-   "texto": "Escreva e desenhe as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir.",
+   "texto": "Escreva as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir.",
    "pacotes": [
     "ciencias4-ci12t1"
    ],
-   "fala": "Escreva e desenhe as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir."
+   "fala": "Escreva as informações que faltam sobre as formas de dispersão de sementes para completar o esquema a seguir."
   },
   {
    "chave": "83ad2fa42h",
@@ -40108,6 +40493,101 @@
     "interior-bau"
    ],
    "fala": "Cada sala nova põe moedas!"
+  },
+  {
+   "chave": "145f8440u",
+   "voz": "narradora",
+   "texto": "Bem-vinda ao bosque!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vinda ao bosque!"
+  },
+  {
+   "chave": "fe39a29eu",
+   "voz": "narradora",
+   "texto": "Bem-vindo ao bosque!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vindo ao bosque!"
+  },
+  {
+   "chave": "6487a60b13",
+   "voz": "narradora",
+   "texto": "Os fantasmas daqui são fofos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Os fantasmas daqui são fofos."
+  },
+  {
+   "chave": "bfc15da014",
+   "voz": "narradora",
+   "texto": "Vença e responda às perguntas!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Vença e responda às perguntas!"
+  },
+  {
+   "chave": "b2019bf8x",
+   "voz": "narradora",
+   "texto": "Uma lanterna das fadas.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Uma lanterna das fadas."
+  },
+  {
+   "chave": "f8dd22d210",
+   "voz": "narradora",
+   "texto": "A luz dela nunca se apaga.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A luz dela nunca se apaga."
+  },
+  {
+   "chave": "5f500214x",
+   "voz": "narradora",
+   "texto": "Um cogumelo que brilha!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um cogumelo que brilha!"
+  },
+  {
+   "chave": "38ab9adaw",
+   "voz": "narradora",
+   "texto": "Ele ilumina o caminho.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ele ilumina o caminho."
+  },
+  {
+   "chave": "c3b16e2113",
+   "voz": "narradora",
+   "texto": "Esta árvore é muito velhinha.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Esta árvore é muito velhinha."
+  },
+  {
+   "chave": "f41fc97b12",
+   "voz": "narradora",
+   "texto": "Ela já viu muitos fantasmas.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ela já viu muitos fantasmas."
   },
   {
    "chave": "db1a1b871r",
@@ -40540,6 +41020,168 @@
     "interior-castelo"
    ],
    "fala": "Em breve teremos novos conteúdos do quarto bimestre!"
+  },
+  {
+   "chave": "942301ebu",
+   "voz": "narradora",
+   "texto": "Bem-vinda à caverna!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Bem-vinda à caverna!"
+  },
+  {
+   "chave": "86930a21u",
+   "voz": "narradora",
+   "texto": "Bem-vindo à caverna!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Bem-vindo à caverna!"
+  },
+  {
+   "chave": "0c7fa18a14",
+   "voz": "narradora",
+   "texto": "Os cristais brilham no escuro.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Os cristais brilham no escuro."
+  },
+  {
+   "chave": "fe6c26bfy",
+   "voz": "narradora",
+   "texto": "O lampião de um mineiro.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "O lampião de um mineiro."
+  },
+  {
+   "chave": "393d5405x",
+   "voz": "narradora",
+   "texto": "Ele ilumina os trilhos.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Ele ilumina os trilhos."
+  },
+  {
+   "chave": "d1b2a74d14",
+   "voz": "narradora",
+   "texto": "Um carrinho cheio de cristais!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Um carrinho cheio de cristais!"
+  },
+  {
+   "chave": "c218e1c4z",
+   "voz": "narradora",
+   "texto": "Alguém esqueceu ele aqui.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Alguém esqueceu ele aqui."
+  },
+  {
+   "chave": "fd436f8810",
+   "voz": "narradora",
+   "texto": "Uma pedra rachada ao meio.",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Uma pedra rachada ao meio."
+  },
+  {
+   "chave": "7283fd4ey",
+   "voz": "narradora",
+   "texto": "Dentro, só cristal roxo!",
+   "pacotes": [
+    "interior-cristal"
+   ],
+   "fala": "Dentro, só cristal roxo!"
+  },
+  {
+   "chave": "a4613d6dt",
+   "voz": "narradora",
+   "texto": "Bem-vinda às dunas!",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Bem-vinda às dunas!"
+  },
+  {
+   "chave": "a2d08253t",
+   "voz": "narradora",
+   "texto": "Bem-vindo às dunas!",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Bem-vindo às dunas!"
+  },
+  {
+   "chave": "bcab069710",
+   "voz": "narradora",
+   "texto": "Cuidado com os escorpiões.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Cuidado com os escorpiões."
+  },
+  {
+   "chave": "e7407242v",
+   "voz": "narradora",
+   "texto": "Um vaso muito antigo.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Um vaso muito antigo."
+  },
+  {
+   "chave": "3fd04658u",
+   "voz": "narradora",
+   "texto": "Tem areia lá dentro.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Tem areia lá dentro."
+  },
+  {
+   "chave": "1607732412",
+   "voz": "narradora",
+   "texto": "Um oásis de água fresquinha!",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Um oásis de água fresquinha!"
+  },
+  {
+   "chave": "48bb6130w",
+   "voz": "narradora",
+   "texto": "A palmeira faz sombra.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "A palmeira faz sombra."
+  },
+  {
+   "chave": "91f1db5110",
+   "voz": "narradora",
+   "texto": "Uma pirâmide pequenininha.",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Uma pirâmide pequenininha."
+  },
+  {
+   "chave": "26cff7f7w",
+   "voz": "narradora",
+   "texto": "Quem será que mora aí?",
+   "pacotes": [
+    "interior-dunas"
+   ],
+   "fala": "Quem será que mora aí?"
   },
   {
    "chave": "3db4cf231u",
@@ -41053,6 +41695,87 @@
     "interior-feira"
    ],
    "fala": "Desenhe o que você observou."
+  },
+  {
+   "chave": "cd42aa79v",
+   "voz": "narradora",
+   "texto": "Bem-vinda à montanha!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Bem-vinda à montanha!"
+  },
+  {
+   "chave": "fa3968ffv",
+   "voz": "narradora",
+   "texto": "Bem-vindo à montanha!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Bem-vindo à montanha!"
+  },
+  {
+   "chave": "7d2ac44910",
+   "voz": "narradora",
+   "texto": "Aqui faz muito frio. Brrr!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Aqui faz muito frio. Brrr!"
+  },
+  {
+   "chave": "68ec2a3a10",
+   "voz": "narradora",
+   "texto": "Uma casinha feita de gelo.",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Uma casinha feita de gelo."
+  },
+  {
+   "chave": "8e2cfa49w",
+   "voz": "narradora",
+   "texto": "Lá dentro é quentinho!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Lá dentro é quentinho!"
+  },
+  {
+   "chave": "38c6d63bs",
+   "voz": "narradora",
+   "texto": "Um trenó vermelho.",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Um trenó vermelho."
+  },
+  {
+   "chave": "9feb776611",
+   "voz": "narradora",
+   "texto": "Ele desliza rápido na neve!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Ele desliza rápido na neve!"
+  },
+  {
+   "chave": "211407a6v",
+   "voz": "narradora",
+   "texto": "Um unicórnio de gelo!",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Um unicórnio de gelo!"
+  },
+  {
+   "chave": "63a351f013",
+   "voz": "narradora",
+   "texto": "Ele brilha quando bate o sol.",
+   "pacotes": [
+    "interior-gelo"
+   ],
+   "fala": "Ele brilha quando bate o sol."
   },
   {
    "chave": "7dca5f57j",
@@ -57601,6 +58324,87 @@
    "fala": "Páginas 28 e 29."
   },
   {
+   "chave": "04546b9bv",
+   "voz": "narradora",
+   "texto": "Bem-vinda ao pântano!",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Bem-vinda ao pântano!"
+  },
+  {
+   "chave": "05b70011v",
+   "voz": "narradora",
+   "texto": "Bem-vindo ao pântano!",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Bem-vindo ao pântano!"
+  },
+  {
+   "chave": "befcddf213",
+   "voz": "narradora",
+   "texto": "As rãs daqui resmungam muito.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "As rãs daqui resmungam muito."
+  },
+  {
+   "chave": "8325178913",
+   "voz": "narradora",
+   "texto": "Vaga-lumes moram aqui dentro.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Vaga-lumes moram aqui dentro."
+  },
+  {
+   "chave": "3bfe8b8aw",
+   "voz": "narradora",
+   "texto": "Eles piscam para você!",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Eles piscam para você!"
+  },
+  {
+   "chave": "cf038cb610",
+   "voz": "narradora",
+   "texto": "Uma folha gigante na água.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Uma folha gigante na água."
+  },
+  {
+   "chave": "7b3a160810",
+   "voz": "narradora",
+   "texto": "Uma rãzinha dorme em cima.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Uma rãzinha dorme em cima."
+  },
+  {
+   "chave": "145fd76611",
+   "voz": "narradora",
+   "texto": "Uma rã de pedra bem antiga.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Uma rã de pedra bem antiga."
+  },
+  {
+   "chave": "b5b9102312",
+   "voz": "narradora",
+   "texto": "Dizem que ela sorri à noite.",
+   "pacotes": [
+    "interior-pantano"
+   ],
+   "fala": "Dizem que ela sorri à noite."
+  },
+  {
    "chave": "6a2d4940z",
    "voz": "npc-aveia",
    "texto": "Olá, eu sou a Dona Aveia!",
@@ -69056,6 +69860,501 @@
     "interior-torre"
    ],
    "fala": "Ele toca na hora certa."
+  },
+  {
+   "chave": "e466bb6214",
+   "voz": "narradora",
+   "texto": "A fonte tem água de arco-íris.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A fonte tem água de arco-íris."
+  },
+  {
+   "chave": "ea679b3714",
+   "voz": "narradora",
+   "texto": "Ela brilha com todas as cores.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ela brilha com todas as cores."
+  },
+  {
+   "chave": "cdb761a7y",
+   "voz": "narradora",
+   "texto": "Este terreno está livre!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Este terreno está livre!"
+  },
+  {
+   "chave": "a9890ce613",
+   "voz": "narradora",
+   "texto": "Um dia vai ter novidade aqui.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um dia vai ter novidade aqui."
+  },
+  {
+   "chave": "2dafba1011",
+   "voz": "narradora",
+   "texto": "Bem-vinda à Vila Arco-Íris!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vinda à Vila Arco-Íris!"
+  },
+  {
+   "chave": "738930fa11",
+   "voz": "narradora",
+   "texto": "Bem-vindo à Vila Arco-Íris!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bem-vindo à Vila Arco-Íris!"
+  },
+  {
+   "chave": "bd9e3deaw",
+   "voz": "narradora",
+   "texto": "Aqui tem quatro lojas.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Aqui tem quatro lojas."
+  },
+  {
+   "chave": "62b3ad29u",
+   "voz": "narradora",
+   "texto": "Um poço dos desejos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um poço dos desejos."
+  },
+  {
+   "chave": "2657876910",
+   "voz": "narradora",
+   "texto": "Faça um pedido bem bonito!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Faça um pedido bem bonito!"
+  },
+  {
+   "chave": "35e133c012",
+   "voz": "npc-lavanda",
+   "texto": "Oi, eu sou a Dona Lavanda!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Oi, eu sou a Dona Lavanda!"
+  },
+  {
+   "chave": "c06a3a2615",
+   "voz": "npc-lavanda",
+   "texto": "Tenho enfeites para sua casa.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tenho enfeites para sua casa."
+  },
+  {
+   "chave": "0c696754x",
+   "voz": "npc-lavanda",
+   "texto": "Quer ver os enfeites?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer ver os enfeites?"
+  },
+  {
+   "chave": "fb227b3911",
+   "voz": "npc-lavanda",
+   "texto": "Sua casa vai ficar linda!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Sua casa vai ficar linda!"
+  },
+  {
+   "chave": "82054693z",
+   "voz": "narradora",
+   "texto": "Tapetes para a sala toda.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tapetes para a sala toda."
+  },
+  {
+   "chave": "0e8035cay",
+   "voz": "narradora",
+   "texto": "Vasos de todas as cores!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vasos de todas as cores!"
+  },
+  {
+   "chave": "cdf72604x",
+   "voz": "narradora",
+   "texto": "Almofadas bem fofinhas!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Almofadas bem fofinhas!"
+  },
+  {
+   "chave": "022e8f4512",
+   "voz": "npc-bigorna",
+   "texto": "Olá, eu sou o Seu Bigorna!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Olá, eu sou o Seu Bigorna!"
+  },
+  {
+   "chave": "8aacbcd113",
+   "voz": "npc-bigorna",
+   "texto": "Eu faço espadas brilhantes.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Eu faço espadas brilhantes."
+  },
+  {
+   "chave": "69e6b84913",
+   "voz": "npc-bigorna",
+   "texto": "Quer ver as minhas espadas?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer ver as minhas espadas?"
+  },
+  {
+   "chave": "a631f5bb12",
+   "voz": "npc-bigorna",
+   "texto": "Use com coragem e carinho!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Use com coragem e carinho!"
+  },
+  {
+   "chave": "378479c412",
+   "voz": "narradora",
+   "texto": "O fogo da forja é quentinho.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O fogo da forja é quentinho."
+  },
+  {
+   "chave": "715e460110",
+   "voz": "narradora",
+   "texto": "Espadas que brilham muito!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Espadas que brilham muito!"
+  },
+  {
+   "chave": "46c9a614z",
+   "voz": "narradora",
+   "texto": "Aqui o ferro vira espada.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Aqui o ferro vira espada."
+  },
+  {
+   "chave": "9f7cda6d15",
+   "voz": "npc-plumita",
+   "texto": "Olá, eu sou a Madame Plumita!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Olá, eu sou a Madame Plumita!"
+  },
+  {
+   "chave": "a3e9359215",
+   "voz": "npc-plumita",
+   "texto": "Tenho chapéus e elmos lindos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tenho chapéus e elmos lindos."
+  },
+  {
+   "chave": "43dc502d11",
+   "voz": "npc-plumita",
+   "texto": "Vamos escolher um chapéu?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vamos escolher um chapéu?"
+  },
+  {
+   "chave": "5842514710",
+   "voz": "npc-plumita",
+   "texto": "Ficou uma graça em você!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ficou uma graça em você!"
+  },
+  {
+   "chave": "5bc21e9d10",
+   "voz": "narradora",
+   "texto": "Chapéus de todas as cores!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Chapéus de todas as cores!"
+  },
+  {
+   "chave": "51393fc512",
+   "voz": "narradora",
+   "texto": "Um elmo com uma pluma linda.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um elmo com uma pluma linda."
+  },
+  {
+   "chave": "643d3cf1z",
+   "voz": "narradora",
+   "texto": "Caixas cheias de chapéus.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Caixas cheias de chapéus."
+  },
+  {
+   "chave": "bcd7a78715",
+   "voz": "npc-ferrolho",
+   "texto": "Olá, sou o Capitão Ferrolho!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Olá, sou o Capitão Ferrolho!"
+  },
+  {
+   "chave": "ddee850513",
+   "voz": "npc-ferrolho",
+   "texto": "Armadura boa protege você.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Armadura boa protege você."
+  },
+  {
+   "chave": "2a17c39714",
+   "voz": "npc-ferrolho",
+   "texto": "Quer ver armaduras e botas?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer ver armaduras e botas?"
+  },
+  {
+   "chave": "9730b9a513",
+   "voz": "npc-ferrolho",
+   "texto": "Agora você está protegida!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Agora você está protegida!"
+  },
+  {
+   "chave": "134981bf13",
+   "voz": "npc-ferrolho",
+   "texto": "Agora você está protegido!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Agora você está protegido!"
+  },
+  {
+   "chave": "3b998fe5x",
+   "voz": "narradora",
+   "texto": "Uma armadura bem forte.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Uma armadura bem forte."
+  },
+  {
+   "chave": "b44ef0e110",
+   "voz": "narradora",
+   "texto": "Botas para longas viagens.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Botas para longas viagens."
+  },
+  {
+   "chave": "bc43f588w",
+   "voz": "narradora",
+   "texto": "Um elmo para a cabeça.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um elmo para a cabeça."
+  },
+  {
+   "chave": "c6e6bc9714",
+   "voz": "npc-kiara",
+   "texto": "Oi, eu sou a Treinadora Kiara!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Oi, eu sou a Treinadora Kiara!"
+  },
+  {
+   "chave": "ea26788bz",
+   "voz": "npc-kiara",
+   "texto": "Eu cuido dos monstrinhos.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Eu cuido dos monstrinhos."
+  },
+  {
+   "chave": "f224166fv",
+   "voz": "npc-kiara",
+   "texto": "Quer uma MonsterBall?",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quer uma MonsterBall?"
+  },
+  {
+   "chave": "450f9096w",
+   "voz": "npc-kiara",
+   "texto": "Boa sorte na aventura!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Boa sorte na aventura!"
+  },
+  {
+   "chave": "ffac7a7110",
+   "voz": "narradora",
+   "texto": "Bolas para pegar monstros!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Bolas para pegar monstros!"
+  },
+  {
+   "chave": "1422924fz",
+   "voz": "narradora",
+   "texto": "Monstrinhos bem cuidados.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Monstrinhos bem cuidados."
+  },
+  {
+   "chave": "99d97e0by",
+   "voz": "narradora",
+   "texto": "Uma MonsterBall gigante!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Uma MonsterBall gigante!"
+  },
+  {
+   "chave": "a268ac2d11",
+   "voz": "narradora",
+   "texto": "Aqui se treina com carinho.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Aqui se treina com carinho."
+  },
+  {
+   "chave": "7c425675u",
+   "voz": "narradora",
+   "texto": "Bem-vinda ao vulcão!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Bem-vinda ao vulcão!"
+  },
+  {
+   "chave": "5f01fc8fu",
+   "voz": "narradora",
+   "texto": "Bem-vindo ao vulcão!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Bem-vindo ao vulcão!"
+  },
+  {
+   "chave": "69179c4914",
+   "voz": "narradora",
+   "texto": "Os dragõezinhos são bravinhos.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Os dragõezinhos são bravinhos."
+  },
+  {
+   "chave": "243d8ed011",
+   "voz": "narradora",
+   "texto": "Ele solta fumaça quentinha.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Ele solta fumaça quentinha."
+  },
+  {
+   "chave": "f0ec842b11",
+   "voz": "narradora",
+   "texto": "Parece um dragão bocejando!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Parece um dragão bocejando!"
+  },
+  {
+   "chave": "0a1be22e12",
+   "voz": "narradora",
+   "texto": "Um ninho com ovos de dragão.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Um ninho com ovos de dragão."
+  },
+  {
+   "chave": "c787485213",
+   "voz": "narradora",
+   "texto": "Eles gostam de ficar quentes.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Eles gostam de ficar quentes."
+  },
+  {
+   "chave": "1093cec414",
+   "voz": "narradora",
+   "texto": "Um osso de dragão, de mentira!",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Um osso de dragão, de mentira!"
+  },
+  {
+   "chave": "d7d0659a12",
+   "voz": "narradora",
+   "texto": "Os filhotes brincam com ele.",
+   "pacotes": [
+    "interior-vulcao"
+   ],
+   "fala": "Os filhotes brincam com ele."
   },
   {
    "chave": "3798a37cx",
@@ -89621,6 +90920,283 @@
     "geral"
    ],
    "fala": "Saíram produtos novos!"
+  },
+  {
+   "chave": "8eae3495u",
+   "voz": "claude",
+   "texto": "Você ganhou uma espada!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Você ganhou uma espada!"
+  },
+  {
+   "chave": "2c7e937bw",
+   "voz": "claude",
+   "texto": "Ela tem a magia do Reino.",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Ela tem a magia do Reino."
+  },
+  {
+   "chave": "50449cfbz",
+   "voz": "claude",
+   "texto": "Vença os fantasmas fofinhos!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Vença os fantasmas fofinhos!"
+  },
+  {
+   "chave": "9d422be8u",
+   "voz": "claude",
+   "texto": "Você venceu o fantasma!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Você venceu o fantasma!"
+  },
+  {
+   "chave": "8ee5c2a710",
+   "voz": "claude",
+   "texto": "Responda e ganhe uma estrela!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Responda e ganhe uma estrela!"
+  },
+  {
+   "chave": "9612ccfft",
+   "voz": "claude",
+   "texto": "Isso mesmo, muito bem!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Isso mesmo, muito bem!"
+  },
+  {
+   "chave": "bacaad4dw",
+   "voz": "claude",
+   "texto": "Você acertou, que beleza!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Você acertou, que beleza!"
+  },
+  {
+   "chave": "e874a74d10",
+   "voz": "claude",
+   "texto": "Quase, veja a resposta certa.",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Quase, veja a resposta certa."
+  },
+  {
+   "chave": "d4bf2c09v",
+   "voz": "claude",
+   "texto": "O fantasma volta depois.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O fantasma volta depois."
+  },
+  {
+   "chave": "9f5a9dd5x",
+   "voz": "claude",
+   "texto": "Depois você tenta de novo!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Depois você tenta de novo!"
+  },
+  {
+   "chave": "34f66b9dr",
+   "voz": "claude",
+   "texto": "Você subiu de nível!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Você subiu de nível!"
+  },
+  {
+   "chave": "99e9752610",
+   "voz": "claude",
+   "texto": "Escolha onde pôr o seu ponto.",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Escolha onde pôr o seu ponto."
+  },
+  {
+   "chave": "22f0c047z",
+   "voz": "claude",
+   "texto": "Sua espada ficou mais forte!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Sua espada ficou mais forte!"
+  },
+  {
+   "chave": "916c5268w",
+   "voz": "claude",
+   "texto": "Agora você tem mais vida!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Agora você tem mais vida!"
+  },
+  {
+   "chave": "799462dbz",
+   "voz": "claude",
+   "texto": "Agora você anda mais rápido!",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Agora você anda mais rápido!"
+  },
+  {
+   "chave": "7a4c181310",
+   "voz": "claude",
+   "texto": "Tem um móvel para a sua casa!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Tem um móvel para a sua casa!"
+  },
+  {
+   "chave": "d3e8a39dz",
+   "voz": "claude",
+   "texto": "Ele fica guardado para você.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Ele fica guardado para você."
+  },
+  {
+   "chave": "8e8f008f11",
+   "voz": "claude",
+   "texto": "Ufa, vamos descansar um pouco.",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Ufa, vamos descansar um pouco."
+  },
+  {
+   "chave": "6accbde410",
+   "voz": "claude",
+   "texto": "Voltamos ao começo do bosque.",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Voltamos ao começo do bosque."
+  },
+  {
+   "chave": "a9da0069x",
+   "voz": "claude",
+   "texto": "Você não perdeu nada, viu?",
+   "pacotes": [
+    "interior-bosque",
+    "interior-cristal",
+    "interior-dunas",
+    "interior-gelo",
+    "interior-pantano",
+    "interior-vulcao"
+   ],
+   "fala": "Você não perdeu nada, viu?"
+  },
+  {
+   "chave": "57895a0819",
+   "voz": "npc-teleportadora",
+   "texto": "Oi! Eu sou a Teleportadora.",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Oi! Eu sou a Teleportadora."
+  },
+  {
+   "chave": "908ec5621c",
+   "voz": "npc-teleportadora",
+   "texto": "Quer ir para a Vila Arco-Íris?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quer ir para a Vila Arco-Íris?"
+  },
+  {
+   "chave": "9eb4295c18",
+   "voz": "npc-teleportadora",
+   "texto": "Quer voltar para a cidade?",
+   "pacotes": [
+    "geral"
+   ],
+   "fala": "Quer voltar para a cidade?"
   },
   {
    "chave": "6a4a021b1r",

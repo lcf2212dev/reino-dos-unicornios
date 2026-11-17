@@ -17,7 +17,7 @@
       intro: 'Hora de criar! Vamos inventar uma paródia musical e depois testar tudo o que aprendemos no capítulo.',
       desafios: [
         { id: 'lp11a6-01', tipo: 'completar', origem: 'APR-50-q1', pagina: 50, livro: 'lp-a50', livre: true,
-          pergunta: 'Junto aos colegas e ao professor, selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.',
+          pergunta: 'Selecione uma música. Pode ser uma das canções estudadas ao longo do capítulo.',
           palavras: ['Rei da Floresta', 'Fundo do mar', 'Como é verde na floresta', 'Ciranda, cirandinha'],
           frases: [
             { antes: 'A música escolhida é', depois: '.', certa: 0 },
@@ -82,12 +82,12 @@
         { id: 'lp11a6-09', tipo: 'escolha', origem: 'APR-52-q3', pagina: 52, livro: 'lp-a52c',
           pergunta: 'Cante todos os versos com muita alegria, siga o ritmo a cada palavra cantada e a melodia da canção. E não esqueça: o que é o mais importante?',
           opcoes: [
-            { e: '🎶', t: 'Se divertir juntos aos colegas ao som das músicas.' },
+            { e: '🎶', t: 'Se divertir junto aos colegas ao som das músicas.' },
             { e: '📣', t: 'Cantar mais alto do que todo mundo.' },
             { e: '⏰', t: 'Terminar a canção bem rápido.' },
           ], certa: 0,
           adaptacao: 'A orientação para cantar virou escolher o que o livro diz ser o mais importante.',
-          explica: 'O mais importante é se divertir juntos aos colegas ao som das músicas!' },
+          explica: 'O mais importante é se divertir junto aos colegas ao som das músicas!' },
         { id: 'lp11a6-10', tipo: 'digitar', origem: 'APR-53-q1', pagina: 53, livro: 'lp-a53',
           apoio: FLORESTA,
           pergunta: 'Encontre o diminutivo da palavra bichos na canção e escreva-o a seguir.',
@@ -136,7 +136,7 @@
           pergunta: 'Use as dicas entre parênteses para completar o texto a seguir.',
           frases: [
             { antes: 'Na floresta tem um', depois: '(diminutivo de lobo),', certas: ['lobinho'] },
-            { antes: 'No jardim tem uma', depois: '(diminutivo de flor),', certas: ['florzinha'] },
+            { antes: 'No jardim tem uma', depois: '(diminutivo de flor),', certas: ['florzinha', 'florinha'] },
             { antes: 'Há também os', depois: '(diminutivo de bichos),', certas: ['bichinhos'] },
             { antes: 'Meu amigo tem um', depois: '(diminutivo de cão),', certas: ['cãozinho'] },
             { antes: 'Na escola tem um', depois: '(aumentativo de livro),', certas: ['livrão'] },

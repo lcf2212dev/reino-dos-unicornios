@@ -29,7 +29,7 @@
     var titulo = el('div.missao-titulo', el('span', sala.emoji + ' ' + sala.nome));
     var corpo = el('div.missao-corpo');
     var btnConferir = el('button.btn-grande.btn-conferir', { type: 'button', disabled: true }, 'Conferir ✓');
-    var rodape = el('footer.missao-rodape.rodape-acao', el('span.sem-relogio', '⏳ Sem relógio. O tempo é todo seu!'), btnConferir);
+    var rodape = el('footer.missao-rodape.rodape-acao', el('span.sem-relogio', '⏳ Sem relógio', el('span.sem-relogio-resto', '. O tempo é todo seu!')), btnConferir);
     // o rodapé de ação da intro ("Começar") e do resumo ("← Voltar" e "Continuar →"): fixo, fora do que rola (arte.md §20)
     var acao = el('footer.rodape-acao', { hidden: true });
     var retorno = el('div.missao-retorno', { hidden: true });
@@ -40,7 +40,7 @@
     tela.appendChild(acao);
     tela.appendChild(retorno);
     document.body.classList.add('em-missao');
-    D.ajustarTitulo(titulo, materia && materia.id);
+    var ajustarTitulo = D.ajustarTitulo(titulo, materia && materia.id);
 
     var botaoFim = null;   // no fim da sala, o "Voltar"/"Chocar o ovo": a sala já contou e o ✕ faz o mesmo
     sair.addEventListener('click', function () {
@@ -79,6 +79,7 @@
       trilha.className = 'missao-trilha fase-' + fase;   // no celular, a trilha só aparece nas perguntas (css)
       // sala de livro com mais perguntas que a sorteada: no celular, uma barra estreita no lugar dos pontos (css)
       if (lista.length > Reino.config.desafiosPorSala) trilha.classList.add('trilha-longa');
+      if (ajustarTitulo) ajustarTitulo();   // a trilha que aparece estreita o título (celular)
     }
     function pintarPontos() { pintarTrilha('desafio'); }
 
@@ -193,7 +194,7 @@
       var d = lista[idx];
       corpo.innerHTML = '';
       ctrl = D.render(d, {
-        modo: 'missao',
+        modo: 'missao', aoLivro: sala.ordem === 'livro' && d.livro ? function () { Reino.UI.abrirLivro(materia, d.livro); } : null,
         lerSozinho: Reino.config.esperaFala.lerQuestoes ? [sair] : null,
         onMudar: function () { btnConferir.disabled = !ctrl.pronto(); },
         onCompleto: function () { conferir(true); },

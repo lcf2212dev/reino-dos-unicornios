@@ -94,10 +94,11 @@ async function escrever(c, loc, texto, modo) {
   } else await loc.fill(texto);
   await c.avancar(40);
 }
-// índice do elemento (entre os do seletor) cujo texto (sem hífen suave) é `texto`
+// índice do elemento (entre os do seletor) cujo texto (sem hífen suave nem as aspas « » do inglês, que a tela não mostra) é `texto`
 const indiceTexto = (c, sel, texto, ultimo) => c.page.evaluate(([s, t, u]) => {
-  const l = Array.from(document.querySelectorAll(s)).map((b) => (u ? b.lastChild : b).textContent.replace(/­/g, '').trim());
-  return l.indexOf(t.trim());
+  const limpo = (x) => x.replace(/[\u00ad«»]/g, '').replace(/\s+/g, ' ').trim();
+  const l = Array.from(document.querySelectorAll(s)).map((b) => limpo((u ? b.lastChild : b).textContent));
+  return l.indexOf(limpo(t));
 }, [sel, texto, !!ultimo]);
 // marcar pelo teclado: o token com Tab fica um só (tabindex itinerante); Home e setas até o índice
 async function tocarToken(c, cd, i, modo) {
@@ -149,8 +150,9 @@ const DESENHO_ERRADO = [{ cor: 0, ferr: 'Lápis', ponto: [3, 3] }];
 
 /* ---------- levar o controle da vez até uma resposta, pelos toques ---------- */
 const daVez = (c) => c.page.evaluate(() => { const a = window.__q.atual; return { id: a.d.id, valor: a.ctrl.valor(), pronto: a.ctrl.pronto() }; });
-async function levarA(c, r, alvo, modo) {
-  const { d } = r, cd = c.page.locator(DESAFIO), v = (await daVez(c)).valor;
+// raiz: o seletor do cartão do desafio (padrão: o da missão; a varredura passa o do painel da pergunta sozinha)
+async function levarA(c, r, alvo, modo, raiz = DESAFIO) {
+  const { d } = r, cd = c.page.locator(raiz), v = (await daVez(c)).valor;
   switch (d.tipo) {
     case 'escolha': case 'vf': if (v !== alvo) await acionar(c, cd.locator('.opcoes > button').nth(r.ordem.indexOf(alvo)), modo); break;
     case 'varias':
@@ -162,7 +164,7 @@ async function levarA(c, r, alvo, modo) {
       for (const i of Object.keys(alvo).map(Number)) {
         if (v[i] === alvo[i]) continue;
         await acionar(c, cd.locator('.ligar-esq').nth(i), modo);
-        await acionar(c, cd.locator('.ligar-dir').nth(await indiceTexto(c, `${DESAFIO} .ligar-dir`, d.pares[alvo[i]][1].t, true)), modo);
+        await acionar(c, cd.locator('.ligar-dir').nth(await indiceTexto(c, `${raiz} .ligar-dir`, d.pares[alvo[i]][1].t, true)), modo);
       }
       break;
     case 'ordenar': case 'frase': {
@@ -170,7 +172,7 @@ async function levarA(c, r, alvo, modo) {
       while (k < v.length && v[k] === alvo[k]) k++;
       for (let n = v.length; n > k; n--) await acionar(c, cd.locator('.seq-alvo .seq-item').nth(n - 1), modo);
       for (let m = k; m < alvo.length; m++) {
-        const i = await indiceTexto(c, `${DESAFIO} .seq-monte button`, (d.itens || d.blocos)[alvo[m]]);
+        const i = await indiceTexto(c, `${raiz} .seq-monte button`, (d.itens || d.blocos)[alvo[m]]);
         assert.ok(i >= 0, `${d.id}: o bloco "${(d.itens || d.blocos)[alvo[m]]}" não está no monte`);
         await acionar(c, cd.locator('.seq-monte button').nth(i), modo);
       }
@@ -190,7 +192,7 @@ async function levarA(c, r, alvo, modo) {
     case 'separar':
       for (let i = 0; i < d.itens.length; i++) {
         if (v[i] === alvo[i]) continue;
-        await acionar(c, cd.locator('.sep-item').nth(await indiceTexto(c, `${DESAFIO} .sep-item`, d.itens[i].t, true)), modo);
+        await acionar(c, cd.locator('.sep-item').nth(await indiceTexto(c, `${raiz} .sep-item`, d.itens[i].t, true)), modo);
         // no título do baú: no meio dele estão as palavras já guardadas, e tocar numa a tira de lá (separar.js)
         const bau = cd.locator('.bau').nth(alvo[i]);
         await acionar(c, modo === 'toque' ? bau.locator('.bau-titulo') : bau, modo);

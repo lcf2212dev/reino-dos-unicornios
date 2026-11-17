@@ -4,13 +4,13 @@
   var fracao = _d.fracao, botaoOpcao = _d.botaoOpcao;
 
   var montar = function (d, opts) {
-    var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['varias', d]);
+    var ordem = opts.ordem || _d.ordemRotulada(d) || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['varias', d]);   // rotuladas: escolha.js
     var sel = {};
     (opts.valorInicial || []).forEach(function (i) { sel[i] = true; });
     var bloq = {};
     // opções com desenho (o.img; d.soImagem): _d.botaoImg, de escolha.js
     var comImg = _d.temImg(d);
-    var lista = el('div.opcoes.opcoes-varias' + (comImg ? '.opcoes-img' : ''));
+    var lista = el('div.opcoes.opcoes-varias' + (comImg ? '.opcoes-img' : '') + _d.classeLongas(d));
     var botoes = {};
     ordem.forEach(function (i) {
       var b = comImg ? _d.botaoImg(d.opcoes[i], d, '.opcao-marcar') : botaoOpcao(d.opcoes[i], '.opcao-marcar');

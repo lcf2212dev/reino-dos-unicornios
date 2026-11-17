@@ -265,11 +265,10 @@
     var ctx = base.getContext('2d');
     var pal = paletaUnicornio(def, estagio);
 
-    var temAsas = (def.raridade === 'epico' || def.raridade === 'lendario') || opcoes.asasFada;
-    var palAsa = pal;
-    if (opcoes.asasFada && !(def.raridade === 'epico' || def.raridade === 'lendario')) {
-      palAsa = Object.assign({}, pal, { W: '#e6d6ff', X: '#b9a3f5' });
-    }
+    // asas só as de fada (o enfeite que ela escolhe): as dos épicos e lendários pareciam um caroço nas costas
+    // (pedido do Leandro, 06/11)
+    var temAsas = !!opcoes.asasFada;
+    var palAsa = Object.assign({}, pal, { W: '#e6d6ff', X: '#b9a3f5' });
     var palAsaEscura = Object.assign({}, palAsa, { W: palAsa.X, X: escurecer(palAsa.X, 0.2) });
     var asas = temAsas && estagio >= 1 ? molde.asas : [];
     // asas de trás antes do corpo, as da frente por cima

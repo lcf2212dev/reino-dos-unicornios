@@ -82,9 +82,11 @@ test('acompanhamento: diário com buraco, entrada nula, estado nulo, texto e Nov
 test('acompanhamento: o instalador monta o app do dock (.desktop, ícone, resumo)', () => {
   const { montarApp, APP_ID } = require('../../gnome/instalar.js');
   const t = fs.mkdtempSync(path.join(os.tmpdir(), 'reino-gnome-app-'));
-  montarApp(path.join(t, 'app'), path.join(t, 'apl'), path.join(t, 'ico'));
+  // como no instalador: o cache do tema é feito em ico/../../ (aqui, t/icons/hicolor), nunca no /tmp inteiro
+  const ico = path.join(t, 'icons', 'hicolor', '512x512', 'apps');
+  montarApp(path.join(t, 'app'), path.join(t, 'apl'), ico);
   for (const f of ['main.js', 'resumo.js', 'nomes.json']) assert.ok(fs.existsSync(path.join(t, 'app', f)), f);
-  assert.ok(fs.existsSync(path.join(t, 'ico', APP_ID + '.png')));
+  assert.ok(fs.existsSync(path.join(ico, APP_ID + '.png')));
   const d = fs.readFileSync(path.join(t, 'apl', APP_ID + '.desktop'), 'utf8');
   assert.match(d, /^Exec=gjs -m .*main\.js$/m);
   assert.match(d, new RegExp('^Icon=' + APP_ID + '$', 'm'));

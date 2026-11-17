@@ -1,0 +1,74 @@
+/* Treinadores de Monstros (docs/contratos/monstros.md): os botões da MonsterBall e da Super na arena
+   (js/ui/monstros-bola.js), logo acima do da poção (css/ui-itens-pocao.css: 56 px + 12 de folga), e a tela "Meus monstros" (js/ui/monstros.js), no
+   jeito do Álbum de ETs: capturado em cores, o que falta em silhueta com "?". Sem animação. */
+.monstros-bola {
+  position: absolute;
+  right: calc(env(safe-area-inset-right, 0px) + 16px + 12px);
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 80px + 12px + 56px + 12px);
+  pointer-events: none;
+}
+.monstros-bola[hidden] { display: none; }
+.btn-tela-cheia.btn-monstros-bola {
+  position: relative; width: 56px; height: 56px; padding: 0;
+  border-width: var(--borda-grossa); border-radius: var(--canto-grande);
+  background: var(--papel-quente);
+  display: flex; align-items: center; justify-content: center;
+  pointer-events: auto; touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+}
+.monstros-bola-icone { display: flex; }
+.monstros-bola-icone canvas { display: block; }
+.monstros-bola-n {
+  position: absolute; right: -8px; bottom: -8px; min-width: 24px; padding: 4px 5px;
+  font-size: var(--texto-p); line-height: 1; text-align: center;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); color: var(--tinta);
+  --degrau: 2px;
+}
+/* a Super, logo acima da comum, com a borda dourada */
+.monstros-bola.monstros-super { bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 80px + 12px + 56px + 12px + 56px + 12px); }
+.monstros-super .btn-monstros-bola { border-color: var(--ouro); }
+/* a Mini, à esquerda da MonsterBall (mesma altura), com a borda azul */
+.monstros-bola.monstros-mini { right: calc(env(safe-area-inset-right, 0px) + 16px + 12px + 56px + 12px); }
+.monstros-mini .btn-monstros-bola { border-color: var(--azul); }
+@media (max-width: 480px) {
+  .monstros-bola.monstros-super { bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 72px + 10px + 56px + 10px + 56px + 10px); }
+  .monstros-bola { right: calc(env(safe-area-inset-right, 0px) + 16px + 8px); bottom: calc(env(safe-area-inset-bottom, 0px) + 16px + var(--balao-altura, 0px) + 72px + 10px + 56px + 10px); }
+  .monstros-bola.monstros-mini { right: calc(env(safe-area-inset-right, 0px) + 16px + 8px + 56px + 10px); }
+}
+
+/* a tela "Meus monstros" */
+.tela-monstros .painel { width: min(880px, 100%); max-width: min(880px, 100%); }
+.monstros-contador { text-align: center; margin-bottom: 10px; }
+.monstros-contador.monstros-vazio { padding: 8px 12px; border: var(--borda-fina) dashed var(--borda); border-radius: var(--canto); background: var(--papel-quente); }
+.monstros-grade {
+  list-style: none; margin: 0; padding: 6px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;
+}
+.monstros-cartao {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center;
+  padding: 10px 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel);
+}
+.monstros-cartao small { color: var(--tinta-suave); }
+.monstros-figura { position: relative; display: flex; align-items: flex-end; justify-content: center; min-height: 80px; }
+.monstros-sprite { image-rendering: pixelated; }
+.monstros-cartao.silhueta { border-style: dashed; background: var(--papel-quente); }
+.monstros-interroga {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: var(--texto-t); color: var(--papel);
+  text-shadow: 2px 0 0 var(--tinta), -2px 0 0 var(--tinta), 0 2px 0 var(--tinta), 0 -2px 0 var(--tinta);
+}
+.monstros-cartao.tem { border-color: var(--certo); background: var(--certo-fundo); }
+.monstros-cartao.junto { outline: var(--borda-grossa) solid var(--ceu); }   /* o anel azul de quem está junto */
+.monstros-selo { font-size: var(--texto-aux); padding: 2px 8px; border-radius: var(--canto); background: var(--ceu); }
+.monstros-qtd { font-size: var(--texto-aux); }
+/* o botão quebra só entre palavras ("Deixar / em casa"), nunca no meio */
+.monstros-levar { width: 100%; margin-top: auto; padding: 8px; font-size: var(--texto); overflow-wrap: normal; word-break: normal; hyphens: none; }
+.letras-grandes .monstros-grade { grid-template-columns: repeat(auto-fill, minmax(232px, 1fr)); }
+@media (max-width: 480px), (max-height: 500px) {
+  .monstros-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .monstros-cartao { padding: 6px 4px; }
+  .monstros-figura { min-height: 64px; }
+}
+
+/* o botão "Meus monstros" da Mochila (js/ui/mochila.js) */
+.moch-monstros { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; }
+.moch-monstros canvas { display: block; }

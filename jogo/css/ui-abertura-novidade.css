@@ -40,6 +40,32 @@
 .abertura-parada .novidade-pula, body.sem-animacao .novidade-pula { animation: none; }
 @media (prefers-reduced-motion: reduce) { .novidade-pula { animation: none; } }
 
+/* Tema "fantasmas" (config.novidadeInicio.tema): o fantasminha flutuando no lugar da casinha, faixa e caixas em roxo
+   de bosque à noite com verde de assombração. */
+:root { --assombro: #6fe39a; --assombro-claro: #b8ffcf; --bosque-noite: #1d1430; --bosque-roxo: #3b2a5c;
+  --bosque-lilas: #5a3f8c; --bosque-verde: #2c8a5a; --fantasma-branco: #f6eeff; --fantasma-lilas: #c9b0f0; }
+.novidade-desenho { display: block; image-rendering: pixelated; }
+@media (min-width: 601px) and (min-height: 501px) { .novidade-desenho { width: 128px !important; height: 128px !important; } }
+.novidade-flutua { animation: novidade-flutua calc(6 * var(--lento)) step-end infinite; }
+@keyframes novidade-flutua {   /* sobe e desce 8 px, em degraus inteiros de 4 px (arte.md §15.4) */
+  0%, 100% { transform: none; }
+  25% { transform: translateY(-4px); }
+  50% { transform: translateY(-8px); }
+  75% { transform: translateY(-4px); }
+}
+.novidade-tema-fantasmas .novidade-texto {
+  color: var(--assombro-claro); background: var(--bosque-noite); border-color: var(--assombro);
+}
+.novidade-tema-fantasmas .novidade-detalhe { color: var(--fantasma-branco); background: var(--bosque-roxo); border-color: var(--fantasma-lilas); }
+.tela-inicio:has(.novidade-tema-fantasmas) .abertura-faixa-novidade {
+  color: var(--fantasma-branco); border-color: var(--assombro);
+  background: linear-gradient(180deg, var(--bosque-lilas) 0 20%, var(--bosque-roxo) 20% 80%, var(--bosque-verde) 80%);
+}
+.tela-inicio:has(.novidade-tema-fantasmas) .atualizando-bloco.cheio { background: var(--assombro); border-color: var(--assombro); }
+@media (max-height: 500px) { .novidade-desenho { width: 48px !important; height: 48px !important; } }
+.abertura-parada .novidade-flutua, body.sem-animacao .novidade-flutua { animation: none; }
+@media (prefers-reduced-motion: reduce) { .novidade-flutua { animation: none; } }
+
 /* A atualização de mentira (1ª vez do aparelho com a novidade): véu escuro, caixa de papel, barra que enche em blocos
    inteiros (nada de barra lisa), o passo da vez e "Pronto!". Sem animação: a barra enche sem o brilho do bloco. */
 .atualizando-veu {

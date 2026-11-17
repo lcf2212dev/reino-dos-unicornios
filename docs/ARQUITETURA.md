@@ -74,8 +74,12 @@ docs/  ARQUITETURA.md  contratos/  receitas/  decisoes/
 | Pergunta surpresa | `jogo/js/sistemas/surpresa.js`, `surpresa-painel.js` | `docs/contratos/surpresa.md` |
 | Viagem de foguete (tanque, voo, planetas, ETs) | `jogo/js/sistemas/viagem*.js`, `jogo/js/ui/foguete.js`, `jogo/js/atividades/voo*.js`, `jogo/js/interiores/planetas/` | `docs/contratos/viagem.md` |
 | Laboratório de Química (misturas, caderno, microscópio, tabela periódica; 2º andar: curiosidades, Fogão dos Estados, Mesa de Separar, livros) | `jogo/js/sistemas/quimica.js`, `quimica-andar2.js`, `jogo/js/conteudo/quimica/`, `jogo/js/ui/quimica-*.js`, `jogo/js/interiores/quimica/` | `docs/contratos/quimica.md` |
+| Bosque dos Fantasmas (portal, combate, perguntas, nível) | `jogo/js/interiores/bosque/`, `jogo/js/sistemas/bosque*.js`, `jogo/js/ui/bosque-*.js` | `docs/contratos/bosque.md` |
+| Vila Arco-Íris (portal no Bosque, 4 lojas, pergunta do 4º bimestre, Teleportadora) | `jogo/js/interiores/vila/`, `jogo/js/sistemas/vila-lojas.js`, `teleportadora.js`, `jogo/js/ui/vila-*.js`, `jogo/js/conteudo/itens/loja-*.js`, `jogo/js/conteudo/casa/moveis-loja.js` | `docs/contratos/vila.md` |
+| Mapa de luta novo (arena: portal, inimigos, números) | `jogo/js/interiores/<mapa>/`, `jogo/js/motor/interiores-arena.js`, `arte/portal.js` | `docs/contratos/arenas.md` |
 | Som, música, voz | `jogo/js/sistemas/som*.js`, `musicas-faixas.js`, `musicas.js`, `voz.js`, `falas.js` | `docs/contratos/som-musica-e-voz.md` |
 | Fotos | `jogo/js/sistemas/fotos.js`, `fotos-moldura.js`, `fotos-telas.js` | `docs/contratos/fotos.md` |
+| Jogar com amigos (servidores, convite, presença) | `jogo/js/sistemas/juntos.js`, `juntos-desenho.js`, `jogo/js/ui/juntos.js`, `vercel/api/juntos.js`, `presenca.js`, `vercel/lib/juntos.js`, `presenca.js` | `docs/contratos/juntos.md` |
 | Matérias, salas, provas, desafios | `jogo/js/conteudo/`, `jogo/js/atividades/` | `docs/contratos/conteudo.md` |
 | Telas, HUD, foco, guarda de toque, Área dos pais | `jogo/js/ui/` | `docs/contratos/ui.md` |
 | Ícones em pixel | `jogo/js/arte/icones/<lote>.js` (prévia `jogo/ferramentas/previas/icones.html`) | `jogo/js/CLAUDE.md` (Arte) |

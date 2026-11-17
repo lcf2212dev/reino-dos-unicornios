@@ -34,6 +34,25 @@ Reino.config = {
     usos: { fomeFruta: 30, fomeComedouro: 45, fomeFogao: 60, sentarMs: 4000, deitarMs: 5000, banhoMs: 5000,
       chuveiroMs: 4500, cozinharMs: 4000, efeitoMs: 2500, curtaMs: 800, pularDepoisMs: 700 },
   },
+  // o Parquinho (sistemas/parquinho.js; docs/contratos/parquinho.md): o portal da praça acorda com `fase1` matérias
+  // completas das que contam para a casa (bimestre >= casa.desdeBimestre), uma delas de `chave` (o id começa assim);
+  // com todas completas, os presentes viram brinquedos. ms = quanto dura cada brincadeira; curtaMs = sem Animações;
+  // depois de pularDepoisMs um toque pula para o fim
+  parquinho: {
+    fase1: 3,
+    chave: ['matematica', 'portugues'],
+    ms: { balanco: 4200, escorregador: 4200, gangorra: 4200, areia: 600, carrossel: 4800, pulapula: 4200, bolinhas: 4200 },
+    // o balanço (interiores/parquinho/poses-balanco.js): ela puxa e solta. puxarPx = quanto arrastar (px da tela) para
+    // puxar tudo; teclaMs = segurando a tecla, quanto leva para puxar tudo; cheio = a fração do puxão que conta como
+    // "puxou tudo" (eles voam para a caixa de areia); amortece = quanto do balanço sobra a cada ida e volta;
+    // periodoMs = uma ida e volta; voarMs = o voo até a caixa de areia
+    balanco: { puxarPx: 140, teclaMs: 1400, cheio: 0.95, amortece: 0.8, periodoMs: 1600, voarMs: 1400 },
+    curtaMs: 900, pularDepoisMs: 700,
+    // a caixa de areia (interiores/parquinho/areia-caixa.js; ms.areia = ela sentar antes de abrir a tela de perto):
+    // cobrirPassadas = quantas passadas de areia cobrem um deles até o pescoço; andaresMax = andares de uma torre do
+    // castelo; torresMax = torres na caixa; enfeitesMax = enfeites na areia (passou, o mais antigo sai)
+    areia: { cobrirPassadas: 10, andaresMax: 3, torresMax: 12, enfeitesMax: 30 },
+  },
   pinPais: '2026',            // troque aqui o PIN da Área dos Pais
   desafiosPorSala: 6,
   desafiosSalaLivro: 14,      // sala de livro (ordem: 'livro', 4º bimestre): todos os desafios, na ordem; no máximo este tanto
@@ -63,15 +82,27 @@ Reino.config = {
   // a novidade em destaque na tela de início (ui/abertura-novidade.js), para todos os jogadores, até `ate` (inclusive):
   // a faixa de cima, o texto grande ao lado do desenho e a linha pequena. Enquanto vale, ela fica no lugar da
   // medalha de ouro (a festa continua no confete e no parabéns do Claude no mapa)
+  // tema: classe novidade-tema-<tema> (cores no css); desenho: emoji com ícone desenhado no lugar da casinha
   // id: a 1ª vez que o aparelho vê esta novidade, o botão é "Atualizar" e passa a atualização de mentira (atualizarMs,
   // com Animações; sem elas, atualizarParadoMs); depois volta o "Entrar no Reino". Trocar o id mostra de novo
-  novidadeInicio: { id: 'casa-2026-10-31', faixa: 'Nova atualização!', texto: 'Decore sua casa!',
-    detalhe: 'Cada matéria completa dá móveis', ate: '2026-11-30', atualizarMs: 3600, atualizarParadoMs: 1500 },
+  novidadeInicio: { id: 'bosque-2026-11-05', faixa: 'Nova atualização!', texto: 'O Bosque dos Fantasmas', tema: 'fantasmas', desenho: '👻',
+    detalhe: 'Venha explorar, se tiver coragem!', ate: '2026-11-30', atualizarMs: 3600, atualizarParadoMs: 1500 },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra
   // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)
   reconectarMs: 30000,
   jogadores: { loginMin: 2, loginMax: 20, senhaMin: 3, senhaMax: 30, prefixoSave: 'reino-v1-', senhaMariana: 'unicorlice77' },
+  // Jogar juntos no mesmo servidor (js/sistemas/juntos.js; docs/contratos/juntos.md): a presença é leve e efêmera
+  juntos: {
+    ligado: true,             // interruptor geral; sem servidor com a rota /api/presenca, o sistema se desliga sozinho
+    intervaloMs: 2500,        // de quanto em quanto tempo conta onde está e recebe quem está no reino
+    intervaloParadoMs: 8000,  // com a aba escondida manda menos (só para não sumir da lista)
+    ttlMs: 15000,             // sem notícia por este tempo o jogador some da tela; o servidor usa o mesmo (vercel/lib/presenca.js)
+    maxJogadores: 32,         // teto da lista (o reino é de família); o servidor usa o mesmo (vercel/lib/presenca.js)
+    suavidade: 8,             // por segundo: quanto maior, mais depressa o desenho alcança a posição que chegou
+    acenoMs: 3500,            // o 👋 fica no ar (maior que intervaloMs: o outro só olha de 2,5 em 2,5 s)
+    recadoMs: 5500,           // o balão do recado fica no ar
+  },
   // fome e sede da montaria (js/sistemas/cuidados.js): só gastam com o jogo aberto e ela jogando.
   // 100 = satisfeito. Abaixo de `baixo`, ela anda a `fatorLento` da velocidade até comer/beber.
   cuidados: {
@@ -163,9 +194,10 @@ Reino.config = {
   // 2ª versão: no voo para um planeta com matéria, `portaisPorVoo` portais de resposta (certo = `estrelasPorPortal`
   // estrela a mais e conta na Aura; errado não tira nada). O ET do desafio faz `desafioPerguntas` perguntas da matéria
   // (cada acerto de primeira vale `estrelasPorAcertoET`; errada mostra a certa); ajudar até o fim faz dele um amigo.
-  // 3ª versão: o ET amigo que acompanha a Mariana anda `companheiroDistancia` px atrás dela
+  // 3ª versão: o ET amigo que acompanha a Mariana anda `companheiroDistancia` px atrás dela; com um monstro equipado
+  // junto (os 3 bichinhos), o monstro vai nessa distância e o ET `etAtrasDoMonstro` px mais atrás, sem encostar nele
   viagem: { tanque: 10, cheioNoComeco: true, vooSegundos: 30, estrelasPorVoo: 5, portaisPorVoo: 3, estrelasPorPortal: 1,
-    desafioPerguntas: 3, estrelasPorAcertoET: 1, companheiroDistancia: 30 },
+    desafioPerguntas: 3, estrelasPorAcertoET: 1, companheiroDistancia: 30, etAtrasDoMonstro: 22 },
   // Laboratório de Química (js/sistemas/quimica.js): estrelas só na 1ª vez de cada descoberta (receita, lâmina do
   // microscópio, lição lida até o fim) e uma vez ao completar o caderno; nada de dinheiro nem Aura (é diversão).
   // `maxTubos`: quantos tubos cabem no béquer. Se mudar as estrelas, regrave as vozes (a Doutora Proveta fala o valor)
@@ -174,6 +206,147 @@ Reino.config = {
   // cada toque em Esquentar ou Esfriar
   quimica: { estrelasReceitaNova: 2, estrelasLaminaNova: 1, estrelasLicaoNova: 1, estrelasCadernoCompleto: 10, maxTubos: 3,
     estrelasEstadoNovo: 1, estrelasMisturaNova: 1, estrelasLivroNovo: 1, grausPorToque: 10 },
+  // Bosque dos Fantasmas (docs/contratos/bosque.md; sistemas/bosque.js e bosque-combate.js). Tempos em ms, distâncias
+  // em px do mundo (tile = 16), velocidades em px/s (ela a pé anda 58). Nada se perde: errar e desmaiar não tiram nada
+  fantasmas: {
+    acertosPorNivel: 10,         // LEGADO da migração do save: era o XP do nível (1 + acertos / acertosPorNivel).
+                                 // Hoje o nível é por mortosPorNivel; esta conta só mantém o nível que ela já tinha
+                                 // na 1ª carga do save novo (bosque.js:migrar). Não usar como XP.
+    perguntasPorBloco: 10,       // LEGADO: era a pergunta a cada 10 inimigos mortos (save antigo; bosque.js:xpLegado)
+    mortosPorNivel: 30,          // LEGADO: era o nível a cada 30 mortos; o `mortos` antigo vira XP por esta conta
+    // XP (pedido do Leandro, 05/11): cada inimigo dá o `xp` do tipo dele; o nível N pede base + passo × (N - 1) de XP
+    // (nível 1→2: 300; 2→3: 330; 10→11: 570). A pergunta abre a cada terço do nível (33%, 66% e ao fechar o nível)
+    xpNivel: { base: 300, passo: 30 },
+    perguntasPorNivel: 3,        // perguntas em cada nível (uma a cada terço da barra); o nível dá o ponto e o baú
+    nivelMax: 1000,              // o nível não passa daqui (os inimigos mortos continuam contando)
+    estrelasPorAcerto: 1,        // estrelas por pergunta certa (se mudar, regrave as vozes: o Claude fala da estrela)
+    // pergunta do fantasma: sorteio uniforme entre todas as perguntas do bimestre em curso (sala feita ou não), de
+    // todo tipo da sala menos estes. Também ficam de fora a pergunta pessoal (`livre: true`) e o `escrever` sem
+    // `chaves` (aceita qualquer texto): a estrela só vem de resposta certa
+    perguntaForaTipos: [
+      'memoria',                 // jogo da memória: sem resposta certa (termina sozinho ao achar os pares; vale 0)
+      'desenho',                 // desenho livre: qualquer desenho vale, não há resposta certa
+      'cacaPalavras',            // na tentativa única libera "Conferir" com uma palavra achada e dá errado
+    ],
+    jogador: {
+      vidaBase: 10,              // vida máxima sem pontos em Vida
+      vidaPorPonto: 2,           // vida máxima a mais por ponto em Vida
+      danoBase: 1,               // dano da espada sem pontos em Força
+      danoPorPonto: 1,           // dano a mais por ponto em Força
+      velocidadePorPonto: 0.04,  // fator de velocidade a mais por ponto em Velocidade (só no Bosque)
+      velocidadeMax: 1.6,        // teto do fator de velocidade
+      ataquePorPonto: 0.1,       // ataque 10% mais rápido por ponto em Velocidade (a recarga = recargaMs / (1 + 0,1 × pontos))
+      ataqueMax: 3,              // teto do fator de ataque (no máximo 3× mais golpes; a recarga não cai abaixo de recargaMs / 3)
+      regenPorPonto: 0.005,      // cada ponto em Vida cura 0,5% da vida máxima por segundo (somado ao 1 a cada regenACadaMs)
+      alcance: 20,               // alcance da espada
+      recargaMs: 350,            // espera entre dois golpes
+      golpeMs: 180,              // duração do golpe (desenho da espada)
+      invencivelMs: 1000,        // depois de levar um toque, esse tempo sem levar outro
+      regenSemDanoMs: 5000,      // tempo sem levar toque para a vida começar a voltar
+      regenACadaMs: 3000,        // depois disso, 1 de vida a cada esse tempo (a cura dos pontos em Vida também espera)
+    },
+    // cada tipo de inimigo: vida (golpes de dano 1), forca (vida que tira por toque), velocidade (px/s), mortos
+    // (quantos inimigos mortos ele conta no placar; a mosca conta 2) e xp (o XP que ele dá; os mais fortes dão mais).
+    // Os outros mapas: config.arenas (abaixo), com os mesmos campos
+    tipos: {
+      facil: { vida: 4, forca: 1, velocidade: 18, mortos: 1, xp: 10 },     // lilás
+      medio: { vida: 6, forca: 2, velocidade: 26, mortos: 1, xp: 12 },     // azul-turquesa (mais vida e mais rápido que o fácil)
+      dificil: { vida: 9, forca: 2, velocidade: 30, mortos: 1, xp: 15 },   // rosa-vinho com coroa
+      mosca: { vida: 12, forca: 3, velocidade: 40, mortos: 2, xp: 25 },    // mosca feia: a mais difícil e a mais rápida; vale 2
+    },
+    quantos: { facil: 5, medio: 4, dificil: 3, mosca: 2 },   // inimigos de cada tipo no Bosque ao mesmo tempo
+    zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], mosca: [3, 10] },   // fileiras (tiles) onde cada tipo nasce e vagueia
+    zonaSegura: 4,               // tiles em volta do começo (spawn) sem fantasma
+    visao: 80,                   // distância em que o fantasma a vê e vem atrás dela
+    coleira: 144,                // distância máxima do ponto onde nasceu (depois disso ele volta)
+    raioToque: 9,                // distância em que o fantasma encosta nela
+    recuoMs: 700,                // o fantasma recua por esse tempo depois de encostar ou de levar golpe
+    voltaMs: 20000,              // fantasma vencido volta a aparecer depois desse tempo
+    vencidoMs: 500,              // animação do fantasma sumindo antes da pergunta
+    vencidoPresoMs: 60000,       // proteção: vencido há mais que isso sem a pergunta devolver volta a contar voltaMs
+                                 // (quando ela entra no Bosque vinda de fora)
+    desmaioMs: 1600,             // animação do desmaio antes de voltar ao começo
+  },
+  // Os mapas de luta além do Bosque (docs/contratos/arenas.md), do mais fácil ao mais difícil (o Bosque é o 1). Cada um
+  // vai por cima de config.fantasmas (Reino.Arenas.cfg): o que não está aqui (o jogador, as perguntas, a curva de XP,
+  // coleira, raio do toque, recuo, tempos) é o do Bosque. Por tipo: vida (golpes de dano 1), forca (vida que tira dela
+  // por toque), velocidade (px/s; ela a pé anda 58), mortos (no placar; o voador vale 2, como a mosca) e xp. Tipos:
+  // facil (embaixo), medio (no meio), dificil (com coroa, em cima), voador (em cima). quantos = de cada tipo ao mesmo
+  // tempo; zonas = fileiras do interior 56 × 44 (as do Bosque); visao = distância em que o inimigo a vê (Bosque: 80);
+  // nivel = o nível recomendado (menu Lugares). Vida e força crescem com o nível (um ponto de habilidade por nível); o
+  // XP também, para valer a pena lutar no mapa mais difícil (no Bosque o fácil dá 10)
+  arenas: {
+    pantano: { nivel: 3, visao: 84, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Pântano das Rãs Resmungonas
+      quantos: { facil: 6, medio: 5, dificil: 3, voador: 2 },
+      tipos: {
+        facil: { vida: 8, forca: 2, velocidade: 22, mortos: 1, xp: 15 },     // rã resmungona
+        medio: { vida: 11, forca: 3, velocidade: 28, mortos: 1, xp: 20 },    // bolha de lodo
+        dificil: { vida: 15, forca: 3, velocidade: 32, mortos: 1, xp: 26 },  // sapo-rei com coroa
+        voador: { vida: 18, forca: 4, velocidade: 42, mortos: 2, xp: 36 },   // libélula-mosca
+      } },
+    gelo: { nivel: 6, visao: 90, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Montanha Gelada
+      quantos: { facil: 6, medio: 5, dificil: 3, voador: 2 },
+      tipos: {
+        facil: { vida: 12, forca: 3, velocidade: 24, mortos: 1, xp: 21 },    // boneco de neve bravo
+        medio: { vida: 16, forca: 4, velocidade: 30, mortos: 1, xp: 28 },    // pinguim
+        dificil: { vida: 22, forca: 4, velocidade: 34, mortos: 1, xp: 36 },  // yeti com coroa
+        voador: { vida: 26, forca: 5, velocidade: 44, mortos: 2, xp: 50 },   // coruja das neves
+      } },
+    dunas: { nivel: 10, visao: 96, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Dunas dos Escorpiões
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 2 },
+      tipos: {
+        facil: { vida: 18, forca: 4, velocidade: 26, mortos: 1, xp: 28 },    // escorpião
+        medio: { vida: 24, forca: 5, velocidade: 32, mortos: 1, xp: 37 },    // cacto andante
+        dificil: { vida: 32, forca: 6, velocidade: 36, mortos: 1, xp: 47 },  // múmia fofa com coroa
+        voador: { vida: 38, forca: 7, velocidade: 46, mortos: 2, xp: 65 },   // abutre engraçado
+      } },
+    cristal: { nivel: 15, visao: 100, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Caverna de Cristal
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
+      tipos: {
+        facil: { vida: 26, forca: 5, velocidade: 28, mortos: 1, xp: 36 },    // slime de cristal
+        medio: { vida: 34, forca: 6, velocidade: 34, mortos: 1, xp: 47 },    // golem de cristal pequeno
+        dificil: { vida: 44, forca: 7, velocidade: 38, mortos: 1, xp: 60 },  // aranha de cristal com coroa
+        voador: { vida: 52, forca: 8, velocidade: 48, mortos: 2, xp: 82 },   // morcego
+      } },
+    vulcao: { nivel: 20, visao: 104, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Vulcão dos Dragõezinhos
+      quantos: { facil: 6, medio: 5, dificil: 4, voador: 3 },
+      tipos: {
+        facil: { vida: 36, forca: 6, velocidade: 30, mortos: 1, xp: 45 },    // salamandra de fogo
+        medio: { vida: 46, forca: 8, velocidade: 36, mortos: 1, xp: 58 },    // bola de lava
+        dificil: { vida: 60, forca: 9, velocidade: 40, mortos: 1, xp: 74 },  // dragãozinho com coroa
+        voador: { vida: 70, forca: 10, velocidade: 50, mortos: 2, xp: 100 }, // morceguinho de fogo
+      } },
+    // Os três bosques de dentro do Bosque dos Fantasmas (pedido do Leandro, 11/11/2026; arenas.md §8): os portais
+    // ficam DENTRO da arena do Bosque (bosque/portais.js), não são lugares do mapa. Do mais fácil ao mais difícil, cada
+    // um acima do Vulcão (o mapa mais forte de hoje) em vida, força e XP, e crescendo entre eles. Nível recomendado
+    // no menu do painel do chip e na placa do portal.
+    // Mais fortes (pedido do Leandro, 16/11/2026: "está muito fácil"): vida ×2, força ×1,6, velocidade ×1,15, visão +16,
+    // um inimigo a mais de cada tipo no chão; o XP subiu ×1,25 para a luta mais longa não atrasar o nível.
+    orvalho: { nivel: 25, visao: 124, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque do Orvalho
+      quantos: { facil: 7, medio: 6, dificil: 5, voador: 3 },
+      tipos: {
+        facil: { vida: 88, forca: 11, velocidade: 37, mortos: 1, xp: 69 },    // caracol
+        medio: { vida: 112, forca: 14, velocidade: 44, mortos: 1, xp: 88 },    // lagarta
+        dificil: { vida: 144, forca: 18, velocidade: 48, mortos: 1, xp: 112 }, // ouriço com coroa
+        voador: { vida: 168, forca: 19, velocidade: 60, mortos: 2, xp: 150 }, // mariposa
+      } },
+    neblina: { nivel: 30, visao: 128, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Neblina
+      quantos: { facil: 7, medio: 6, dificil: 5, voador: 3 },
+      tipos: {
+        facil: { vida: 108, forca: 13, velocidade: 39, mortos: 1, xp: 82 },    // guaxinim
+        medio: { vida: 136, forca: 16, velocidade: 46, mortos: 1, xp: 105 },   // raposa
+        dificil: { vida: 172, forca: 19, velocidade: 51, mortos: 1, xp: 135 }, // javali com coroa
+        voador: { vida: 200, forca: 21, velocidade: 62, mortos: 2, xp: 180 }, // gavião
+      } },
+    lua: { nivel: 35, visao: 132, zonas: { facil: [27, 38], medio: [15, 26], dificil: [3, 14], voador: [3, 10] },   // Bosque da Lua Cheia
+      quantos: { facil: 8, medio: 7, dificil: 6, voador: 3 },
+      tipos: {
+        facil: { vida: 128, forca: 14, velocidade: 41, mortos: 1, xp: 98 },    // gato da lua
+        medio: { vida: 160, forca: 19, velocidade: 48, mortos: 1, xp: 125 },  // cervo da lua
+        dificil: { vida: 200, forca: 22, velocidade: 53, mortos: 1, xp: 160 }, // urso da lua com coroa
+        voador: { vida: 236, forca: 24, velocidade: 64, mortos: 2, xp: 212 }, // corvo da lua
+      } },
+  },
   novidadeDias: 45,   // dias em que o selo "✨ Novo!" aparece num lugar novo (lugar.novidade)
   versao: { intervaloMs: 10 * 60000, confirmarMs: 60000, cacheMs: 330000, paradaMs: 8000, avisoMs: 4500, esperaMs: 2500 },
   // acessórios das provas à venda na Loja (só depois de ganhar um da mesma prova)

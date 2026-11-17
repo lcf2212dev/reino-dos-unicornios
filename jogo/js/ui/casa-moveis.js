@@ -1,4 +1,5 @@
-/* Escolha do móvel avulso de uma sala feita (docs/contratos/casa.md §12). Cartões dos móveis sorteados
+/* Escolha do móvel avulso de uma sala feita, ou de outra fonte (nível do Bosque; docs/contratos/casa.md §12).
+   O título vem de Reino.CasaMoveis.titulo(chave). Cartões dos móveis sorteados
    (Reino.CasaMoveis.opcoes(sala), em geral 5): a capa desenhada pelo objeto da biblioteca (UI.capaCasa, de
    ui/casa-kits.js), o nome e o cômodo onde combina; o que ela já tem diz "Mais um!".
    UI.escolherMovelCasa(salaId, { de, total }) → Promise(bool): o toque dá o móvel (CasaMoveis.escolher), festa e
@@ -12,8 +13,8 @@
 
   /** @returns {Promise<boolean>} true se escolheu um móvel */
   UI.escolherMovelCasa = function (salaId, ordem) {
-    var CM = Reino.CasaMoveis, C = Reino.Casa, info = CM && CM.salaInfo(salaId);
-    var ids = info && CM.pendentes().indexOf(salaId) >= 0 ? CM.opcoes(salaId) : [];
+    var CM = Reino.CasaMoveis, C = Reino.Casa, titulo = CM ? CM.titulo(salaId) : '';
+    var ids = titulo && CM.pendentes().indexOf(salaId) >= 0 ? CM.opcoes(salaId) : [];
     if (!ids.length || !window.PA || !UI.capaCasa) return Promise.resolve(false);
     ordem = ordem || {};
     return new Promise(function (resolver) {
@@ -21,7 +22,7 @@
       var feito = false;
       pn.tela.classList.add('tela-movel-casa');
       var conta = ordem.total > 1 ? el('span.cmovel-conta', (ordem.de || 1) + ' de ' + ordem.total) : null;
-      pn.conteudo.appendChild(el('p.ckit-dica.cmovel-dica', U.colado('Presente da sala “' + info.sala.nome + '”'), conta));
+      pn.conteudo.appendChild(el('p.ckit-dica.cmovel-dica', U.colado(titulo), conta));
       var grade = el('div.ckit-grade.cmovel-grade');
       ids.forEach(function (id) {
         var m = Reino.movelCasa(id), tem = CM.qtd(id);

@@ -116,18 +116,42 @@
 @media (min-width: 640px) and (max-width: 999.98px) { .apoio-ouvir-rotulo { display: inline; } .apoio-corpo { max-height: 30vh; max-height: 30dvh; } }
 /* tablet em pé: pouco escondido (ou espaço livre na tela) → o texto inteiro, sem rolagem dentro da caixa (js: caber) */
 @media (min-width: 640px) and (max-width: 999.98px) { .apoio-inteiro .apoio-corpo { max-height: none; overflow: visible; } }
-/* tela larga (notebook, tablet deitado): o texto de apoio ao lado da pergunta, sempre aberto */
+/* tela larga (notebook, tablet deitado): o texto de apoio ao lado da pergunta, sempre aberto. Só na tela cheia (sala,
+   prova, treino: .missao-corpo, em :where para não mudar o peso); o cartão num painel fica no desenho do tablet, abaixo */
 @media (min-width: 1000px) {
   .missao-corpo > .desafio.com-apoio, .missao-corpo:has(> .desafio.com-apoio) > * { max-width: 1180px; }
-  .desafio.com-apoio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; align-items: start; column-gap: 20px; }
-  .desafio.com-apoio > .apoio { grid-column: 1; grid-row: 1 / span 2; }
-  .desafio.com-apoio > :not(.apoio) { grid-column: 2; }
-  .apoio-abrir { display: none; }
+  :where(.missao-corpo) > .desafio.com-apoio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); grid-template-rows: auto 1fr; align-items: start; column-gap: 20px; }
+  :where(.missao-corpo) > .desafio.com-apoio > .apoio { grid-column: 1; grid-row: 1 / span 2; }
+  :where(.missao-corpo) > .desafio.com-apoio > :not(.apoio) { grid-column: 2; }
+  :where(.missao-corpo) .apoio-abrir { display: none; }
+}
+/* o cartão do desafio num painel (Hora da pergunta, lojistas da Vila, pergunta surpresa, ET): o painel tem a largura
+   do tablet (560/720 px) em qualquer janela, então na tela larga ele usa o desenho do tablet em pé (uma coluna, a
+   caixa do texto de apoio recolhível), o mesmo da regra de até 999 px acima */
+@media (min-width: 1000px) {
+  .painel .desafio.com-apoio { gap: 10px; }
+  .painel .apoio { padding: 10px 12px 12px; }
+  .painel .apoio-topo { flex-wrap: nowrap; }
+  .painel .apoio-topo .apoio-rotulo { display: none; }
+  .painel .apoio-abrir { flex: 1 1 auto; min-width: 0; }
+  .painel .btn-ouvir-apoio { min-width: 52px; font-size: var(--texto); }
+  .painel .apoio-corpo { max-height: 30vh; max-height: 30dvh; overflow: auto; margin-top: 8px; padding: 0 6px 4px 2px; border-bottom: var(--borda-fina) dashed var(--ambar); overscroll-behavior: contain; }
+  .painel .apoio-corpo .apoio-titulo { margin-top: 0; }
+  .painel .apoio-fechado .apoio-corpo { display: none; }
+  .painel .apoio-inteiro .apoio-corpo { max-height: none; overflow: visible; }
+}
+/* Letras grandes num painel (tablet e notebook): o 🔊 fica só com o ícone, como no celular, e "📖 Esconder" inteiro numa
+   linha; as opções numa coluna (em 24 px, meia largura do painel não tem lugar para "consulta") */
+@media (min-width: 640px) {
+  .letras-grandes .painel .apoio-ouvir-rotulo { display: none; }
+  .letras-grandes .painel .apoio-abrir { white-space: nowrap; }
+  .letras-grandes .painel :is(.opcoes-varias, .opcoes-duas):not(.opcoes-img) { grid-template-columns: 1fr; }
 }
 
 /* instrucao (opcional): como responder no jogo, numa linha própria logo abaixo da pergunta */
 .instrucao { display: flex; align-items: baseline; gap: 6px; margin: 8px 0 0; font-size: var(--texto); font-style: italic; color: var(--tinta-suave); }
 .instrucao-icone { flex: none; font-style: normal; }
+.instrucao > span:last-child { min-width: 0; }
 
 /* completar: lacuna dentro da palavra (colado) e grade compacta (itens com figura) */
 .completar-itens { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 10em), 1fr)); gap: 8px; }
@@ -138,8 +162,22 @@
 /* botões de letra (S, Z, X, R…) com no mínimo 48×48: na grade, a coluna cresce conforme o número de botões (--opcoes) */
 .completar-grade .completar-itens { grid-template-columns: repeat(auto-fill, minmax(min(100%, max(10em, calc(var(--opcoes, 1) * 53px + 13px))), 1fr)); }
 .completar-colado .chip-palavra, .completar-grade .chip-palavra { min-width: 48px; }
+/* botões de um sinal ou número fora da grade (completar.js, .opcoes-curtas): a fileira divide a linha por igual (44 px
+   cada no mínimo, o alvo do dedo), em vez de deixar o último sozinho na linha de baixo */
+.completar .frase-opcoes.opcoes-curtas { gap: 6px; }
+.completar .frase-opcoes.opcoes-curtas .chip-palavra { flex: 1 1 0; min-width: 44px; max-width: 64px; padding-left: 4px; padding-right: 4px; }
+/* grade com palavra do quadro maior que uma sílaba (completar.js: "Pelo vento", "Pelos animais"): um botão por linha, na
+   largura do cartão; o botão fino de letra partia a palavra letra a letra */
+.completar-grade.completar-palavras-longas .frase-opcoes { flex-direction: column; align-items: stretch; }
+.completar-grade.completar-palavras-longas .chip-palavra { flex: none; max-width: none; padding: 6px 8px; }
 .completar-img { display: inline-flex; line-height: 1; min-height: 64px; align-items: center; justify-content: center; font-size: var(--texto-t); }
 .palavra-colada { white-space: nowrap; }
+/* Letras grandes no celular: a palavra da lacuna colada ("Vitória-Régia") inteira, um degrau abaixo (arte.md §17.3) */
+@media (max-width: 480px) { .letras-grandes .frase-colada { font-size: var(--texto-aux); } }
+/* a lacuna e o sinal logo depois dela ("__."), juntos na quebra de linha; a lacuna preenchida com a resposta longa
+   ("Chapeuzinho Vermelho") quebra dentro dela e encolhe para o sinal caber */
+.lacuna-cola { display: inline-flex; align-items: baseline; max-width: 100%; }
+.lacuna-cola > .lacuna { flex: 0 1 auto; }
 .lacuna.lacuna-colada { min-width: 2em; margin: 0; padding: 0 1px; line-height: 1.5; }
 .lacuna.lacuna-colada.preenchida { min-width: 0; padding: 0; }
 /* colado com frase inteira: caixa na largura toda, a frase quebra nos espaços (só a palavra da lacuna fica inteira) */
@@ -188,6 +226,7 @@ span.mai-acento-texto.mai-acento-texto { all: unset; }
 span.mai-acento.mai-acento { all: unset; position: relative; -webkit-text-fill-color: transparent; }
 span.mai-acento.mai-acento::before, span.mai-acento.mai-acento::after {
   position: absolute; left: 0; top: 0; line-height: 1; white-space: pre;
+  text-indent: 0;   /* o recuo herdado (verso com text-indent: -16px) desenhava a letra uma casa à esquerda */
   -webkit-text-fill-color: currentColor; pointer-events: none;
 }
 span.mai-acento.mai-acento::before { content: attr(data-b); content: attr(data-b) / ""; }

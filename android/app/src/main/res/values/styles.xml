@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Fundo roxo do jogo com o unicórnio já na abertura (nada de tela branca antes de o site carregar). -->
+    <style name="Tema.Reino" parent="@android:style/Theme.Material.NoActionBar">
+        <item name="android:windowBackground">@drawable/fundo_abertura</item>
+        <item name="android:statusBarColor">@color/cor_tema</item>
+        <item name="android:navigationBarColor">@color/cor_barra_navegacao</item>
+    </style>
+</resources>

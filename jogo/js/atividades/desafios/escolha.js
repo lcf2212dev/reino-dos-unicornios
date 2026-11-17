@@ -10,7 +10,7 @@
   _d.botaoImg = function (o, d, extra) {
     return el('button.opcao.opcao-img' + (extra || ''), { type: 'button', 'aria-label': d.soImagem ? U.semEn(o.t) : null },
       el('span.opcao-figura', { 'aria-hidden': 'true' }, o.img ? _d.figuraIcone(o.img, 64) : null),
-      d.soImagem ? null : el('span.opcao-texto', U.colado(o.t)));
+      d.soImagem ? null : _d.caberTexto(el('span.opcao-texto', _d.textoOpcao(o.t)), true));
   };
   // validar: desenho das opções (aviso na sala, erro na prova) e soImagem só com desenho em todas
   _d.conferirOpcoesImg = function (d, v) {
@@ -19,16 +19,39 @@
     com.forEach(function (o) { _d.conferirDesenho(o.img, d.id + ': opção "' + o.t + '"', v); });
   };
 
+  // opções que começam todas com um rótulo em sequência ("A:", "b)", "Foto 1:", "Grupo 2:", "3)"): a ordem do conteúdo,
+  // sem sorteio (B, C, E, A embaralhados confundem); as outras continuam sorteadas pela mesma chave
+  var RE_ROTULO = /^\s*(?:(?:foto|quadro|grupo|imagem)\s+(\d+)\s*[:).-]?|([a-z])\s*[):]|(\d+)\s*\))/i;
+  _d.ordemRotulada = function (d) {
+    var ops = d.opcoes || [];
+    var ok = ops.length > 1 && ops.every(function (o, i) {
+      var m = RE_ROTULO.exec(String(o && o.t || ''));
+      if (!m) return false;
+      var n = m[1] || m[3] ? Number(m[1] || m[3]) : m[2].toLowerCase().charCodeAt(0) - 96;
+      return n === i + 1;
+    });
+    return ok ? ops.map(function (_, i) { return i; }) : null;
+  };
+
+  // rótulo comprido: .opcoes-longas (mais de 24 letras: uma coluna só no texto, até 6 opções, ou 4 com Letras grandes;
+  // a coluna da figura mais larga a partir de 640 px) e .opcoes-muito-longas (mais de 48 letras: uma coluna só no
+  // texto também com Letras grandes). Medido nas 291 perguntas de opção: nenhuma regra empurra a última opção para
+  // baixo do rodapé (ui-missao.css, ui-desafios-grade.css)
+  _d.classeLongas = function (d) {
+    var n = Math.max.apply(null, (d.opcoes || []).map(function (o) { return U.semEn(String(o && o.t || '')).trim().length; }).concat(0));
+    return (n > 24 ? '.opcoes-longas' : '') + (n > 48 ? '.opcoes-muito-longas' : '');
+  };
+
   // escolha única (também serve para "completar a frase")
   function montarEscolha(d, opts) {
-    var ordem = opts.ordem || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
+    var ordem = opts.ordem || _d.ordemRotulada(d) || U.embaralhar(d.opcoes.map(function (_, i) { return i; }), ['escolha', d]);
     var sel = opts.valorInicial != null ? opts.valorInicial : null;
     var bloqueadas = {};
     var comImg = _d.temImg(d);
-    var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : ''));
+    var lista = el('div.opcoes' + (d.opcoes.length === 2 ? '.opcoes-duas' : '') + (comImg ? '.opcoes-img' : '') + _d.classeLongas(d));
     var botoes = {};
     ordem.forEach(function (i) {
-      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: U.colado(o.t) });   // colado: arte.md §17
+      var o = d.opcoes[i], b = comImg ? _d.botaoImg(o, d) : botaoOpcao({ e: o.e, t: String(o.t) });   // colado e hifenizado: _d.textoOpcao (arte.md §17)
       b.addEventListener('click', function () {
         if (bloqueadas[i] || ctrl.travado) return;
         sel = i; Reino.Som.tocar('selecionar'); pintar(); opts.onMudar();

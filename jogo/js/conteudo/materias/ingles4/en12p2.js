@@ -77,6 +77,7 @@ Reino.registrarSala('ingles4',
           adaptacao: 'Montar o sanduíche de verdade virou escolher os recheios; qualquer escolha vale.',
           explica: 'Que sanduíche gostoso! «Sandwich» é sanduíche.' },
         { id: 'en12p2-09', tipo: 'ligar', origem: 'PRJ-187-qA', pagina: 187, livro: 'en-p187',
+          apoio: { titulo: 'Os desenhos do livro', partes: [{ texto: 'Embaixo, o livro mostra: um pote de mel, um vidro de ketchup, um vidro de azeite, um pote de geleia vermelha, um ovo frito e um copo de suco cor de laranja.' }] },
           pergunta: '«Super Challenge. Match the food.» Ligue cada comida ao que se faz com ela.',
           pares: [
             [{ e: '🫒', t: '«Olives»' }, { t: '«Olive oil»' }],

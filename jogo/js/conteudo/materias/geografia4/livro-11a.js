@@ -80,7 +80,7 @@
       { t: 'texto', texto: 'Nas cidades brasileiras, também podemos observar a convivência entre a natureza e a ação humana criando paisagens muito diversas. Em algumas cidades, é possível identificar muitos espaços verdes, como gramados, canteiros de árvores e parques. Em outras, é mais comum identificar casas, prédios e outros tipos de construção.' },
       { t: 'texto', texto: 'Repare na diferença entre a quantidade de elementos culturais como ruas, casas e prédios nas cidades brasileiras retratadas a seguir.' },
       { t: 'figuras', itens: [
-        { img: '🏛️', legenda: 'Vista panorâmica da cidade de São Paulo, no estado de São Paulo.' },
+        { img: '🌇', legenda: 'Vista panorâmica da cidade de São Paulo, no estado de São Paulo.' },
         { img: '🚗', legenda: 'Paisagem da cidade de Caruaru, em Pernambuco.' },
         { img: '⛪', legenda: 'Paisagem da cidade de Itamogi, em Minas Gerais.' },
       ] },

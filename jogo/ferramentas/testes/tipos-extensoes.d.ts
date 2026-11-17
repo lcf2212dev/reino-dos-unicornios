@@ -26,6 +26,8 @@ interface LugarRegistrado {
   placa?: 'acima' | 'direita';
   /** tiles [x, y] de rua da rua até a frente da porta (obrigatório) */
   caminho: [number, number][];
+  /** false = fechado: a porta abre menu.abrir em vez do interior e o lugar sai do menu Lugares (Reino.lugarLiberado) */
+  liberado?(l?: any): boolean;
   /** cerquinha com portão na fileira da frente (depois do sorteio; mundo/mapa.js) */
   cerca?: boolean;
   menu?: MenuLugar;
@@ -43,11 +45,15 @@ interface ModuloDef {
   depurar?(): any;
   /** ações de objeto/NPC que o sistema oferece aos prédios (npcs-conversa.js procura aqui) */
   acoes?: { [tipo: string]: (acao: any, ctx: any) => any };
+  /** antes da conversa com um NPC: null = normal; Promise<bool> = espera (false: não conversa) */
+  porteira?(npc: any): Promise<boolean> | null;
   camada?: {
     ativo(): boolean;
     itensDesenho(pintor: any, t: number, animar: boolean): any[];
     sobre?(ctx: CanvasRenderingContext2D, pintor: any, t: number, animar: boolean): void;
   };
+  /** true enquanto o módulo desenha ela e o unicórnio (o desenho normal some; personagens/jogador-desenho.js) */
+  desenhaEla?(): boolean;
 }
 
 /* ---------- campos do save (Reino.Progresso.registrarCampo; save-e-mescla.md §11) ---------- */
@@ -170,9 +176,89 @@ interface MovelCasaDef {
   comodo: string;
   direcoes: 1 | 2 | 4;
   parede?: boolean;
+  /** móvel da loja da Vila (só se compra; fora do sorteio das salas e dos presentes) */
+  loja?: boolean;
+}
+/** Outra fonte de móvel avulso além das salas (Reino.CasaMoveis.registrarFonte; casa.md §12). Chaves próprias
+ *  (ex.: 'bosque:3'), que não colidem com ids de sala. */
+interface FonteMovelCasa {
+  id: string;
+  /** as chaves que dão um móvel agora (as já escolhidas saem sozinhas dos pendentes) */
+  chaves(): string[];
+  /** o texto do presente na tela de escolha (ex.: "Presente do nível 3") */
+  titulo(chave: string): string;
+  /** opções só entre os móveis que ela ainda não tem (sem repetido nem "Mais um!") */
+  soNovos?: boolean;
 }
 /** Interior que o jogador decora (casa.md §4): o validador dispensa o critério de "rico" e a cena soma os móveis do save. */
 interface InteriorDef {
   decoravel?: boolean;
   objetosExtras?(P: any): ObjetoInterior[];
+}
+
+/* ---------- evento do Bosque dos Fantasmas (js/nucleo/eventos.js; bosque.md §5) ---------- */
+// junta-se ao EventosReino de tipos-jogo.d.ts (que está no limite de linhas)
+interface EventosReino {
+  /** carga: { tipo: 'vida'|'golpe'|'vencido'|'abate'|'desmaio'|'acerto'|'ponto', ... } */
+  BOSQUE: 'bosque';
+  /** carga: { tipo: 'ganhou'|'estrelas'|'mudou', ... } (itens.md §11) */
+  ITENS: 'itens';
+  /** carga: { tipo: 'jogou'|'capturou'|'escapou'|'voltou'|'equipou', especie?, arena? } (monstros.md) */
+  MONSTROS: 'monstros';
+}
+
+/* ---------- regras do Bosque dos Fantasmas (js/sistemas/bosque.js; bosque.md §5) ---------- */
+type HabilidadeBosque = 'forca' | 'vida' | 'velocidade';
+/** Uma pergunta de fantasma: os objetos da matéria, da sala e do desafio. */
+interface PerguntaBosque { materia: Materia; sala: Sala; desafio: Desafio }
+/** O móvel surpresa gravado por CasaMoveis.presente: a chave e o id do móvel. */
+interface PresenteBosque { chave: string; movel: string }
+/** O que um inimigo morto rende: o placar, as perguntas pendentes, o nível novo e o móvel que ele já gravou. */
+interface AbateBosque { mortos: number; perguntas: number; subiu: number | null; premioNivel: PresenteBosque | null; xp: number }
+/** Reino.Bosque */
+interface BosqueApi {
+  acertos(): number;
+  mortos(): number;
+  nivel(): number;
+  xp(): { n: number; de: number; maximo: boolean };
+  /** XP total: o do placar antigo de mortos (xpLegado) + o ganho desde o XP */
+  xpTotal(): number;
+  perguntasPendentes(): number;
+  /** n de `de` XP do terço de agora; pct 0–99; marca = qual terço do nível (1 a 3) */
+  proximaPergunta(): { n: number; de: number; pct: number; marca: number };
+  temEspada(): boolean;
+  /** true só na 1ª vez */
+  ganharEspada(): boolean;
+  pontos(): { forca: number; vida: number; velocidade: number };
+  pontosPendentes(): number[];
+  porPonto(n: number, h: HabilidadeBosque): boolean;
+  dano(): number;
+  vidaMax(): number;
+  fatorVelocidade(): number;
+  /** 1 + ataquePorPonto × pontos em Velocidade, até ataqueMax */
+  fatorAtaque(): number;
+  /** a espera entre golpes: recargaMs / fatorAtaque() */
+  recargaMs(): number;
+  /** fração da vida máxima curada por segundo (pontos em Vida × regenPorPonto) */
+  regenPorSegundo(): number;
+  noBosque(): boolean;
+  /** numa arena (o Bosque ou um mapa novo; arenas.md) */
+  naArena(): boolean;
+  arenaAtual(): string | null;
+  pergunta(): PerguntaBosque | null;
+  perguntas(): PerguntaBosque[];
+  /** arena: a dele (padrão: a de agora; sem arena, o Bosque) */
+  abater(tipo: string, arena?: string): AbateBosque;
+  acertou(materiaId: string): { estrelas: number; nivel: number; presente: PresenteBosque | null };
+  errou(materiaId: string): void;
+  consumirPergunta(): boolean;
+  chaveMovel(n: number): string;
+  HABILIDADES: HabilidadeBosque[];
+  curva: { xpDoNivel(n: number): number; xpAte(n: number): number; nivelDoXp(x: number): number; xpLegado(m: number): number; tercosDe(x: number): number };
+}
+
+/* ---------- pergunta sozinha (Reino.avulsa / Reino.cartaAvulsa, js/nucleo/registros.js; quarto-bimestre.md §12.1) ---------- */
+interface DesafioBase {
+  /** Bosque, Vila, surpresa, viagem: false = só na sala; { carta } = a carta do "Leia antes" no lugar da `livro` (null: nenhuma) */
+  avulsa?: false | { carta: string | null };
 }

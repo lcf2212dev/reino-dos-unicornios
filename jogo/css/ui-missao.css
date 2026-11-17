@@ -20,6 +20,7 @@
 /* degrau do título que não cabe (D.ajustarTitulo, js/atividades/desafios.js): um token abaixo, nunca fator */
 .missao-topo .missao-titulo.titulo-aux { font-size: var(--texto-aux); }
 .titulo-cola { white-space: nowrap; }   /* o ícone preso à 1ª palavra (D.ajustarTitulo) */
+.titulo-hifen .titulo-cola { white-space: normal; }   /* nem em 12 cabe: quebra só no hífen ("Matérias-/primas"; o ícone tem espaço inquebrável) */
 .titulo-resto { white-space: normal; }   /* o resto do «inglês» do título, dentro do mesmo span.en, quebra normal */
 /* letras grandes no celular (em pé ou deitado, O-35): o título do topo fica no degrau de baixo (16), como o cabeçalho que não cabe (arte.md §21) */
 @media (max-width: 480px), (max-height: 480px) { .letras-grandes .missao-titulo { font-size: var(--texto-aux); } }
@@ -67,6 +68,12 @@
   background: var(--papel); border-top: var(--borda-grossa) solid var(--borda);
 }
 .sem-relogio { font-size: var(--texto-aux); color: var(--tinta-suave); }
+/* "⏳ Sem relógio. O tempo é todo seu!" numa linha só, sem palavra órfã: no tablet a frase inteira cabe ao lado do
+   Conferir (que encolhe até o rótulo dele); onde não cabe (abaixo de 640 px, ou com Letras grandes abaixo de 1000 px)
+   fica só "⏳ Sem relógio", como na prova e no treino */
+.missao-rodape .sem-relogio { flex: none; white-space: nowrap; }
+@media (max-width: 639.98px) { .sem-relogio-resto { display: none; } }
+@media (max-width: 999.98px) { .letras-grandes .sem-relogio-resto { display: none; } }
 /* Conferir: a mesma classe e a mesma cor na sala, na surpresa e no ET (arte.md §8): laranja, e desabilitado (sem
    resposta) no estado indisponível de ui-base.css */
 .btn-conferir { background: var(--laranja); color: var(--tinta); }
@@ -80,12 +87,23 @@
 .pergunta { font-size: var(--texto); }   /* enunciado: 16 no celular, 24 a partir de 640 px (arte.md §9.1) */
 @media (min-width: 640px) { .pergunta { font-size: var(--texto-g); } }
 .afirmacao { margin: 10px 0 0; padding: 12px 14px; border-left: var(--borda-grossa) solid var(--ambar); background: var(--papel-quente); border-radius: var(--canto); font-size: var(--texto); }
+/* "🔊 Ouvir" e "📖 Livro" (sala de livro, D.render aoLivro) na mesma linha, rótulos inteiros */
+.enunciado-botoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.enunciado-botoes > .btn-ouvir { margin-top: 0; padding: 4px 10px; white-space: nowrap; }
+@media (max-width: 480px) { .letras-grandes .enunciado-botoes > .btn-ouvir { font-size: var(--texto-aux); } }   /* rótulo curto: um degrau abaixo (arte.md §17.3) */
 .btn-ouvir { margin-top: 10px; min-height: 44px; padding: 4px 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel-quente); font-size: var(--texto); }
 
 .opcoes { display: grid; grid-template-columns: 1fr; gap: 12px; }
 /* Verdadeiro/Falso e duas opções lado a lado só a partir de 640 px: no celular, "Verdadeiro" na letra pixel
    não cabe em meia tela e empurrava o "Falso" para fora */
 @media (min-width: 640px) { .opcoes-varias { grid-template-columns: 1fr 1fr; } .opcoes-duas, .opcoes-vf { grid-template-columns: 1fr 1fr; } }
+/* rótulo comprido (escolha.js, .opcoes-longas: mais de 24 letras): uma coluna só, na sala e no painel (em meia largura a
+   frase ficava com uma palavra por linha) */
+:root:not(.letras-grandes) .opcoes-longas:not(.opcoes-img):not(:has(> .opcao:nth-child(7))),
+.opcoes-muito-longas:not(.opcoes-img):not(:has(> .opcao:nth-child(7))),
+.letras-grandes .opcoes-longas:not(.opcoes-img):not(:has(> .opcao:nth-child(5))) { grid-template-columns: 1fr; }
+/* (só até 6 opções: as 10 de uma lista em uma coluna desciam 800 px abaixo do rodapé no tablet; com Letras grandes, as
+   de 25 a 48 letras só até 4: com 5 ou mais, em uma coluna, passavam do rodapé no tablet) */
 .opcao {
   display: flex; align-items: center; gap: 12px;
   min-height: 64px; padding: 12px 16px; text-align: left;
@@ -97,11 +115,28 @@
   display: inline-flex; align-items: center; justify-content: center; flex: none; line-height: 1;
 }
 .opcao-emoji { font-size: var(--texto-g); }
-.opcao-texto { flex: 1; }
+/* a palavra que não cabe no botão não parte no meio (_d.caberTexto: um degrau abaixo ou o hífen da sílaba; .texto-parte
+   é o último recurso) */
+.opcao-texto { flex: 1; min-width: 0; overflow-wrap: normal; }
+.opcao-texto.texto-parte, .ligar-texto.texto-parte { overflow-wrap: break-word; }
+/* o degrau de baixo de qualquer texto que não cabe (_d.caberTexto): toda tela mora em #telas, e o id vence a letra de
+   cada lugar (enunciado, carta, legenda) */
+#telas .texto-menor { font-size: var(--texto-aux); }
+/* grupo colado do texto da opção e do ligar com emoji (_d.textoOpcao: "de brinquedo", "100 reais"): inteiro na linha; só
+   o que é mais largo que o botão quebra entre as palavras (ou na sílaba, com hífen), em vez de vazar (arte.md §17) */
+.grupo-colado { display: inline-block; max-width: 100%; }
+.en .grupo-colado { max-width: calc(100% - 0.3em); }   /* dentro do «inglês», menos a folga dele (ui-desafios.css) */
+/* no nome da opção com figura o pai tem a largura do próprio texto (flex: none) e a conta exata da folga arredonda uma
+   fração de px para menos: «I cry.» quebrava em "I / cry." com espaço sobrando (arte.md §17.4). 0.05em de sobra
+   absorve o arredondamento; sem folga nenhuma (100%) o rótulo mais largo que o botão passava 7 px com Letras grandes */
+.opcao-img .en .grupo-colado { max-width: calc(100% - 0.25em); }
+/* o grupo mais largo que a caixa mesmo no degrau de baixo se desfaz (quebra.js, soltar): as palavras dele quebram como
+   texto comum, sem a linha de uma palavra só que o grupo inteiro na linha de baixo deixava */
+.grupo-colado.grupo-solto { display: inline; }
 /* palavra comprida (ex.: "acontecimentos" com letras grandes no celular): quebra dentro do texto da opção em vez de
    empurrar o botão para fora da tela; palavras que cabem não mudam (break-word só age quando a palavra não cabe) */
-.opcoes-varias > .opcao { min-width: 0; }
-.opcoes-varias .opcao-texto { min-width: 0; overflow-wrap: break-word; }
+.opcoes > .opcao { min-width: 0; }
+.opcoes-varias .opcao-texto { min-width: 0; }
 .opcao[aria-pressed="true"] { background: var(--ambar-claro); border-color: var(--roxo); box-shadow: var(--sombra-grande); --degrau: 4px; outline: var(--borda-fina) solid var(--roxo); outline-offset: 0; }
 .opcao-marcar::after { content: ""; flex: none; width: 28px; height: 28px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); }
 .opcao-marcar[aria-pressed="true"]::after {
@@ -140,6 +175,7 @@
   font-size: var(--texto);
 }
 .ligar-item > span:last-child:not(.ligar-img) { flex: 1 1 0; max-width: 100%; overflow-wrap: break-word; }
+.ligar-item > span.ligar-texto:not(.texto-parte) { overflow-wrap: normal; }   /* com emoji: _d.caberTexto (quebra.js) */
 /* com emoji (D6-17): o emoji fica em cima do texto, os dois na coluna ao lado da bolinha (o texto não desce por causa dele) */
 .ligar-item:has(> .opcao-emoji) { display: grid; grid-template-columns: auto minmax(0, 1fr); justify-items: start; align-content: center; column-gap: 8px; row-gap: 4px; }
 .ligar-item:has(> .opcao-emoji) > .opcao-emoji, .ligar-item:has(> .opcao-emoji) > span:last-child { grid-column: 2; }
@@ -160,8 +196,9 @@
   min-height: 52px; padding: 8px 14px; text-align: left;
   border: var(--borda-fina) solid var(--borda); border-radius: var(--canto);
   background: var(--papel); box-shadow: var(--sombra-pequena); --degrau: 2px;
-  
+  max-width: 100%;   /* a frase longa quebra dentro do botão (sílaba: _d.caberTexto), nunca passa da caixa */
 }
+.seq-item > span { min-width: 0; }
 .seq-alvo .seq-item { width: 100%; background: var(--ambar-claro); }
 .seq-monte { display: flex; flex-wrap: wrap; gap: 10px; }
 .frase-linha { flex-direction: row; flex-wrap: wrap; align-items: center; }

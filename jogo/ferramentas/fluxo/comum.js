@@ -62,12 +62,12 @@ function lerArgs(argv, { booleanas = [], repetidas = [] } = {}) {
   return op;
 }
 
-// repositório da pasta atual, árvore principal (1ª worktree) e a pasta onde moram as worktrees
+// repositório da pasta atual, árvore principal (1ª worktree) e a pasta onde moram as worktrees (<principal>/worktrees)
 function raizes(cwd = process.cwd()) {
   const repo = git(cwd, 'rev-parse', '--show-toplevel');
   const lista = worktrees(repo);
   const principal = lista[0].pasta;
-  return { repo, principal, mae: path.dirname(principal), worktrees: lista };
+  return { repo, principal, mae: path.join(principal, 'worktrees'), worktrees: lista };
 }
 
 // git worktree list --porcelain → [{ pasta, head, branch }]

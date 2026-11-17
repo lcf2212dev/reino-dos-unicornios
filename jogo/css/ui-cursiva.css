@@ -1,0 +1,19 @@
+/* Letra cursiva: a tela de escrever (js/ui/cursiva.js; docs/contratos/cursiva.md). Em cima a conta e a frase em
+   letra de forma; a frase toda pequena; o papel (canvas em px de arte, 2 px CSS cada, sem borrar) com a pauta;
+   embaixo a dica e "Ver como faz". O papel não rola a página com o dedo (touch-action: none). */
+.tela-cursiva .painel { width: min(760px, 100%); }
+.cursiva { display: flex; flex-direction: column; align-items: stretch; gap: 8px; }
+.cursiva-cima { text-align: center; }
+.cursiva-conta { margin: 0; font-size: var(--texto-aux); color: var(--tinta-suave); }
+.cursiva-modelo { margin: 4px 0 0; font-size: var(--texto); color: var(--tinta); }
+.cursiva-frase, .cursiva-palco { display: block; margin: 0 auto; image-rendering: pixelated; }
+.cursiva-papel { border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-pequeno); background: var(--papel);
+  overflow: hidden; touch-action: none; }
+.cursiva-palco { touch-action: none; cursor: crosshair; -webkit-user-select: none; user-select: none; }
+.cursiva-baixo { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.cursiva-dica { margin: 0; flex: 1 1 200px; font-size: var(--texto); color: var(--tinta); }
+.cursiva-ver { min-height: 44px; padding: 6px 12px; font-size: var(--texto-aux); }
+.cursiva-pegar { align-self: center; }
+@media (max-width: 480px) {
+  .cursiva-dica { font-size: var(--texto-aux); }
+}

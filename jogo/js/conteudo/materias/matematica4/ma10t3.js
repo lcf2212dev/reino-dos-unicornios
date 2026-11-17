@@ -3,16 +3,20 @@
    pouparam (dobro e triplo) (docs/contratos/quarto-bimestre.md §3). A sentença matemática da linha do livro vira
    caixas para os números; na multiplicação, os fatores valem em qualquer ordem. */
 (function () {
-  function reais(v) {
+  function reais(v, ext) { // ext (opcional): a quantia por extenso, que também vale
     var r = [];
     (v.indexOf(',') < 0 ? [v, v + ',00'] : [v]).forEach(function (x) { r.push(x, 'R$ ' + x, 'R$' + x, x + ' reais'); });
-    return r;
+    return ext ? r.concat(ext, ext + ' reais') : r;
   }
   function num(n) { return { antes: '', depois: '', certas: [String(n)], junto: true }; }
   var CEDULA_2 = { img: 'ma:cedula-2', legenda: '2 reais' };
   var BRUNO = { titulo: 'A quantia de Bruno', partes: [{ figuras: [
     { img: 'ma:cedula-5', legenda: '5 reais' }, { img: 'ma:cedula-2', legenda: '2 reais' }, { img: 'ma:cedula-2', legenda: '2 reais' },
   ] }] };
+  var IRMAOS = { titulo: 'O que os irmãos pouparam', partes: [
+    { titulo: 'Bruno', figuras: BRUNO.partes[0].figuras },
+    { texto: 'Ana poupou o dobro da quantia de Bruno. Paula poupou o triplo da quantia de Bruno.' },
+  ] };
 
   Reino.registrarSala('matematica4',
     {
@@ -25,10 +29,10 @@
           pergunta: 'Em cada cofrinho representado a seguir, há 10 moedas de 1 real. Escreva a quantia total em reais em cada situação.',
           cab: ['Quantidade de cofrinhos', 'Quantia total'],
           linhas: [
-            ['2 cofrinhos', { certas: reais('20') }],
-            ['3 cofrinhos', { certas: reais('30') }],
-            ['5 cofrinhos', { certas: reais('50') }],
-            ['8 cofrinhos', { certas: reais('80') }],
+            ['2 cofrinhos', { certas: reais('20', 'vinte') }],
+            ['3 cofrinhos', { certas: reais('30', 'trinta') }],
+            ['5 cofrinhos', { certas: reais('50', 'cinquenta') }],
+            ['8 cofrinhos', { certas: reais('80', 'oitenta') }],
           ],
           adaptacao: 'Os porquinhos desenhados de cada linha viraram o número de cofrinhos.',
           explica: 'Cada cofrinho tem 10 reais. 2 cofrinhos: R$ 20,00. 3: R$ 30,00. 5: R$ 50,00. 8: R$ 80,00.' },
@@ -42,7 +46,7 @@
           ],
           explica: '2 + 2 + 2 = 6. Jorge ganhou R$ 6,00 do avô.' },
         { id: 'ma10t3-03', tipo: 'digitar', origem: 'ATI-05-q2b', pagina: 5, livro: 'ma-t05', figura: CEDULA_2,
-          pergunta: 'Escreva uma multiplicação para representar essa situação.',
+          pergunta: 'Jorge ganhou do avô 3 cédulas iguais à cédula ao lado. Escreva uma multiplicação para representar essa situação.',
           qualquerOrdem: [[0, 1]],
           frases: [
             { antes: '', depois: '×', certas: ['3'] },
@@ -65,7 +69,7 @@
           explica: 'São 3 filhos, e cada um ganhou 5 reais: 3 × 5 = 15. Denise distribuiu R$ 15,00.' },
         { id: 'ma10t3-05', tipo: 'digitar', origem: 'ATI-06-q4a', pagina: 6, livro: 'ma-t06', apoio: BRUNO,
           pergunta: 'Ana, Paula e Bruno são irmãos e começaram a poupar. Depois de algum tempo, Bruno conseguiu poupar a quantia representada a seguir. a) Quantos reais Bruno conseguiu poupar?',
-          frases: [{ antes: '', depois: '', certas: reais('9') }],
+          frases: [{ antes: '', depois: '', certas: reais('9', 'nove') }],
           explica: '5 + 2 + 2 = 9. Bruno poupou R$ 9,00.' },
         { id: 'ma10t3-06', tipo: 'digitar', origem: 'ATI-06-q4b', pagina: 6, livro: 'ma-t06', apoio: BRUNO,
           pergunta: 'b) Ana poupou o dobro da quantia de Bruno. Quantos reais Ana poupou?',
@@ -75,7 +79,7 @@
           pergunta: 'c) Paula poupou o triplo da quantia de Bruno. Quantos reais Paula poupou?',
           frases: [{ antes: '', depois: '', certas: reais('27') }],
           explica: 'O triplo é três vezes: 9 + 9 + 9 = 27. Paula poupou R$ 27,00.' },
-        { id: 'ma10t3-08', tipo: 'digitar', origem: 'ATI-06-q4d', pagina: 6, livro: 'ma-t06',
+        { id: 'ma10t3-08', tipo: 'digitar', origem: 'ATI-06-q4d', pagina: 6, livro: 'ma-t06', apoio: IRMAOS,
           pergunta: 'd) Quantos reais os três irmãos pouparam juntos?',
           frases: [
             { antes: 'Os três irmãos pouparam', depois: 'juntos.', certas: reais('54') },

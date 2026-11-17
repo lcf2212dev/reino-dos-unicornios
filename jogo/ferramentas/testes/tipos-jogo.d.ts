@@ -985,7 +985,7 @@ interface EventosReino {
   NUVEM: 'nuvem';
   /** carga: { nome, sexo } */
   PERFIL: 'perfil';
-  RESPOSTAS: 'respostas';
+  RESPOSTAS: 'respostas'; JUNTOS: 'juntos';   // JUNTOS: carga { total, sala, jogadores, servidor, aviso } (juntos.md)
 }
 /** Nome de um evento ('progresso', 'cena'…). */
 type Evento = EventosReino[keyof EventosReino];
@@ -994,7 +994,7 @@ type Evento = EventosReino[keyof EventosReino];
 interface BimestresApi {
   atual: number; inicio: string; aviso: string;
   emEspera(materia: Materia | string): boolean;
-  acaoEmEspera(acao: any): boolean;
+  acaoEmEspera(acao: any): boolean; ativa(materia: Materia | string): string;   // ativa: a nova do mesmo prédio
   avisar(quem?: any): Promise<any>;
   painel(titulo?: string, opcoes?: any): any;
 }

@@ -97,6 +97,10 @@ test('worktrees internas não entram na validação nem resolvem referências da
   escrever(raiz, '.claude/worktrees/antiga/CLAUDE.md', 'Antigo: `js/sumiu.js`.\n');
   escrever(raiz, '.claude/worktrees/antiga/jogo/servidor/CLAUDE.md', 'Banco antigo: `dados/reino.db`.\n');
   escrever(raiz, '.claude/worktrees/antiga/jogo/js/so-na-antiga.js', '// arquivo de outra árvore\n');
+  // as criadas pelo `npm run worktree` moram em worktrees/ (a pasta que o .gitignore protege)
+  escrever(raiz, 'worktrees/reino-antiga/CLAUDE.md', 'Antigo: `js/sumiu.js`.\n');
+  escrever(raiz, 'worktrees/reino-antiga/jogo/servidor/CLAUDE.md', 'Banco antigo: `dados/reino.db`.\n');
+  escrever(raiz, 'worktrees/reino-antiga/jogo/js/so-na-antiga.js', '// arquivo de outra árvore\n');
   const antes = rodar(raiz);
   assert.strictEqual(antes.status, 0, antes.saida);
   assert.match(antes.saida, /em 1 arquivos/);
@@ -109,6 +113,21 @@ test('worktrees internas não entram na validação nem resolvem referências da
     '✘ .claude/skills/exemplo/SKILL.md:1: caminho não existe: js/nao-existe.js',
     '✘ docs/guia.md:1: caminho não existe: js/so-na-antiga.js',
   ], depois.saida);
+});
+
+test('sem a pasta de material (fora do git numa worktree nova): referências a matérias/ não são erro', () => {
+  const raiz = pastaNova('sem-material');
+  escrever(raiz, 'package.json', JSON.stringify({ scripts: {} }));
+  escrever(raiz, 'CLAUDE.md', 'Prints em `matérias/`; a revisão da prova vai na subpasta `Revisão/`.\n');
+  const r = rodar(raiz);
+  assert.strictEqual(r.status, 0, r.saida);
+
+  // com a pasta no disco, um caminho inventado dentro dela volta a ser erro
+  escrever(raiz, 'matérias/3 Bimestre/ciências/Revisão/IMG_1.jpeg', 'x');
+  escrever(raiz, 'docs/guia.md', 'Sumiu: `matérias/ciencias/nada/`. Existe: `Revisão/`.\n');
+  const depois = rodar(raiz);
+  assert.strictEqual(depois.status, 1, depois.saida);
+  assert.deepStrictEqual(depois.erros, ['✘ docs/guia.md:1: caminho não existe: matérias/ciencias/nada/'], depois.saida);
 });
 
 test('pasta de material nova na raiz (Geografia/): vira raiz de caminho sem lista fixa', () => {

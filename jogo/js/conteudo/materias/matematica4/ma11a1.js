@@ -48,6 +48,7 @@
           adaptacao: 'Recortar e colar os brinquedos nas prateleiras virou escolher o jeito de arrumar com a mesma quantidade em cada uma.',
           explica: 'Com 3 em cima e 3 embaixo, as duas prateleiras ficam com a mesma quantidade: 3 + 3 = 6.' },
         { id: 'ma11a1-04', tipo: 'digitar', origem: 'APR-27-qE', pagina: 27, livro: 'ma-a27',
+          apoio: { titulo: 'Os brinquedos', partes: [{ texto: 'Beatriz quer colocar a mesma quantidade de brinquedos em cada prateleira.', figuras: BRINQUEDOS.partes[0].figuras }] },
           pergunta: 'Quantos brinquedos Beatriz deve colocar em cada prateleira?',
           frases: [{ antes: '', depois: 'brinquedos em cada prateleira.', certas: ['3', 'três'] }],
           explica: 'São 6 brinquedos em 2 prateleiras: 3 em cada uma.' },
@@ -60,7 +61,7 @@
           frases: [{ antes: '', depois: 'caixas.', certas: ['2', 'duas'] }],
           explica: 'Beatriz vai usar 2 caixas.' },
         { id: 'ma11a1-07', tipo: 'digitar', origem: 'APR-28-qC', pagina: 28, livro: 'ma-a28', apoio: PELUCIAS,
-          pergunta: 'Trace linhas para ligar cada bichinho de pelúcia a uma caixa.',
+          pergunta: 'Beatriz quer colocar a mesma quantidade de pelúcias em cada caixa. Quantas pelúcias vão para cada caixa?',
           frases: [
             { antes: '1ª caixa:', depois: 'pelúcias', certas: ['4', 'quatro'] },
             { antes: '2ª caixa:', depois: 'pelúcias', certas: ['4', 'quatro'] },

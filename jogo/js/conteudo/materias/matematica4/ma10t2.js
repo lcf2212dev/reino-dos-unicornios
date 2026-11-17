@@ -2,10 +2,10 @@
    Renato e de Jairo, as compras de Amanda, o troco do pai de Felipe e as compras de Marina
    (docs/contratos/quarto-bimestre.md §3). O quadro da conta do livro vira a frase com a caixa da resposta. */
 (function () {
-  function reais(v) {
+  function reais(v, ext) { // ext (opcional): a quantia por extenso, que também vale
     var r = [];
     (v.indexOf(',') < 0 ? [v, v + ',00'] : [v]).forEach(function (x) { r.push(x, 'R$ ' + x, 'R$' + x, x + ' reais'); });
-    return r;
+    return ext ? r.concat(ext, ext + ' reais') : r;
   }
   function dinheiro(lista) {
     var nome = { 'moeda-50c': '50 centavos', 'moeda-1': '1 real', 'cedula-2': '2 reais', 'cedula-5': '5 reais',
@@ -33,9 +33,10 @@
           ], certa: 1,
           explica: 'A cédula é de 5 reais. Seis moedas de 50 centavos fazem 3 reais, e mais 2 reais: 5 reais! O grupo 1 só tem R$ 4,50.' },
         { id: 'ma10t2-02', tipo: 'digitar', origem: 'ATI-03-q1b', pagina: 3, livro: 'ma-t03',
-          pergunta: 'b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar o valor indicado no item a?',
+          pergunta: 'b) Renato já tem 10 moedas de 50 centavos no cofrinho. Quantos reais ele terá no total se acrescentar as moedas que recebeu na troca da cédula de 5 reais?',
+          adaptacao: 'O "valor indicado no item a" virou a troca da cédula de 5 reais, para a pergunta valer sozinha.',
           frases: [
-            { antes: 'Renato terá', depois: 'no total.', certas: reais('10') },
+            { antes: 'Renato terá', depois: 'no total.', certas: reais('10', 'dez') },
           ],
           explica: 'Duas moedas de 50 centavos fazem 1 real; então 10 moedas fazem 5 reais. 5 + 5 = 10. Ele terá R$ 10,00.' },
         { id: 'ma10t2-03', tipo: 'escolha', origem: 'ATI-03-q2', pagina: 3, livro: 'ma-t03',

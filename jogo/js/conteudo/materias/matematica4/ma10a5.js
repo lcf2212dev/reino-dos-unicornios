@@ -3,7 +3,11 @@
    desenhar o par das cédulas de 20 e de 200 reais virou marcar os grupos certos (um desafio para cada cédula, os dois
    com a origem APR-20-qB). A conversa APR-20-qC é leitura (soLeitura). */
 (function () {
-  function reais(n) { return [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais']; }
+  // ext (opcional): a quantia por extenso, que também vale ("cinco", "cinco reais")
+  function reais(n, ext) {
+    var r = [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais'];
+    return ext ? r.concat(ext, ext + ' reais') : r;
+  }
   Reino.registrarSala('matematica4',
     {
       id: 'ma10a5', nome: 'Memória das quantias', emoji: '🃏',
@@ -11,7 +15,7 @@
       cartas: ['ma-a20', 'ma-a20b', 'ma-a21', 'ma-a22'],
       intro: 'Vamos achar os pares de cartas com a mesma quantia e testar tudo o que você já sabe sobre o dinheiro!',
       desafios: [
-        { id: 'ma10a5-01', tipo: 'ligar', origem: 'APR-20-qA', pagina: 20, livro: 'ma-a20',
+        { id: 'ma10a5-01', tipo: 'ligar', origem: 'APR-20-qA', pagina: 20, livro: 'ma-a20', avulsa: { carta: null },
           pergunta: 'Memória das quantias: ligue cada carta à carta que tem a mesma quantia.',
           pares: [
             [{ t: 'R$ 10,00' }, { t: '2 cédulas de 5 reais' }],
@@ -21,9 +25,9 @@
           ],
           adaptacao: 'O jogo da memória com as cartas recortadas, em dupla, virou ligar os pares de cartas.',
           explica: '5 + 5 = 10; 50 + 50 centavos = 1 real; 2 reais e 50 centavos = R$ 2,50; 20 + 20 + 10 = 50.' },
-        { id: 'ma10a5-02', tipo: 'varias', origem: 'APR-20-qB', pagina: 20, livro: 'ma-a20b',
+        { id: 'ma10a5-02', tipo: 'varias', origem: 'APR-20-qB', pagina: 20, livro: 'ma-a20b', avulsa: { carta: null },
           figura: { img: 'ma:cedula-20', legenda: 'cédula de 20 reais' },
-          pergunta: 'Para cada quantia a seguir, forme o par. Quais grupos têm o mesmo valor da cédula de 20 reais? Marque todos.',
+          pergunta: 'Forme o par da carta com a cédula de 20 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos.',
           opcoes: [
             { t: '2 cédulas de 10 reais', ok: true },
             { t: '1 cédula de 10 reais e 2 cédulas de 5 reais', ok: true },
@@ -33,9 +37,9 @@
           ],
           adaptacao: 'Desenhar as cédulas e moedas do par virou marcar os grupos que formam o par.',
           explica: '10 + 10, 10 + 5 + 5 e 5 + 5 + 5 + 5 dão 20. Já 5 + 5 dá 10 e 10 + 2 dá 12.' },
-        { id: 'ma10a5-03', tipo: 'varias', origem: 'APR-20-qB', pagina: 20, livro: 'ma-a20b',
+        { id: 'ma10a5-03', tipo: 'varias', origem: 'APR-20-qB', pagina: 20, livro: 'ma-a20b', avulsa: { carta: null },
           figura: { img: 'ma:cedula-200', legenda: 'cédula de 200 reais' },
-          pergunta: 'Agora, quais grupos têm o mesmo valor da cédula de 200 reais? Marque todos.',
+          pergunta: 'Forme o par da carta com a cédula de 200 reais. Quais grupos têm o mesmo valor dessa cédula? Marque todos.',
           opcoes: [
             { t: '2 cédulas de 100 reais', ok: true },
             { t: '2 cédulas de 50 reais' },
@@ -52,7 +56,7 @@
             { t: '1 cédula de 10 reais, 1 cédula de 2 reais e 3 moedas de 25 centavos' },
           ], certa: 1,
           explica: '10 + 2 = 12 reais, e 25 + 25 + 25 = 75 centavos: R$ 12,75. O outro grupo dá R$ 12,50.' },
-        { id: 'ma10a5-05', tipo: 'escolha', origem: 'APR-21-q2', pagina: 21, livro: 'ma-a21',
+        { id: 'ma10a5-05', tipo: 'escolha', origem: 'APR-21-q2', pagina: 21, livro: 'ma-a21', avulsa: { carta: null },
           pergunta: 'Marque um X no grupo de moedas que pode ser trocado exatamente por uma cédula de R$ 2,00.',
           opcoes: [
             { t: '5 moedas de 10 centavos e 2 moedas de 5 centavos' },
@@ -65,15 +69,15 @@
           pergunta: 'a) Escreva no quadro abaixo a quantidade de moedas de cada valor.',
           cab: ['Valor da moeda', 'Quantidade de moedas'],
           linhas: [
-            ['5 centavos', { certas: ['6', 'seis'] }],
-            ['10 centavos', { certas: ['7', 'sete'] }],
-            ['25 centavos', { certas: ['8', 'oito'] }],
-            ['50 centavos', { certas: ['4', 'quatro'] }],
+            ['5 centavos', { certas: ['6', 'seis', '6 moedas', 'seis moedas'] }],
+            ['10 centavos', { certas: ['7', 'sete', '7 moedas', 'sete moedas'] }],
+            ['25 centavos', { certas: ['8', 'oito', '8 moedas', 'oito moedas'] }],
+            ['50 centavos', { certas: ['4', 'quatro', '4 moedas', 'quatro moedas'] }],
           ],
           explica: 'Paulo tem 6 moedas de 5 centavos, 7 de 10 centavos, 8 de 25 centavos e 4 de 50 centavos.' },
         { id: 'ma10a5-07', tipo: 'digitar', origem: 'APR-22-q3b', pagina: 22, livro: 'ma-a22',
           pergunta: 'b) Que quantia Paulo tinha?',
-          frases: [{ antes: 'Paulo tinha', depois: '', certas: reais(5) }],
+          frases: [{ antes: 'Paulo tinha', depois: '', certas: reais(5, 'cinco') }],
           explica: '30 centavos + 70 centavos = 1 real. 8 moedas de 25 centavos = 2 reais. 4 moedas de 50 centavos = 2 reais. Ao todo: R$ 5,00.' },
         { id: 'ma10a5-08', tipo: 'escolha', origem: 'APR-22-q3c', pagina: 22, livro: 'ma-a22',
           pergunta: 'c) Paulo recebeu nessa troca a menor quantidade possível de cédulas. Qual cédula ele recebeu?',

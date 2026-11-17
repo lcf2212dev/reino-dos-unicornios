@@ -62,11 +62,11 @@
           ],
           adaptacao: 'A resposta escrita virou escolher entre as opções.',
           explica: 'Sim! Rosa e camélia tiveram 18 mudas cada uma: as colunas têm a mesma altura.' },
-        { id: 'ma12a2-06', tipo: 'digitar', origem: 'APR-59-qA', pagina: 59, livro: 'ma-a59', apoio: ALIMENTOS,
+        { id: 'ma12a2-06', tipo: 'digitar', origem: 'APR-59-qA', pagina: 59, livro: 'ma-a59', avulsa: { carta: 'ma-a58b' }, apoio: ALIMENTOS,
           pergunta: 'Quantos alimentos ultraprocessados Soraia consumiu em uma semana?',
           frases: [{ antes: '', depois: 'alimentos ultraprocessados.', certas: ['4', 'quatro'] }],
           explica: 'A barra laranja da Soraia chega no 4.' },
-        { id: 'ma12a2-07', tipo: 'escolha', origem: 'APR-59-qB', pagina: 59, livro: 'ma-a59', apoio: ALIMENTOS,
+        { id: 'ma12a2-07', tipo: 'escolha', origem: 'APR-59-qB', pagina: 59, livro: 'ma-a59', avulsa: { carta: 'ma-a58b' }, apoio: ALIMENTOS,
           pergunta: 'Quem consumiu a maior quantidade de alimentos in natura?',
           opcoes: [
             { t: 'Soraia' },
@@ -76,7 +76,7 @@
           ], certa: 2,
           adaptacao: 'A resposta escrita virou escolher entre as opções.',
           explica: 'Rodrigo consumiu 14 alimentos in natura: a barra azul mais comprida.' },
-        { id: 'ma12a2-08', tipo: 'escolha', origem: 'APR-59-qC', pagina: 59, livro: 'ma-a59', apoio: ALIMENTOS,
+        { id: 'ma12a2-08', tipo: 'escolha', origem: 'APR-59-qC', pagina: 59, livro: 'ma-a59', avulsa: { carta: 'ma-a58b' }, apoio: ALIMENTOS,
           pergunta: 'Quem consumiu a mesma quantidade de alimentos ultraprocessados e in natura?',
           opcoes: [
             { t: 'Soraia' },

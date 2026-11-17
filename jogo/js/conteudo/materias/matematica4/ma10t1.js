@@ -47,7 +47,7 @@
         { id: 'ma10t1-02', tipo: 'tabela', origem: 'ATI-02-q2a', pagina: 2, livro: 'ma-t02', apoio: LOJA,
           pergunta: 'Observe a quantia que Daniel e Helena gastaram na loja de brinquedos. a) Escreva no quadro a seguir a quantia que cada um deles gastou.',
           cab: ['Daniel', 'Helena'],
-          linhas: [[{ certas: reais('71,25') }, { certas: reais('75,50').concat(reais('75,5')) }]],
+          linhas: [[{ certas: reais('71,25').concat('71 reais e 25 centavos') }, { certas: reais('75,50').concat(reais('75,5'), '75 reais e 50 centavos') }]],
           explica: 'Daniel: 50 + 20 + 1 real e 25 centavos = R$ 71,25. Helena: 50 + 20 + 5 reais e 50 centavos = R$ 75,50.' },
         { id: 'ma10t1-03', tipo: 'escolha', origem: 'ATI-02-q2b', pagina: 2, livro: 'ma-t02', apoio: LOJA,
           pergunta: 'b) Quem gastou a maior quantia?',

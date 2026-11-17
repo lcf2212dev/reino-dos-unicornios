@@ -2,7 +2,11 @@
    preços, o dobro e o triplo, os pirulitos de Davi, a papelaria e o videogame de Joana e Bruno
    (docs/contratos/quarto-bimestre.md §3). A conta no quadro e a frase com lacuna viraram digitar a quantia. */
 (function () {
-  function reais(n) { return [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais']; }
+  // ext (opcional): a quantia por extenso, que também vale ("cinco", "cinco reais")
+  function reais(n, ext) {
+    var r = [n + '', n + ',00', 'R$ ' + n + ',00', 'R$' + n + ',00', 'R$ ' + n, 'R$' + n, n + ' reais'];
+    return ext ? r.concat(ext, ext + ' reais') : r;
+  }
   Reino.registrarSala('matematica4',
     {
       id: 'ma10a4', nome: 'Problemas com o Real', emoji: '🛒',
@@ -21,22 +25,22 @@
         { id: 'ma10a4-02', tipo: 'digitar', origem: 'APR-16-q1b', pagina: 16, livro: 'ma-a16',
           figura: { img: 'ma:cedula-100', legenda: 'cédula de 100 reais' },
           pergunta: 'b) Se o pai de Caio comprar na loja mais barata e pagar com a cédula ao lado, quantos reais ele vai receber de troco?',
-          frases: [{ antes: 'Ele vai receber', depois: 'de troco.', certas: reais(9) }],
+          frases: [{ antes: 'Ele vai receber', depois: 'de troco.', certas: reais(9, 'nove') }],
           explica: 'Na Brinquedão ele gasta 91. 100 - 91 = 9. O troco é de R$ 9,00.' },
         { id: 'ma10a4-03', tipo: 'tabela', origem: 'APR-17-q2', pagina: 17, livro: 'ma-a17',
           pergunta: 'Calcule o dobro e o triplo de cada uma das quantias mostradas a seguir.',
           cab: ['Quantia em reais', 'Dobro', 'Triplo'],
           linhas: [
-            ['cédula de 2 reais', { certas: reais(4) }, { certas: reais(6) }],
-            ['cédula de 5 reais', { certas: reais(10) }, { certas: reais(15) }],
-            ['cédula de 10 reais', { certas: reais(20) }, { certas: reais(30) }],
-            ['cédula de 10 reais e cédula de 2 reais', { certas: reais(24) }, { certas: reais(36) }],
+            ['cédula de 2 reais', { certas: reais(4, 'quatro') }, { certas: reais(6, 'seis') }],
+            ['cédula de 5 reais', { certas: reais(10, 'dez') }, { certas: reais(15, 'quinze') }],
+            ['cédula de 10 reais', { certas: reais(20, 'vinte') }, { certas: reais(30, 'trinta') }],
+            ['cédula de 10 reais e cédula de 2 reais', { certas: reais(24, 'vinte e quatro') }, { certas: reais(36, 'trinta e seis') }],
           ],
           explica: 'O dobro é 2 vezes e o triplo é 3 vezes: 2 dá 4 e 6; 5 dá 10 e 15; 10 dá 20 e 30; 12 dá 24 e 36.' },
         { id: 'ma10a4-04', tipo: 'digitar', origem: 'APR-17-q3', pagina: 17, livro: 'ma-a17',
           figura: { img: 'ma:cedula-2', legenda: 'cédula de 2 reais' },
           pergunta: 'Davi comprou na cantina 4 pirulitos para ele e os colegas. Cada pirulito custou a quantia representada ao lado. Quantos reais Davi gastou nessa compra?',
-          frases: [{ antes: 'Davi gastou', depois: 'nessa compra.', certas: reais(8) }],
+          frases: [{ antes: 'Davi gastou', depois: 'nessa compra.', certas: reais(8, 'oito') }],
           explica: '2 + 2 + 2 + 2 = 8, ou 4 × 2 = 8. Davi gastou R$ 8,00.' },
         { id: 'ma10a4-05', tipo: 'digitar', origem: 'APR-18-q4a', pagina: 18, livro: 'ma-a18',
           pergunta: 'a) Se Catarina comprar uma caixa de lápis de cor e um estojo, quantos reais ela vai gastar?',

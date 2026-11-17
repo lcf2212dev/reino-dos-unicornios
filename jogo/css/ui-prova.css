@@ -100,7 +100,7 @@
 .vf-botao { width: 52px; height: 52px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--branco); font-size: var(--texto); box-shadow: var(--sombra-pequena); --degrau: 2px; }
 .vf-botao.vf-com-icone { padding: 0; display: flex; align-items: center; justify-content: center; }   /* ✓ e ✘ desenhados, centrados (D12b-02) */
 .vf-botao[aria-pressed="true"] { background: var(--roxo-texto); color: var(--branco); box-shadow: var(--sombra-pequena); --degrau: 2px; outline: var(--borda-fina) solid var(--roxo); outline-offset: 2px; }
-.vf-texto { flex: 1; font-size: var(--texto); }
+.vf-texto { flex: 1; min-width: 0; font-size: var(--texto); }   /* a palavra longa não empurra os botões para fora (quebra na sílaba: _d.caberTexto) */
 .tudo-certo .vf-linha { background: var(--certo-fundo); }
 
 /* completar com as palavras do quadro */
@@ -117,7 +117,7 @@
 .completar .chip-palavra { min-width: 48px; }
 /* lista longa (5+ frases, as contas curtas da Matemática): 2 colunas quando a caixa comporta 2 de 340 px (D6-27);
    caixa estreita e lista curta (frases longas) ficam em 1 coluna */
-.completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); }
+.completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 21.25em), 1fr)); }   /* 340 px em 16; com Letras grandes (24) a frase longa fica numa coluna, sem uma palavra por linha */
 .completar:not(.completar-grade):not(.completar-colado-longo):has(> .frase-completar:nth-child(6)) > .quadro-palavras { grid-column: 1 / -1; }
 .tudo-certo .frase-completar { background: var(--certo-fundo); }
 
@@ -129,6 +129,9 @@
 
 /* letras grandes no celular: as palavras do quadro e das escolhas ficam em 16 ("liquidificador" cabe na linha) */
 @media (max-width: 480px) { .letras-grandes .quadro-palavras, .letras-grandes .chip-palavra { font-size: var(--texto-aux); } }
+/* ... e a palavra posta na lacuna no mesmo tamanho do botão dela (16): as lacunas das frases ficam iguais entre si e
+   "FOTOSSÍNTESE" cabe inteira */
+@media (max-width: 480px) { .letras-grandes .completar .lacuna { font-size: var(--texto-aux); } }
 /* letras grandes no celular: o selo da tentativa numa linha e a linha do prêmio em três faixas (quando, selo, prêmio) */
 @media (max-width: 480px) {
   .letras-grandes .selo-tentativa b { font-size: var(--texto); }

@@ -11,7 +11,7 @@
     carta('ci-t01', '🌱', 'Conhecendo as plantas – Capítulo 10', 1, [
       { t: 'texto', texto: TITULO + '. Observe as imagens das plantas 1 e 2.' },
       { t: 'figuras', itens: [
-        { img: 'ci:10-vitoria-regia', legenda: '1: um lago coberto de folhas redondas que boiam, com flores lilases.' },
+        { img: 'ci:10-vitoria-regia', legenda: '1: um lago ensolarado, coberto de folhas redondas que boiam, com flores lilases.' },
         { img: '🌵', legenda: '2: uma planta de folhas compridas num solo seco e cheio de pedras, com sol forte.' },
       ] },
     ]),
@@ -24,6 +24,7 @@
     ]),
     carta('ci-t04', '🌳', TITULO + ' (continuação)', 4, [
       { t: 'texto', texto: 'Ligue as partes das plantas usadas como matéria-prima com os produtos que elas ajudam a fazer.' },
+      { t: 'texto', texto: 'Nas fotos: a) um algodão aberto no pé; b) flores de camomila secas numa colher de pau; c) toras de madeira empilhadas; d) folhas verdes de hortelã. Do outro lado: uma xícara de chá amarelinho, roupas dobradas, um vidrinho de óleos essenciais com varetas e uma mesinha de madeira.' },
     ]),
   ]);
 })();

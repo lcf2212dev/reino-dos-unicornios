@@ -1,0 +1,132 @@
+{
+  "nome": "parquinho-brincar",
+  "pedido": "pedidos/2026-11-15-parquinho-brincar.md",
+  "personagens": [],
+  "tarefas": [
+    {
+      "id": "contrato",
+      "tipo": "contrato",
+      "titulo": "Onda 0: balanço e areia em arquivos próprios, gancho fim da pose, números na config",
+      "quem": "orquestrador",
+      "depende": [],
+      "arquivos": [
+        "jogo/js/interiores/parquinho/poses.js",
+        "jogo/js/nucleo/config.js",
+        "docs/contratos/parquinho.md",
+        "pedidos/"
+      ],
+      "worktree": "parquinho-brincar",
+      "pronto": [
+        "poses-balanco.js e poses-areia.js com as poses de hoje, sem mudar nada no jogo",
+        "npm run unidade -- --so parquinho verde"
+      ],
+      "estimativa": 15
+    },
+    {
+      "id": "balanco",
+      "tipo": "mecanica",
+      "titulo": "Balanço de puxar e soltar; puxou tudo, os dois voam para a caixa de areia",
+      "quem": "builder",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/parquinho/brincar.js",
+        "jogo/js/interiores/parquinho/poses-balanco.js",
+        "jogo/js/interiores/parquinho/balanco.js",
+        "jogo/ferramentas/testes/unidade/parquinho-balanco.test.js"
+      ],
+      "worktree": "parquinho-balanco",
+      "pronto": [
+        "no balanço ela fica sentada até descer (toque sem arrastar, Esc ou setas); o balanço não balança sozinho",
+        "arrastar puxa, com medidor de força; soltar vai e volta e para aos poucos",
+        "puxou tudo e soltou: os dois voam e caem na caixa de areia; ela fica em pé ao lado da caixa",
+        "teclado: segurar Espaço/Enter/↑ puxa, soltar solta, Esc desce"
+      ],
+      "estimativa": 90,
+      "ler": [
+        "docs/contratos/parquinho.md §4",
+        "docs/contratos/cena-e-motor.md §14"
+      ],
+      "testes": [
+        "npm run unidade -- --so parquinho",
+        "npm run e2e -- --mudancas"
+      ]
+    },
+    {
+      "id": "areia",
+      "tipo": "mecanica",
+      "titulo": "A brincadeira da caixa de areia: castelo, cavar, cobrir os dois até o pescoço, enfeitar, alisar",
+      "quem": "builder",
+      "depende": [
+        "contrato"
+      ],
+      "arquivos": [
+        "jogo/js/interiores/parquinho/poses-areia.js",
+        "jogo/js/interiores/parquinho/objetos.js",
+        "jogo/js/interiores/parquinho/areia-caixa.js",
+        "jogo/js/interiores/parquinho/areia-desenho.js",
+        "jogo/js/ui/parquinho-areia.js",
+        "jogo/css/ui-parquinho-areia.css",
+        "jogo/ferramentas/testes/unidade/parquinho-areia.test.js"
+      ],
+      "worktree": "parquinho-areia",
+      "pronto": [
+        "tocar na caixa de areia abre a tela de perto, com pazinha, balde, mão, enfeites e rastelo em pixel art",
+        "castelo com torres que crescem, buracos, montinhos, cobrir ela e o unicórnio até o pescoço e descobrir",
+        "o que ela fez fica até fechar o jogo; a caixa no parquinho mostra o castelinho",
+        "celular, tablet, notebook e teclado (Tab, setas, Enter, Esc)"
+      ],
+      "estimativa": 120,
+      "ler": [
+        "docs/contratos/parquinho.md §4",
+        "docs/contratos/ui.md §2",
+        "docs/contratos/ui.md §3",
+        "docs/contratos/ui.md §4",
+        "docs/contratos/arte.md §10",
+        "docs/contratos/arte.md §15"
+      ],
+      "modelo": "jogo/js/ui/quimica-bancada.js",
+      "testes": [
+        "npm run unidade -- --so parquinho",
+        "npm run e2e -- --mudancas"
+      ]
+    },
+    {
+      "id": "integracao",
+      "tipo": "integracao",
+      "titulo": "Juntar as duas frentes, docs do parquinho, validar-tudo e entregar",
+      "quem": "orquestrador",
+      "depende": [
+        "balanco",
+        "areia"
+      ],
+      "arquivos": [
+        "jogo/js/manifesto.js",
+        "jogo/index.html"
+      ],
+      "worktree": "parquinho-brincar",
+      "pronto": [
+        "npm test e npm run e2e verdes, diferenças explicadas",
+        "main com push e Vercel conferida"
+      ],
+      "estimativa": 40
+    },
+    {
+      "id": "entrega",
+      "tipo": "entrega",
+      "titulo": "Merge na main, push e a Vercel no ar",
+      "quem": "orquestrador",
+      "depende": [
+        "integracao"
+      ],
+      "arquivos": [],
+      "worktree": "parquinho-brincar",
+      "pronto": [
+        "main com push",
+        "npm run vercel -- --conferir"
+      ],
+      "estimativa": 10
+    }
+  ]
+}

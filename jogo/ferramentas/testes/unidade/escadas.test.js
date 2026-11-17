@@ -25,6 +25,24 @@ const CONGELADA = {
   'matematica-1:0': { para: 'matematica-2', x: 3, y: 10 }, 'matematica-1:1': { para: 'matematica', x: 9, y: 3 },
   'matematica-2:0': { para: 'matematica-3', x: 3, y: 10 }, 'matematica-2:1': { para: 'matematica-1', x: 33, y: 3 },
   'matematica-3:0': { para: 'matematica-2', x: 33, y: 3 },
+  // Vila Arco-Íris (vila.md §2): o portal do Bosque e o da Vila (sentido 'portal'), e a porta de cada loja ↔ a saída dela
+  'bosque:0': { para: 'vila', x: 2, y: 19 },
+  'vila:0': { para: 'vila-casa', x: 8, y: 9 }, 'vila:1': { para: 'vila-armas', x: 8, y: 9 },
+  'vila:2': { para: 'vila-cabecas', x: 8, y: 9 }, 'vila:3': { para: 'vila-armaduras', x: 8, y: 9 },
+  'vila:4': { para: 'bosque', x: 52, y: 22 },
+  // Treinadores de Monstros (monstros.md): a porta no terreno da direita ↔ a saída do prédio
+  'vila:5': { para: 'vila-treinadores', x: 8, y: 9 }, 'vila-treinadores:0': { para: 'vila', x: 33, y: 18 },
+  'vila-casa:0': { para: 'vila', x: 6, y: 9 }, 'vila-armas:0': { para: 'vila', x: 15, y: 9 },
+  'vila-cabecas:0': { para: 'vila', x: 24, y: 9 }, 'vila-armaduras:0': { para: 'vila', x: 33, y: 9 },
+  // Bosques de dentro do Bosque (arenas.md §8): aqui as pastas carregam em ordem alfabética (lua, neblina, orvalho),
+  // então a escada de cada uma entra no Bosque nessa ordem. A ida chega no spawn da floresta (28,39: o portal de
+  // volta fica em (28,40) com `chegar` (0,-1)); a volta chega ao lado do portal do Bosque (`chegar` de cada um)
+  'bosque:1': { para: 'lua', x: 28, y: 39 },
+  'bosque:2': { para: 'neblina', x: 28, y: 39 },
+  'bosque:3': { para: 'orvalho', x: 28, y: 39 },
+  'lua:0': { para: 'bosque', x: 27, y: 6 },
+  'neblina:0': { para: 'bosque', x: 52, y: 32 },
+  'orvalho:0': { para: 'bosque', x: 8, y: 40 },
 };
 TORRE.forEach((id, i) => {
   let k = 0;

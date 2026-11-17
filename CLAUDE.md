@@ -78,12 +78,13 @@ antigas dos pacotes) e `jogo/index.html` (mude `jogo/js/manifesto.js` e rode `np
   `--forcar` roda) · `npm run e2e` (jogo x base, tem que dar idêntico; `--mudancas` durante o trabalho) ·
   `npm run unidade` · `npm run validar` · `npm run tamanho` · `npm run tipos`
 - `npm run novo -- <tipo> <id>` (gerador; `--lista`) · `npm run ver` (fotografa uma cena nos 3 tamanhos) ·
+  `npm run varredura` (layout de todas as questões das salas de livro, nos 3 tamanhos) ·
   `npm run servidor-teste` (skill `servidor-de-teste`) · `npm run memoria` (memória de uma aba, passo a passo)
 - `npm run index` · `npm run versao` · `npm run vozes` e `npm run vozes-elenco` (skills `gravar-vozes`, `validar-vozes`)
 - `npm run worktree` · `npm run material -- <Pasta>` (prints de `matérias/<pasta>/` reduzidos) · `npm run plano`
   (frentes paralelas de um pedido) · `npm run integrar` (skill `entregar`) · `npm run limpar` (lista worktrees e
   branches que sobraram; `--aplicar`) · `npm run vercel` (publica na Vercel) ·
-  `npm run icones` (ícones do app instalado, de `jogo/ferramentas/pwa/`)
+  `npm run icones` (ícones do app instalado, de `jogo/ferramentas/pwa/`) · `npm run android` (o app da Play Store)
 
 ## Mapa de pastas
 ```
@@ -98,7 +99,8 @@ jogo/css/                  plano, sem subpasta; ordem da cascata = manifesto
 jogo/ferramentas/          testes, validadores, vozes, fluxo (worktree, integrar), gerado/ (GERADO)
 jogo/servidor/             servidor de casa (aposentado): intocável
 vercel/                    o jogo na Vercel: API sobre Postgres, PWA (pwa/), build copia jogo/
-matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova)
+android/                   o app da Play Store (abre o site da Vercel; acesso restrito pelo teste interno)
+matérias/<matéria>/        prints e fotos da escola (apostila; Revisão/ = folha de prova); fora do git, só no disco
 docs/                      ARQUITETURA.md (mapa; §5.1 quero X → qual registro), contratos/, receitas/, decisoes/
 ```
 

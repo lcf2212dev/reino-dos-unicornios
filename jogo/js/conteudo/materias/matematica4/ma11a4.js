@@ -33,7 +33,7 @@
           frases: [{ antes: '', depois: 'lápis de cor', certas: ['12', 'doze'] }],
           explica: 'A caixa tem uma dúzia de lápis: 12 unidades.' },
         { id: 'ma11a4-05', tipo: 'escolha', origem: 'APR-37-qB', pagina: 37, livro: 'ma-a37',
-          pergunta: 'Contorne os lápis a seguir para indicar a quantidade de lápis que Daniel usou nessa pintura.',
+          pergunta: 'Quantos lápis a seguir devem ser contornados para indicar a quantidade de lápis que Daniel usou nessa pintura?',
           apoio: { titulo: 'Os lápis de cor', partes: [{ figuras: [
             { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' },
             { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' }, { img: '🖍️' },

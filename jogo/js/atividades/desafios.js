@@ -79,7 +79,8 @@
      linha, como no "Expedição Antártida" do celular com letras grandes). Se o título passa de 2 linhas, a letra desce
      um degrau da escala (arte.md §9.8): o título nasce em --texto (16; 24 com "Letras grandes") e desce para
      --texto-aux (12; 16), por classe (css/ui-missao.css), nunca por fator; fica o degrau com menos linhas.
-     O encolher é só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam como estão. */
+     O encolher pelas linhas é só nas matérias desta lista: História e Inglês têm o mesmo aperto, mas as telas delas ficam
+     como estão. Em toda matéria, o pedaço sem quebra mais largo que a caixa também desce o degrau (arte.md §17.3). */
   D.MATERIAS_TITULO_AJUSTAVEL = ['portugues'];
   // degraus abaixo do corpo do título, do maior ao menor: [classe, token]; só entram os menores que a letra de agora
   D.DEGRAUS_TITULO = [['titulo-aux', '--texto-aux']];
@@ -99,16 +100,17 @@
     cola.className = 'titulo-cola';
     alvo.insertBefore(cola, ic);
     cola.appendChild(ic);
-    espacos.forEach(function (e) { cola.appendChild(e); });
+    // espaço inquebrável entre o ícone e a palavra: no degrau .titulo-hifen o pedaço quebra só no hífen da palavra
+    espacos.forEach(function (e) { e.nodeValue = '\u00a0'; cola.appendChild(e); });
     if (prox.nodeType === 3) {
       var m = RE_PALAVRA.exec(prox.nodeValue);
-      cola.appendChild(document.createTextNode(m[1]));
+      cola.appendChild(document.createTextNode(m[1].replace(/^\s+/, '\u00a0')));
       prox.nodeValue = m[2];
     } else {
       var t = prox.firstChild, mt = t && t.nodeType === 3 && RE_PALAVRA.exec(t.nodeValue);
       cola.appendChild(prox);
       if (mt && (mt[2] || t.nextSibling)) {
-        t.nodeValue = mt[1];
+        t.nodeValue = mt[1].replace(/^\s+/, '\u00a0');
         var resto = document.createElement('span');
         resto.className = 'titulo-resto';
         if (mt[2]) resto.appendChild(document.createTextNode(mt[2]));
@@ -119,18 +121,25 @@
     return true;
   }
   D.ajustarTitulo = function (titulo, materiaId) {
-    var alvoCola = titulo.firstElementChild || titulo;
+    var alvoCola = titulo.firstElementChild || titulo, aoColar = null;
     if (!colarIcone(alvoCola) && window.MutationObserver) {
-      // desliga quando colar, quando o título sair da tela ou em 3 s
-      var mo = new MutationObserver(function () { if (!titulo.isConnected || colarIcone(alvoCola)) mo.disconnect(); });
+      // desliga quando colar, quando o título sair da tela ou em 3 s; colou: mede de novo (o pedaço sem quebra cresceu)
+      var mo = new MutationObserver(function () {
+        if (!titulo.isConnected) mo.disconnect();
+        else if (colarIcone(alvoCola)) { mo.disconnect(); if (aoColar) aoColar(); }
+      });
       mo.observe(alvoCola, { childList: true });
       setTimeout(function () { mo.disconnect(); }, 3000);   // o ícone troca logo; emoji sem desenho não prende o observer
     }
-    if (D.MATERIAS_TITULO_AJUSTAVEL.indexOf(materiaId) < 0) return;
-    // palavra curtinha no fim não desce sozinha: "L, R e RR" ia com o "RR" sozinho embaixo; agora "e RR" vai junto
-    var fim = (titulo.firstElementChild || titulo).lastChild;
-    if (fim && fim.nodeType === 3) fim.nodeValue = fim.nodeValue.replace(/ (\S{1,3})$/, '\u00a0$1');
-    if (!window.ResizeObserver) return;
+    // as 3 linhas só nas matérias da lista; a palavra sem quebra (ícone + 1ª palavra, "Matérias-primas") mais larga que
+    // a caixa desce o degrau em toda matéria (arte.md §17.3)
+    var ajustavel = D.MATERIAS_TITULO_AJUSTAVEL.indexOf(materiaId) >= 0;
+    if (ajustavel) {
+      // palavra curtinha no fim não desce sozinha: "L, R e RR" ia com o "RR" sozinho embaixo; agora "e RR" vai junto
+      var fim = (titulo.firstElementChild || titulo).lastChild;
+      if (fim && fim.nodeType === 3) fim.nodeValue = fim.nodeValue.replace(/ (\S{1,3})$/, '\u00a0$1');
+    }
+    if (!window.ResizeObserver) return function () {};
     var largura = -1, pedido = 0;
     var classes = D.DEGRAUS_TITULO.map(function (g) { return g[0]; });
     function linhas() {
@@ -143,31 +152,46 @@
     function usar(classe) {
       classes.forEach(function (c) { titulo.classList.toggle(c, c === classe); });
     }
+    // nota do degrau de agora (menor é melhor): passar da caixa pesa mais que ter linhas a mais
+    function nota() { return (titulo.scrollWidth > titulo.clientWidth + 1 ? 100 : 0) + (ajustavel ? Math.max(0, linhas() - 2) : 0); }
     function medir() {
       pedido = 0;
       if (!titulo.isConnected) return;
       usar(null);
-      var n = linhas();
-      if (n <= 2) return;
+      titulo.classList.remove('titulo-hifen');
+      var n = nota();
+      if (!n) return;
       // só os degraus menores que o corpo de agora (o valor do token no :root, que "Letras grandes" troca)
       var base = parseFloat(getComputedStyle(titulo).fontSize), raiz = getComputedStyle(document.documentElement);
       var melhor = { c: null, n: n };
       D.DEGRAUS_TITULO.filter(function (g) { return parseFloat(raiz.getPropertyValue(g[1])) < base; }).some(function (g) {
         usar(g[0]);
-        var nk = linhas();
+        var nk = nota();
         if (nk < melhor.n) melhor = { c: g[0], n: nk };
-        return nk <= 2;
+        return !nk;
       });
+      // nem o degrau de baixo cabe ("Matérias-primas" com o ícone): a palavra quebra no hífen dela ou na sílaba
+      // (hífen suave, arte.md §17.2), na letra de antes; o ícone fica com a 1ª parte (espaço inquebrável)
+      if (melhor.n >= 100) {
+        var cola = titulo.querySelector('.titulo-cola'), h = Reino._ui && Reino._ui.hifenizar;
+        if (cola && h) Array.prototype.forEach.call(cola.childNodes, function (n) { if (n.nodeType === 3) n.nodeValue = h(n.nodeValue); });
+        usar(null); titulo.classList.add('titulo-hifen');
+        if (nota() < melhor.n) return;
+        titulo.classList.remove('titulo-hifen');
+      }
       usar(melhor.c);
     }
     function pedir() { if (!pedido) pedido = requestAnimationFrame(medir); }
+    aoColar = pedir;
     new ResizeObserver(function () {
       // só a largura importa (a altura muda com a própria fonte)
       if (titulo.clientWidth === largura) return;
       largura = titulo.clientWidth;
-      pedir();
+      medir();   // já, no próprio observador (antes de pintar): a trilha que cresce não deixa um quadro com o título vazando
     }).observe(titulo);
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(pedir);
+    // quem muda o cabeçalho (a trilha que aparece na pergunta) mede de novo na hora, sem esperar o observador
+    return function () { largura = titulo.clientWidth; medir(); };
   };
   if (window.MutationObserver && document.body) {
     acentuarDentro(document.body);
@@ -179,10 +203,11 @@
     }).observe(document.body, { childList: true, subtree: true, characterData: true });
   }
 
+  // texto da opção colado e que cabe no botão, sinal e "R$" presos: desafios/quebra.js (arte.md §17)
   function botaoOpcao(o, extra) {
     return el('button.opcao' + (extra || ''), { type: 'button' },
       o.e ? el('span.opcao-emoji', { 'aria-hidden': 'true' }, o.e) : null,
-      el('span.opcao-texto', o.t));
+      _d.caberTexto(el('span.opcao-texto', typeof o.t === 'string' ? _d.textoOpcao(o.t) : o.t)));
   }
   _d.botaoOpcao = botaoOpcao;
 
@@ -236,8 +261,8 @@
       (apoio.partes || []).map(function (p) {
         return el('div.apoio-parte',
           p.titulo ? el('p.apoio-parte-titulo', p.titulo) : null,
-          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li' + (/^\s*([a-z]\)|\d+[.)]|[■•])\s/.test(t) ? '.sem-marca' : ''), t); })) : null,
-          p.texto ? el('p.apoio-texto', p.texto) : null,
+          p.lista ? el('ul.apoio-lista', p.lista.map(function (t) { return el('li' + (/^\s*([a-z]\)|\d+[.)]|[■•])\s/.test(t) ? '.sem-marca' : ''), _d.colarTexto(t)); })) : null,
+          p.texto ? el('p.apoio-texto', _d.colarTexto(p.texto)) : null,
           // versos e figuras (4º bimestre): desafios/figuras.js
           p.versos ? _d.versosApoio(p.versos) : null,
           p.figuras ? _d.figurasLista(p.figuras, 'apoio-figuras') : null);
@@ -253,11 +278,13 @@
     abrir.addEventListener('click', function () { fechado = !fechado; Reino.Som.tocar('toque'); pintar(); caber(); });
     pintar();
     // tablet em pé: se o que fica escondido na rolagem é pouco (< 80 px) ou cabe no espaço livre da tela,
-    // a caixa mostra o texto inteiro, sem rolagem dentro dela (no celular e na tela larga, nada muda)
+    // a caixa mostra o texto inteiro, sem rolagem dentro dela (no celular e na tela larga, nada muda; num painel, a tela
+    // larga usa o desenho do tablet: ui-desafios.css)
     var TABLET_EM_PE = '(min-width: 640px) and (max-width: 999.98px)';
+    function comoTablet() { return window.matchMedia(caixa.closest('.painel') ? '(min-width: 640px)' : TABLET_EM_PE).matches; }
     function caber() {
       caixa.classList.remove('apoio-inteiro');
-      if (fechado || !caixa.isConnected || !window.matchMedia(TABLET_EM_PE).matches) return;
+      if (fechado || !caixa.isConnected || !comoTablet()) return;
       var falta = corpoApoio.scrollHeight - corpoApoio.clientHeight;
       if (falta <= 0) return;
       var tela = caixa.closest('.missao-corpo');
@@ -290,17 +317,24 @@
     if (d.apoio) card.appendChild(D.caixaApoio(d.apoio, !!opts.apoioFechado));
     var enun = el('div.enunciado'), def = D.tipoDe(d);
     // enunciadoTela: o tipo desenha o próprio enunciado (vf: a pergunta fixa e a afirmação)
-    (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', d.pergunta)]).forEach(function (n) { enun.appendChild(n); });
+    (def && def.enunciadoTela ? def.enunciadoTela(d) : [el('p.pergunta', _d.colarTexto(d.pergunta))]).forEach(function (n) { enun.appendChild(n); });
     // instrucao (opcional): o jeito de responder no jogo, numa linha própria logo abaixo da pergunta
     if (d.instrucao) enun.appendChild(el('p.instrucao', el('span.instrucao-icone', { 'aria-hidden': 'true' }, '👉'), el('span', d.instrucao)));
     // figura (opcional, 4º bimestre): ícone ou ilustração logo abaixo do enunciado (desafios/figuras.js)
     if (d.figura) enun.appendChild(D.figuraDesafio(d.figura));
     var ouvir = el('button.btn-ouvir.livre-na-fala', { type: 'button', 'aria-label': 'Ouvir a pergunta' }, '🔊 Ouvir');
     ouvir.addEventListener('click', function () { Reino.UI.ouvirDeNovo(Reino.Falas.segmentosDesafio(d, ctrl.ordem), { voz: 'narradora' }); });
-    if (Reino.Som.temVoz()) enun.appendChild(ouvir);
+    // opts.aoLivro (só na sala de livro, missao.js): "📖 Livro" ao lado do 🔊, abre a carta da pergunta (como o
+    // "Ver no livro" do erro); a pergunta fica como está e o foco volta ao botão quando o livro fecha
+    var livro = opts.aoLivro && el('button.btn-ouvir.btn-livro.livre-na-fala', { type: 'button', 'aria-label': 'Ver no livro' }, '📖 Livro');
+    if (livro) livro.addEventListener('click', function () { Reino.Som.tocar('toque'); opts.aoLivro(); });
+    var botoes = Reino.Som.temVoz() ? [ouvir] : [];
+    if (livro) enun.appendChild(el('div.enunciado-botoes', botoes.concat(livro)));
+    else if (botoes.length) enun.appendChild(ouvir);
     card.appendChild(enun);
     card.appendChild(ctrl.el);
     ctrl.card = card;
+    _d.caberDentro(card);   // a palavra que não cabe quebra na sílaba, nunca no meio (desafios/quebra.js)
     // opts.lerSozinho (true ou lista de alvos a mais, ex.: ✕ e "Conferir"): lê a questão ao aparecer (UI.esperarFala:
     // só trava as respostas e os alvos com config.esperaFala.travar); ctrl.leitura é a Promise do fim.
     if (opts.lerSozinho) {

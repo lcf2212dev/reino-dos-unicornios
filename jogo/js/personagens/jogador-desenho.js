@@ -105,8 +105,10 @@
     var B = Reino.Banho, U = Reino.CasaUsos;
     try { return !!(B && B.desenhandoUni && B.desenhandoUni()) || !!(U && U.desenhandoUni && U.desenhandoUni()); } catch (e) { return false; }
   }
-  // um uso da casa em que ela senta, deita, toma banho ou cozinha: a animação desenha os dois
-  function casaComEla() { try { return !!(Reino.CasaUsos && Reino.CasaUsos.desenhandoEla && Reino.CasaUsos.desenhandoEla()); } catch (e) { return false; } }
+  // um uso da casa em que ela senta, deita, toma banho ou cozinha, ou um módulo com desenhaEla() (o brinquedo do Parquinho)
+  function casaComEla() {
+    try { return !!(Reino.CasaUsos && Reino.CasaUsos.desenhandoEla && Reino.CasaUsos.desenhandoEla()) || (Reino.modulos || []).some(function (m) { return !!(m.desenhaEla && m.desenhaEla()); }); } catch (e) { return false; }
+  }
   // nuvenzinha de poeira do sujinho: 3 fiapos cinza-terra junto dos cascos (yPes −1 … −5), atrás do unicórnio
   // de lado e dos dois lados das patas de frente ou de costas; em blocos de px inteiros do sprite (a mesma grade
   // dele: borda esquerda x − larg/2). Com Animações, sobem e somem devagar; sem, ficam parados.
@@ -273,8 +275,8 @@
     var quadro = J.andando && animar ? PASSOS[Math.floor(passo.dist / pxQuadro) % 4] : 0;
     var usa = est.usando;
     var olhar = PA.vistaDaDirecao(J.olharX, J.olharY);
-    // fome ou sede baixa (ela anda mais devagar): o unicórnio fica com a pose cansada
-    var opcoes = { enfeites: usa.enfeites, capa: usa.capa, asasFada: usa.asasFada, vista: olhar.vista, cansado: cansado() };
+    // cansado: fome ou sede baixa (pose cansada); vestes: as roupas de aventura (itens.md §8), sem banho nem casa
+    var opcoes = { enfeites: usa.enfeites, capa: usa.capa, asasFada: usa.asasFada, vista: olhar.vista, cansado: cansado(), vestes: Reino.Itens ? Reino.Itens.vestes() : null };
     // o pulinho do trote é de 1 px inteiro (sobe ou não sobe: movimento de pixel em degrau)
     var pulo = animar ? trote(pxQuadro) : 0;
     // pulo alto (J.pular): o corpo sobe, a sombra fica no chão e encolhe um pouco no alto; no alto, patas encolhidas
@@ -324,7 +326,7 @@
         if (sujo) poeira(p, J.x, J.y + 1 - puloM, spr.w, spr.h, ladoDe(olhar), animar, 1 - prof * 1.5);
       } }];
       if (icone) {
-        var hM = alturaEstavel(['m', def.id, estagio, (usa.enfeites || []).join('+')].join('|'), function (v) {
+        var hM = alturaEstavel(['m', def.id, estagio, (usa.enfeites || []).join('+'), PA._interno.chaveVestes(opcoes.vestes)].join('|'), function (v) {
           return PA.montada(def, estagio, 0, est.aparencia, Object.assign({}, opcoes, { vista: v }));
         });
         sobre = function () { desenharIcone(p, icone, J.x, J.y + 1 + prof * corte * AFUNDA - hM - alto, animar); };
@@ -336,7 +338,7 @@
       if (Math.hypot(frente.x - tras.x, frente.y - tras.y) > 1) J.olharBebe = PA.vistaDaDirecao(frente.x - tras.x, frente.y - tras.y);
       var olharB = J.olharBebe || olhar;
       var bebe = PA.unicornio(def, 0, quadroUni, Object.assign({}, opcoes, { vista: olharB.vista }));
-      var menina = PA.mariana(est.aparencia, false, quadro, { capa: usa.capa, vista: olhar.vista });
+      var menina = PA.mariana(est.aparencia, false, quadro, { capa: usa.capa, vista: olhar.vista, vestes: opcoes.vestes });
       pulo *= 1.5;
       var ry = r.y;
       var profB = fundura(r.x, ry), profM = fundura(J.x, J.y);

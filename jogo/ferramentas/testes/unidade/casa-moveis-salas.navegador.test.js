@@ -1,4 +1,4 @@
-// Casa do jogador, os móveis avulsos (casa.md §12): os 50 registrados (um por sala do 4º bimestre, mais 3 camas, o chuveiro e os 8 do quarto do ET), cada um com o
+// Casa do jogador, os móveis avulsos (casa.md §12): os 50 registrados das salas (os `loja: true` da Vila ficam no casa-moveis-loja) (um por sala do 4º bimestre, mais 3 camas, o chuveiro e os 8 do quarto do ET), cada um com o
 // objeto casa-movel-<id> da biblioteca, cômodo de config.casa.comodos, nome curto, direções 1/2/4; cada direção
 // declarada desenha só dentro da pegada (com a folga do `topo`), o lado e as costas diferem da frente. Salva uma
 // prancha por cômodo em /tmp/reino-testes/casa-moveis-salas/ para olhar. Servidor de TESTE (cenario.js).
@@ -27,7 +27,7 @@ const MEDIR = `(function () {
     return { cv: cv, fora: fora, dentro: dentro, dados: cv.toDataURL() };
   }
   var res = [], pranchas = {}, linhas = {};
-  (Reino.moveisCasa || []).forEach(function (m) {
+  (Reino.moveisCasa || []).filter(function (m) { return !m.loja; }).forEach(function (m) {   // os da loja: casa-moveis-loja
     var def = OBJ[m.objeto], r = { id: m.id, nome: m.nome, objeto: m.objeto, comodo: m.comodo, direcoes: m.direcoes, parede: !!m.parede, existe: !!def, dirs: {} };
     res.push(r);
     if (!def) return;

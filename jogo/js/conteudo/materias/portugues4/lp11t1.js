@@ -51,7 +51,7 @@
           requisitos: ['formas', 'cores'],
           adaptacao: 'Os quatro quadros verdes viraram a prancheta de desenho do jogo.',
           explica: 'Que bichinhos lindos! Peixe, papagaio, hamster e tartaruga.' },
-        { id: 'lp11t1-06', tipo: 'varias', origem: 'ATI-08-q5', pagina: 8, livro: 'lp-t08',
+        { id: 'lp11t1-06', tipo: 'varias', origem: 'ATI-08-q5', pagina: 8, livro: 'lp-t08', avulsa: { carta: 'lp-a33b' },
           pergunta: 'Pinte as características que podem fazer parte de uma letra de canção.',
           opcoes: [
             { t: 'Versos e estrofes', ok: true },
@@ -63,7 +63,7 @@
           ],
           adaptacao: 'Pintar os quadros virou tocar neles.',
           explica: 'Letra de canção tem versos, estrofes, refrão, ritmo e melodia. Modo de preparo é de receita; lide é de notícia; «slogan» é de anúncio.' },
-        { id: 'lp11t1-07', tipo: 'ligar', origem: 'ATI-09-q1', pagina: 9, livro: 'lp-t09',
+        { id: 'lp11t1-07', tipo: 'ligar', origem: 'ATI-09-q1', pagina: 9, livro: 'lp-t09', avulsa: { carta: 'lp-a37' },
           pergunta: 'Ligue os substantivos masculinos à versão deles no feminino.',
           pares: [
             [{ t: 'amigo' }, { t: 'amiga' }],
@@ -74,7 +74,7 @@
           ],
           direita: [3, 2, 0, 1, 4],
           explica: 'Amigo, amiga; sogro, sogra; autor, autora; esposo, esposa; padrinho, madrinha.' },
-        { id: 'lp11t1-08', tipo: 'completar', origem: 'ATI-09-q2', pagina: 9, livro: 'lp-t09',
+        { id: 'lp11t1-08', tipo: 'completar', origem: 'ATI-09-q2', pagina: 9, livro: 'lp-t09', avulsa: { carta: 'lp-a37b' },
           pergunta: 'Numere cada palavra de acordo com a legenda para indicar se é um substantivo masculino (1) ou feminino (2).',
           palavras: ['1', '2'],
           frases: [
@@ -87,7 +87,7 @@
           ],
           adaptacao: 'Escrever o número no quadrinho virou tocar em 1 ou 2.',
           explica: 'Masculinos (1): o ventilador, o caderno, o apontador. Femininos (2): a água, a mochila, a lancheira.' },
-        { id: 'lp11t1-09', tipo: 'tabela', origem: 'ATI-09-q3', pagina: 9, livro: 'lp-t09',
+        { id: 'lp11t1-09', tipo: 'tabela', origem: 'ATI-09-q3', pagina: 9, livro: 'lp-t09', avulsa: { carta: 'lp-a37' },
           pergunta: 'Complete o quadro para formar masculino e feminino de cada palavra.',
           cab: ['masculino', 'feminino'],
           linhas: [
@@ -99,7 +99,7 @@
             ['o tio', { certas: ['a tia', 'tia'] }],
           ],
           explica: 'O jogador e a jogadora, o alemão e a alemã, o capitão e a capitã, o médico e a médica, o professor e a professora, o tio e a tia.' },
-        { id: 'lp11t1-10', tipo: 'digitar', origem: 'ATI-10-q4', pagina: 10, livro: 'lp-t10',
+        { id: 'lp11t1-10', tipo: 'digitar', origem: 'ATI-10-q4', pagina: 10, livro: 'lp-t10', avulsa: { carta: 'lp-a37' },
           pergunta: 'Escreva o substantivo feminino dos animais representados a seguir.',
           frases: [
             { img: '🐱', alt: 'gato', antes: '', depois: '', certas: ['gata', 'a gata'] },
@@ -107,7 +107,7 @@
             { img: 'palavra:coelho', alt: 'coelho', antes: '', depois: '', certas: ['coelha', 'a coelha'] },
           ],
           explica: 'Gato, gata; tigre, tigresa; coelho, coelha.' },
-        { id: 'lp11t1-11', tipo: 'digitar', origem: 'ATI-10-q5', pagina: 10, livro: 'lp-t10',
+        { id: 'lp11t1-11', tipo: 'digitar', origem: 'ATI-10-q5', pagina: 10, livro: 'lp-t10', avulsa: { carta: 'lp-a37' },
           apoio: { titulo: 'As frases', partes: [{ lista: [
             'a) A DIRETORA do filme é também A ATRIZ principal.',
             'b) A RAINHA convidou para o chá A PRINCESA, A DUQUESA e A CONDESSA.',

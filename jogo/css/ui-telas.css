@@ -94,8 +94,9 @@
 .btn-comecar { font-size: var(--texto); padding: 16px 22px; }
 
 /* Claude */
-.intro-claude { display: flex; align-items: center; gap: 14px; padding: 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-quente); text-align: left; }
+.intro-claude { display: flex; align-items: center; gap: 14px; max-width: 100%; padding: 14px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--papel-quente); text-align: left; }
 .intro-claude-grande { max-width: 560px; background: var(--papel); }
+.intro-claude > p { min-width: 0; }   /* a palavra longa quebra na sílaba (_d.caberTexto) em vez de empurrar o balão para fora */
 .claude-intro { flex: none; }
 .lugar-guia { display: flex; align-items: center; gap: 12px; }
 /* celular com Letras grandes (O-31): a palavra longa não cabe ao lado do retrato; o retrato vai para cima e,

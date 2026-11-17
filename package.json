@@ -1,7 +1,13 @@
 {
   "name": "reino-dos-unicornios",
   "private": true,
+  "license": "MIT",
   "description": "Ferramentas de desenvolvimento do jogo Mariana e o Reino dos Unicórnios (o jogo não tem dependências nem build).",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcf2212dev/reino-dos-unicornios.git"
+  },
+  "homepage": "https://reino-dos-unicornios.vercel.app",
   "devDependencies": {
     "playwright": "1.63.0",
     "pngjs": "7.0.0"
@@ -19,6 +25,7 @@
     "tamanho": "node jogo/ferramentas/tamanho.js",
     "tipos": "node jogo/ferramentas/testes/tipos.js",
     "ver": "node jogo/ferramentas/testes/ver.js",
+    "varredura": "node jogo/ferramentas/testes/varredura.js",
     "memoria": "node jogo/ferramentas/testes/sonda-memoria.js",
     "novo": "node jogo/ferramentas/novo/novo.js",
     "worktree": "node jogo/ferramentas/fluxo/worktree.js",
@@ -28,6 +35,7 @@
     "plano": "node jogo/ferramentas/fluxo/plano.js",
     "vercel": "node jogo/ferramentas/fluxo/vercel.js",
     "icones": "node jogo/ferramentas/pwa/gerar-icones.js",
-    "gnome": "node jogo/ferramentas/gnome/instalar.js"
+    "gnome": "node jogo/ferramentas/gnome/instalar.js",
+    "android": "node jogo/ferramentas/android/android.js"
   }
 }

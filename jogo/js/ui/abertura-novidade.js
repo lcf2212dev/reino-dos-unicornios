@@ -24,14 +24,18 @@
     var c = cfg(), textos = el('div.novidade-textos', el('p.novidade-texto', c.texto));
     if (c.detalhe) textos.appendChild(el('p.novidade-detalhe', c.detalhe));
     var raiz = el('div.novidade-bloco');
-    if (UI.casinhaDOM) raiz.appendChild(el('div.novidade-pula', { 'aria-hidden': 'true' }, UI.casinhaDOM(4, 'novidade-casinha')));
+    if (c.tema) raiz.classList.add('novidade-tema-' + c.tema);
+    if (c.desenho && PA.iconeEmoji) {   // o desenho da novidade (ex.: o fantasminha 👻), flutuando em degraus
+      var d = PA.iconeEmoji(c.desenho, 4); d.classList.add('novidade-desenho');
+      raiz.appendChild(el('div.novidade-flutua', { 'aria-hidden': 'true' }, d));
+    } else if (UI.casinhaDOM) raiz.appendChild(el('div.novidade-pula', { 'aria-hidden': 'true' }, UI.casinhaDOM(4, 'novidade-casinha')));
     raiz.appendChild(textos);
     return raiz;
   }
 
   /* ---------- a atualização de mentira (pedido do Leandro, 31/10/2026: "fake updating") ---------- */
   var CHAVE = 'reino-novidade-vista';
-  var PASSOS = ['Abrindo o mapa do Reino…', 'Construindo a sua casa…', 'Trazendo os móveis…', 'Pintando as paredes…', 'Pronto!'];
+  var PASSOS = ['Abrindo o mapa do Reino…', 'Plantando as árvores do bosque…', 'Chamando os fantasmas…', 'Acendendo as lanternas…', 'Pronto!'];
   var BLOCOS = 12;
 
   function primeiraVez() {
@@ -55,7 +59,7 @@
       var passo = el('p.atualizando-passo', { 'aria-live': 'polite' }, PASSOS[0]);
       var pct = el('p.atualizando-pct', '0%');
       var caixa = el('div.atualizando-caixa', { role: 'status' },
-        el('p.atualizando-titulo', 'Atualizando o Reino'), barra, pct, passo);
+        el('p.atualizando-titulo', 'Atualizando'), barra, pct, passo);
       var veu = el('div.atualizando-veu', caixa);
       (tela || document.body).appendChild(veu);
       var t0 = Date.now(), ultimoPasso = 0;

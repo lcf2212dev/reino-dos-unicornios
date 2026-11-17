@@ -24,7 +24,7 @@
           frases: [{ antes: '', depois: 'grupos', certas: ['4', 'quatro'] }],
           explica: 'O professor vai dividir a turma em 4 grupos.' },
         { id: 'ma11a2-03', tipo: 'escolha', origem: 'APR-29-qC', pagina: 29, livro: 'ma-a29',
-          pergunta: 'Circule os alunos para formar os grupos e responda: Quantos alunos cada grupo terá?',
+          pergunta: 'Quantos alunos cada grupo terá?',
           opcoes: [
             { t: '3' },
             { t: '4' },
@@ -42,7 +42,7 @@
           frases: [{ antes: '', depois: 'crianças', certas: ['3', 'três'] }],
           explica: 'Tiago e os dois amigos: 3 crianças estão jogando.' },
         { id: 'ma11a2-06', tipo: 'digitar', origem: 'APR-30-qC', pagina: 30, livro: 'ma-a30',
-          pergunta: 'Trace linhas para ligar cada carta a uma criança e responda: Quantas cartas cada criança receberá?',
+          pergunta: 'Quantas cartas cada criança receberá?',
           frases: [{ antes: '', depois: 'cartas para cada criança.', certas: ['4', 'quatro'] }],
           adaptacao: 'Traçar linhas das cartas até as crianças virou só escrever a resposta.',
           explica: '12 ÷ 3 = 4: cada criança recebe 4 cartas, porque 4 + 4 + 4 = 12.' },
@@ -55,7 +55,7 @@
           frases: [{ antes: '', depois: 'pratos', certas: ['3', 'três'] }],
           explica: 'Ela vai usar 3 pratos.' },
         { id: 'ma11a2-09', tipo: 'digitar', origem: 'APR-31-q1c', pagina: 31, livro: 'ma-a31', apoio: ROSQUINHAS,
-          pergunta: 'Recorte as rosquinhas da aba. Depois, cole as rosquinhas nos pratos e responda: Há quantas rosquinhas em cada prato?',
+          pergunta: 'As rosquinhas serão distribuídas igualmente nos 3 pratos. Há quantas rosquinhas em cada prato?',
           frases: [
             { antes: '1º prato:', depois: 'rosquinhas', certas: ['3', 'três'] },
             { antes: '2º prato:', depois: 'rosquinhas', certas: ['3', 'três'] },
@@ -64,7 +64,7 @@
           adaptacao: 'Recortar e colar as rosquinhas nos pratos virou escrever quantas ficam em cada prato.',
           explica: '9 rosquinhas em 3 pratos: 3 em cada prato, porque 3 + 3 + 3 = 9.' },
         { id: 'ma11a2-10', tipo: 'digitar', origem: 'APR-32-q2a', pagina: 32, livro: 'ma-a32',
-          pergunta: 'Beto vai ajudar a mãe a pendurar 12 camisetas no varal. Desenhe e pinte as camisetas distribuindo a mesma quantidade em cada corda do varal.',
+          pergunta: 'Beto vai ajudar a mãe a pendurar 12 camisetas no varal, distribuindo a mesma quantidade em cada corda do varal. Quantas camisetas vão em cada corda?',
           frases: [
             { antes: '1ª corda:', depois: 'camisetas', certas: ['6', 'seis'] },
             { antes: '2ª corda:', depois: 'camisetas', certas: ['6', 'seis'] },

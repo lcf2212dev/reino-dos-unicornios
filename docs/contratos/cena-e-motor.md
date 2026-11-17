@@ -39,7 +39,7 @@ Reino.Cena = {
   irPara(interiorId, chegada {x,y}?, olhar {x,y}?, de?) → Promise   // interior → interior (escadas), com íris.
                                  // Sem chegada: ao lado da escada de interiorId que volta para `de`
                                  // (Interiores.chegadaVindoDe; interiores.md §3.1); sem ela, o spawn
-  sair() → Promise               // interior → mapa, 1 tile abaixo da porta do lugar, olhando para baixo
+  sair(chegada?) → Promise       // interior → mapa, 1 tile abaixo da porta do lugar (ou no tile `chegada` {x,y}), olhando para baixo
   paraTela(wx, wy) → {x, y}      // px do jogo → px CSS da página (testes e toques)
   quadros: { media() → ms, ultimo }   // tempo de desenho por quadro (últimos ~120), para o debug
   ocupar(motivo), liberar(motivo)     // estado 'atividade' sem tela DOM (ex.: banho); evento OCUPADA (motivo | null)
@@ -228,7 +228,11 @@ alvo = { tipo: 'npc'|'objeto'|'saida'|'escada'|'lugar'|'claude', id,
    `config.cofre.cheio`. Toque: `Mapa.alvoObjeto(wx, wy)` e `Mapa.alvoObjetoPerto(tl, olhar)` (o adaptador do mapa em
    `motor/cena.js`, depois do Claude): ela anda até (23, 27) e abre `UI.telaCofre()` (`ui/cofre.js`).
 
-## 10. Nadar no lago
+## 10. Nadar no lago (e na água de um interior)
+Interior com `agua` no def (`interiores.md` §3; ex.: as lagoas do Pântano, `arenas.md` §6.10): a cena ganha
+`agua(tx, ty)` e `fundura(wx, wy)` (as do def) e tudo abaixo vale nela igual ao lago (velocidade, corte, ondinhas,
+respingo, gotinhas, montada e bebê); o caminho vai por terra quando o destino é terra (sem o custo 3× do mapa). O mapa
+continua com `Mapa.fundura`, como sempre.
 ```
 Mapa.agua(tx, ty) → bool          // tile de água do lago (tipo 'a'); a fonte da praça não é água e segue sólida
 Mapa.solido(tx, ty)               // água do lago é andável (false); borda, prédios e enfeites, sólidos
@@ -239,12 +243,16 @@ Mapa.caminho(a, b)                // destino em terra: primeiro um caminho SEM �
 Mapa.maisPerto(x, y, de)          // tocou em terra sólida: prefere terra; quem está nadando prefere a terra encostada
                                   // no que tocou (senão a água em volta); tocou na água: aceita água
 Mapa.fundura(wx, wy) → px         // quanto o ponto está dentro da água DESENHADA (elipse do lago); negativo = margem
-cena.agua(tx, ty) → bool          // adaptador do mapa; interiores não têm (= false)
+cena.agua(tx, ty) → bool          // adaptador do mapa e interior com def.agua; os outros não têm (= false)
+cena.fundura(wx, wy) → px         // só interior com def.agua (o mapa usa Mapa.fundura)
 Jogador.nadando() → bool          // o tile atual é água (velocidade e som)
-Jogador.fundura(x, y) → 0–1       // Mapa.fundura suavizada numa rampa de 12 px; fora do mapa = 0
+Jogador.fundura(x, y) → 0–1       // Mapa.fundura (no interior com água, cena.fundura) suavizada numa rampa de 12 px;
+                                  // cena sem água = 0
 Jogador.velocidade() → px/s       // ALVO: base (montada 82, a pé 58) × (nadando ? config.nado.fator (0,6) : 1)
-                                  // × Cuidados.fatorVelocidade(). O passo usa J.vel, que chega ao alvo aos
-                                  // poucos (SUAVE_VEL 0,18 s), sem tranco na margem
+                                  // × Cuidados.fatorVelocidade() × cada fator registrado. O passo usa J.vel,
+                                  // que chega ao alvo aos poucos (SUAVE_VEL 0,18 s), sem tranco na margem
+Jogador.registrarFatorVelocidade(fn) // fn() → número > 0 multiplica o alvo (outro valor ou erro = 1); sem fator,
+                                  // a velocidade é a de sempre (ex.: Velocidade no Bosque, bosque.md §5)
 Reino.Som.tocar('splash' | 'gotas' | 'gole' | 'nhac')   // entrar na água, sair, beber, comer
 ```
 Lugar novo não entra na água: o validador acusa rect ou `caminho` no lago (§9.8).
@@ -291,7 +299,7 @@ Sistema novo (como cuidados, surpresa, fotos, banho) = arquivos na pasta dele + 
 `motor/main.js`, `motor/laco.js`, `sistemas/falas.js` nem `debug.js`. Registro em `js/nucleo/modulos.js`
 (`node: true`, logo depois de `nucleo/registros.js`):
 - `Reino.registrarModulo(def)`, `Reino.modulos` (ordem de registro = ordem do manifesto), `Reino.modulo(id)`.
-- `def = { id, iniciar?(ctx), depoisDasBoasVindas?(ctx), falas?(), depurar?(), acoes?, camada? }` (tipo `ModuloDef`).
+- `def = { id, iniciar?(ctx), depoisDasBoasVindas?(ctx), falas?(), depurar?(), acoes?, camada?, desenhaEla? }` (tipo `ModuloDef`).
 
 | Gancho | Quando roda |
 |---|---|
@@ -300,6 +308,7 @@ Sistema novo (como cuidados, surpresa, fotos, banho) = arquivos na pasta dele + 
 | `falas()` → `[{ texto, voz?, pacote? }]` | `Reino.Falas.todas()` (voz padrão `claude`, pacote padrão `geral`) |
 | `depurar()` | `__reino.modulo(id)` |
 | `camada: { ativo(), itensDesenho(pintor, t, animar), sobre?(ctx, pintor, t, animar) }` | a cada quadro, §5 passos 4 e 5 (erros com rótulo `id` e `id + '-sobre'`) |
+| `desenhaEla?()` → bool | a cada quadro: verdadeiro, o desenho normal dela e do unicórnio some (o módulo desenha os dois; `personagens/jogador-desenho.js`; ex.: o brinquedo do Parquinho) |
 | `acoes: { <tipo>: fn(acao, ctx) → Promise }` | quando a Mariana toca um objeto/NPC com `acao: { tipo: '<tipo>', … }` (npcs-e-dialogo.md §7) |
 
 1. Registrar só guarda funções: nada de DOM, Progresso ou Cena no carregamento (as ferramentas carregam no Node).
@@ -362,7 +371,8 @@ Exemplo mínimo (um sistema novo "brilho" na pasta dos sistemas, no manifesto de
 
 ## 15. Versão nova: a aba se atualiza sozinha
 Módulo `versao` (`jogo/js/sistemas/versao.js`, `Reino.Versao`). Depois de publicar o jogo novo (Vercel), as
-abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão do Leandro: sem perguntar).
+abas que ficaram abertas nos aparelhos (e o app instalado, que é a mesma página com o service worker) percebem e
+recarregam sozinhas (decisão do Leandro: sem perguntar).
 - **A impressão digital**: `npm run versao` (`jogo/ferramentas/gerar-versao.js`) grava `jogo/js/versao.json` =
   `{ versao, gerado }`, com `versao` = sha256 de `index.html` + `css/**` + `js/**` (inclusive `js/voz/`, fora o próprio
   `versao.json`), caminho e conteúdo, em ordem alfabética: a mesma árvore dá sempre o mesmo hash. O arquivo está no
@@ -386,8 +396,24 @@ abas que ficaram abertas nos aparelhos percebem e recarregam sozinhas (decisão 
   os testes trocam), com `Jogadores.lembrarEntrada()` antes: o reload entra direto no mapa, sem abertura nem senha
   (`save-e-mescla.md` §12). Tocar fora do balão, tecla, andar ou sair do mapa durante o aviso ou a espera: desiste e tenta de
   novo na próxima parada. Nada vai para o save.
+- **Service worker (Vercel/PWA)**: o `sw.js` muda a cada deploy e serve o jogo inteiro do cache (`vercel/pwa/sw.js`);
+  o REGISTRO inline do index montado (`vercel/montar.js`) confere o `sw.js` (`registration.update()`) ao abrir, quando
+  a aba volta a ficar visível e a cada 60 s com a aba visível (repetir é inofensivo: sem rate-limit). O install do
+  `sw.js` novo baixa o NÚCLEO INTEIRO antes do `skipWaiting()`/`clients.claim()`; quando ele assume a aba
+  (`controllerchange`), a página pode estar com o index/scripts velhos: o REGISTRO chama `Reino.Versao.novaVersao()`
+  (`V.novaVersao()`), que põe a fase em `nova` (`nova = 'serviceworker'`) e segue o fluxo normal (parada → aviso →
+  gravar → reload); com o jogo ainda não entrado (ou sem o módulo), a aba recarrega na hora, porque a versão nova já
+  está inteira no cache. O primeiro controle (instalação nova, com a página já na versão servida) não recarrega.
+  Corrida resolvida: se o `sw.js` novo assume antes de `V.iniciar`, o módulo lembra a troca (`trocou`) e `V.iniciar`
+  chama `V.novaVersao()` — a marca-base lida depois já seria a da versão nova, e a página velha nunca seria percebida.
+  Guarda: reabrir o jogo sem rede continua servindo a versão do cache que já está no aparelho.
 - Números: `config.versao = { intervaloMs, confirmarMs, cacheMs, paradaMs, avisoMs, esperaMs }` (o módulo tem os
   mesmos valores padrão se faltar). Depuração: `__reino.modulo('versao')` → `{ ligado, motivo, fase, base, suspeita,
-  nova, buscas, avisos, cancelados, … }` (`fase`: `desligado`, `vigiando`, `nova`, `aviso`, `gravado`, `recarregando`).
-- Testes: `unidade/versao.test.js` (desligado, falas, gerador estável) e `unidade/versao.navegador.test.js`
-  (`?debug=1&congelar=1&versao=1`, `page.route` servindo v1 e v2).
+  nova, buscas, avisos, cancelados, controle, trocou, … }` (`fase`: `desligado`, `vigiando`, `nova`, `aviso`, `gravado`,
+  `recarregando`; `nova = 'serviceworker'` = a troca veio do service worker).
+- Testes: `unidade/versao.test.js` (desligado, falas, gerador estável), `unidade/versao.navegador.test.js`
+  (`?debug=1&congelar=1&versao=1`, `page.route` servindo v1 e v2), `unidade/versao-entrou.navegador.test.js` (modo vivo:
+  o reload cai direto no mapa, uma vez só) e `unidade/atualizacao-sozinha.navegador.test.js` (o app montado com service
+  worker: na tela de início o deploy novo recarrega a aba na hora; com o jogo aberto, o `sw.js` novo assume, o Claude
+  avisa, o jogo grava e recarrega direto no mapa na v2; `unidade/sw-nucleo.navegador.test.js` cobre o núcleo/vozes do
+  `sw.js` e `unidade/montar-lotes.navegador.test.js` confere o REGISTRO no index montado).

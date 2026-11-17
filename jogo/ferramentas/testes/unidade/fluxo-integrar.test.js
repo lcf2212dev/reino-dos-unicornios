@@ -91,7 +91,7 @@ test('integrar: cherry-pick + worktree sem commit + index.html + colisão igual;
   assert.deepStrictEqual(R.linhas('e2e.log'), ['--podar', 'e2e'], 'poda no começo, depois o e2e');
   assert.deepStrictEqual(R.linhas('test.log'), ['test']);
   const integ = r1.pasta;
-  assert.strictEqual(integ, path.join(R.base, `reino-integracao-${nm(R, 't1')}`));
+  assert.strictEqual(integ, path.join(R.mae, `reino-integracao-${nm(R, 't1')}`));
   assert.deepStrictEqual(assuntos(integ, 3), ['Reino dos Unicórnios: começo', 'Reino dos Unicórnios: frente A', 'Reino dos Unicórnios: frente B']);
   assert.strictEqual(C.git(integ, 'rev-list', '--merges', 'main..HEAD'), '', 'histórico linear');
   assert.match(R.ler('jogo/index.html', integ), /^<!-- gerado --> a b-A c d e f-B g$/m);
@@ -196,7 +196,7 @@ test('integrar: processo vivo numa worktree de frente para tudo', async () => {
     const r = await rodar(R, ['feat/viva', '--nome', nm(R, 't4'), '--sem-e2e']);
     assert.strictEqual(r.codigo, 1);
     assert.match(r.texto, new RegExp(`PID ${p.pid} \\[feat/viva\\]`));
-    assert.ok(!fs.existsSync(path.join(R.base, `reino-integracao-${nm(R, 't4')}`)));
+    assert.ok(!fs.existsSync(path.join(R.mae, `reino-integracao-${nm(R, 't4')}`)));
   } finally { p.kill(); }
 });
 
@@ -217,13 +217,13 @@ test('integrar: branch `integracao` antiga não atrapalha; branch em conflito pa
   await assert.rejects(rodar(R, ['feat/f', '--nome', n6, '--sem-e2e']),
     new RegExp(`integracao-${n6}: já existe integracao-${n6}/velha[\\s\\S]*--nome ${n6}-2`));
   assert.strictEqual(R.git(R.principal, 'for-each-ref', '--format=%(refname)', 'refs/heads/'), refsAntes);
-  assert.ok(!fs.existsSync(path.join(R.base, `reino-integracao-${n6}`)));
+  assert.ok(!fs.existsSync(path.join(R.mae, `reino-integracao-${n6}`)));
   assert.ok(!fs.existsSync(path.join(C.PASTA_TESTES, 'integrar', `${n6}.json`)));
 
   // integração antiga com barra (integracao/<n>, estado gravado): --nome retoma pela branch do estado
   const n7 = nm(R, 't7');
   R.git(R.principal, 'branch', '-D', 'integracao');
-  const velha = path.join(R.base, `reino-integracao-${n7}`);
+  const velha = path.join(R.mae, `reino-integracao-${n7}`);
   R.git(R.principal, 'worktree', 'add', '-q', velha, '-b', `integracao/${n7}`, 'main');
   fs.writeFileSync(path.join(C.PASTA_TESTES, 'integrar', `${n7}.json`), JSON.stringify({
     nome: n7, pasta: velha, branch: `integracao/${n7}`, main: R.git(R.principal, 'rev-parse', 'main'),

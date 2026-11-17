@@ -61,9 +61,15 @@ Reino.registrarInterior({
   saida: { x, y },                    // tapete de saída (só no de entrada): tile de chão na última fileira do cômodo
   spawn: { x, y },                    // 1 tile acima do tapete (planeta, sem entrada: onde o e2e e o irPara sem chegada põem)
   fundo?: 'espaco',                   // céu aberto: I.FUNDOS[id] = { cor, desenhar(ctx, w, h) } pinta o vão em volta
-                                      // dos cômodos (em vez do roxo-escuro, sem lábios) e `cor` é a cor fora do interior
+                                      // dos cômodos (em vez do roxo-escuro, sem lábios) e `cor` é a cor fora do interior;
+                                      // `saida?(ctx, px, py)` desenha a saída no lugar do vão e do capacho (o portal
+                                      // do Bosque, bosque.md); sem ela, a porta de sempre
+  agua?: { tile(tx, ty), fundura(wx, wy) },   // água andável: ela nada (cena-e-motor.md §10); tile → bool, fundura
+                                      // → px para dentro da água desenhada (negativo = fora). Sem ela, sem água
   escadas: [{ x, y, para: 'torre-1', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
-                                      // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo)
+                                      // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo);
+                                      // 'portal' = nada desenhado (o prédio põe um objeto ali: porta de loja, portal
+                                      // mágico), com a seta de `seta: 'sobe'|'desce'|false` (padrão 'sobe')
   comodos: [{
     id: 'galeria1', nome: 'Cartas e Lembranças',
     placa: 'Sala 1 • Cartas e Lembranças',   // placa com a fonte pixel na parede do fundo; aceita {nome}, {a|b} e
@@ -306,6 +312,9 @@ Prédio novo = a pasta `jogo/js/interiores/<p>/` + as linhas dela no manifesto. 
 - `menu = { emoji, info?(l), avisos?(l) → [{ texto, icone?, tipo }], abrir?(l) }` alimenta a linha do menu
   Lugares, os chips e a tela própria (`Reino.UI.registrarLugarMenu(tipo, menu)`, a mesma tabela dos lugares de
   hoje). Sem `menu`: 📍, sem informação, sem avisos e só o interior. `tipo` do lugar = `id`.
+- `liberado?(l) → bool` (lido só por `Reino.lugarLiberado(l)`): enquanto der false, a porta abre `menu.abrir` em vez do
+  interior (`motor/cena.js`, `entrarLugar`) e o lugar sai do menu Lugares; o rect, o caminho e o desenho parado ficam
+  para todo mundo. Exemplo: o portal do Parquinho (`parquinho.md` §3).
 - O validador lê os lugares dos dados (`ferramentas/validar/lugares-do-mapa.js`) e acusa id repetido, registrado
   sem caminho, rect fora do mapa ou por cima de outro lugar, caminho fora do mapa ou por dentro de um prédio.
 ```js

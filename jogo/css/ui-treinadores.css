@@ -1,0 +1,26 @@
+/* Treinadores de Monstros: a loja das MonsterBalls da Treinadora Kiara (js/ui/treinadores-loja.js;
+   docs/contratos/monstros.md). Usa as peças da loja da Vila (css/ui-vila.css): saldo, recado, cartão e rodapé.
+   Um cartão por bola (MonsterBall e Super MonsterBall), lado a lado; no celular, um embaixo do outro. */
+.tela-treinadores .painel { width: min(680px, 100%); }
+.treinadores-corpo { display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap; }
+.treinadores-cartao { flex: 1 1 220px; max-width: 300px; cursor: default; padding: 12px 10px; }
+.treinadores-cartao .vila-cartao-nome { font-size: var(--texto); }
+.treinadores-super { border-color: var(--ouro); background: var(--ouro-claro); }
+/* a Mini: a borda azul */
+.treinadores-mini { border-color: var(--azul); }
+.treinadores-cheio { margin-left: 8px; color: var(--tinta-suave); font-size: var(--texto-aux); text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--erro); }
+.treinadores-desconto { text-align: center; font-size: var(--texto-aux); color: var(--tinta-suave); margin: 0 0 10px; }
+.treinadores-tem { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.treinadores-escolha { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 6px; }
+.treinadores-escolha .btn-icone { width: 48px; height: 48px; min-width: 48px; font-size: var(--texto); }
+.treinadores-qtd { min-width: 32px; text-align: center; font-size: var(--texto); }
+.treinadores-meus { min-height: 44px; padding: 6px 14px; font-size: var(--texto-aux); }
+/* celular: os cartões ocupam a largura, um embaixo do outro */
+@media (max-width: 480px) {
+  .treinadores-corpo { flex-direction: column; gap: 8px; }
+  .treinadores-cartao { flex: none; width: 100%; max-width: none; padding: 8px 6px; }
+}
+/* "ou" e "Escrever 2 frases" no cartão da MonsterBall (a bola de graça pela letra cursiva; docs/contratos/cursiva.md) */
+.treinadores-ou { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 8px; }
+.treinadores-ou-txt { font-size: var(--texto-aux); color: var(--tinta-suave); }
+.treinadores-escrever { min-height: 44px; padding: 6px 12px; font-size: var(--texto-aux); }

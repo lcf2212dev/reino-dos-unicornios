@@ -20,13 +20,27 @@
 .apoio-estrofe:last-child { margin-bottom: 0; }
 .apoio-verso { display: block; padding-left: 16px; text-indent: -16px; }
 
-/* opção com desenho (escolha e varias): o desenho de 64 px em cima do nome; grade de 2 colunas no celular */
-.opcoes.opcoes-img { grid-template-columns: repeat(auto-fill, minmax(min(100%, 140px), 1fr)); }
+/* opção com desenho (escolha e varias): o desenho de 64 px em cima do nome; grade de 2 colunas no celular. A coluna
+   cabe uma palavra de 8 letras inteira (128 px + 8 px de folga de cada lado + a borda: "elefante", «football»); a de 9
+   ou mais quebra na sílaba (_d.textoOpcao) */
+.opcoes.opcoes-img { grid-template-columns: repeat(auto-fit, minmax(min(100%, 9.5em), 1fr)); }
+/* a coluna em em (acompanha a letra do nome: 152 px em 16) e auto-fit (poucas opções = colunas largas, sem trilhas
+   vazias). Com Letras grandes no tablet e no notebook, 6.5em (156 px em 24): as 4 colunas de antes, que cabiam sem
+   rolar (com 9em, 3 colunas empurravam a última figura para baixo do rodapé). Rótulo comprido (escolha.js,
+   .opcoes-longas) com a coluna mais larga só a partir de 640 px e sem Letras grandes: no celular 14em não cabe duas
+   vezes, e com Letras grandes 2 colunas empurravam a última opção para baixo do rodapé */
+@media (min-width: 640px) {
+  .letras-grandes .opcoes.opcoes-img { grid-template-columns: repeat(auto-fit, minmax(min(100%, 6.5em), 1fr)); }
+  /* o rótulo comprido em 3 opções ou mais desce um degrau (16): em 24 ele crescia as figuras para baixo do rodapé */
+  .letras-grandes .opcoes-img.opcoes-longas:has(> .opcao:nth-child(3)) .opcao-texto { font-size: var(--texto-aux); }
+  :root:not(.letras-grandes) .opcoes.opcoes-img.opcoes-longas { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14em), 1fr)); }
+}
 .opcao.opcao-img { flex-direction: column; justify-content: center; gap: 6px; padding: 10px 8px 12px; text-align: center; }
 .opcao-img .opcao-figura { display: inline-flex; align-items: center; justify-content: center; min-height: 64px; font-size: var(--texto-t); line-height: 1; }
-.opcao-img .opcao-texto { flex: none; max-width: 100%; overflow-wrap: break-word; }
+/* o nome não parte no meio: a palavra que não cabe faz a letra descer um degrau (_d.caberTexto e .texto-menor, arte.md §17.3) */
+.opcao-img .opcao-texto { flex: none; max-width: 100%; }
 /* celular com letras grandes: o nome da opção desce um degrau (24 → 16) para caber na meia largura (arte.md §17.3) */
-@media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto { font-size: var(--texto-aux); } }
+@media (max-width: 480px) { .letras-grandes .opcao-img .opcao-texto, .letras-grandes .opcoes-img { font-size: var(--texto-aux); } }   /* a grade mede em em do nome */
 .opcao-marcar.opcao-img { position: relative; padding-top: 16px; }
 .opcao-marcar.opcao-img::after { position: absolute; top: 6px; right: 6px; }
 
@@ -66,10 +80,18 @@
   :is(.tabela-larga, .tabela-digita) .tabela-quadro td[data-cab]:has(> .campo-texto-caixa, > .tabela-lacuna) { display: block; }
   .letras-grandes .tabela-desafio .tabela-quadro td[data-cab]::before,
   :is(.tabela-larga, .tabela-digita) .tabela-quadro td[data-cab]:has(> .campo-texto-caixa, > .tabela-lacuna)::before { display: block; margin-bottom: 4px; }
-  .letras-grandes .tabela-desafio .tabela-quadro td[data-cab]::before { white-space: nowrap; }
+  /* (o título da coluna que não cabe numa linha, "Principal matéria-prima", quebra entre as palavras) */
   /* tabela de 2 colunas (sem ficha): o título da coluna um degrau abaixo, a palavra inteira (arte.md §17.3) */
   .tabela-quadro th { font-size: var(--texto-aux); }
 }
+
+/* tablet e notebook com Letras grandes: a tabela mais larga que a moldura (tabela.js) vira a mesma ficha por linha */
+.tabela-ficha .tabela-quadro thead { display: none; }
+.tabela-ficha :is(.tabela-quadro, .tabela-quadro tbody, .tabela-quadro tr) { display: block; }
+.tabela-ficha .tabela-quadro tr { margin-bottom: 8px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); }
+.tabela-ficha .tabela-quadro td { display: block; border: 0; border-bottom: var(--borda-fina) dashed var(--ambar); text-align: left; }
+.tabela-ficha .tabela-quadro td:last-child { border-bottom: 0; }
+.tabela-ficha .tabela-quadro td[data-cab]::before { content: attr(data-cab); display: block; margin-bottom: 4px; font-size: var(--texto-aux); line-height: var(--entrelinha); color: var(--tinta-suave); }
 
 /* cruzadinha: a fileira de acentos (ui-desafios-livro.css) em 2 linhas de 6, na largura da grade, também na tela larga */
 .cruzadinha .acentos { grid-template-columns: repeat(6, minmax(44px, 1fr)); width: 100%; }
@@ -126,7 +148,7 @@
 .caca-letra.caca-inicio { background: var(--roxo-texto); color: var(--branco); }
 .caca-letra:focus-visible { z-index: 2; }
 .caca-lista { display: flex; flex: 1 1 200px; flex-wrap: wrap; align-content: flex-start; justify-content: center; gap: 8px; min-width: 0; margin: 0; padding: 0; list-style: none; }
-.caca-palavra { padding: 4px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); font-size: var(--texto); line-height: var(--entrelinha); }
+.caca-palavra { max-width: 100%; padding: 4px 10px; border: var(--borda-fina) solid var(--borda); border-radius: var(--canto); background: var(--papel); font-size: var(--texto); line-height: var(--entrelinha); }
 .caca-palavra.achada { border-color: var(--certo); background: var(--certo-fundo); color: var(--certo); text-decoration: line-through; }
 
 /* ---------- erro de item e acerto (arte.md §19.2 e 3) ---------- */

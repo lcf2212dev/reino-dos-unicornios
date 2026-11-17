@@ -57,8 +57,35 @@ Reino.EVENTOS = {
      Emite: sistemas/jogadores.js. Ouve: quem mostra o nome ou desenha o personagem (a tela de criar personagem),
      motor/interiores-placas.js (texto das placas com {nome}). */
   PERFIL: 'perfil',
+  /* Quem está no reino mudou (Jogar juntos; docs/contratos/juntos.md §5). Carga: { total, sala, jogadores } (os
+     outros jogadores online, cada um com { login, nome, sala, x, y }). Emite: sistemas/juntos.js (só quando muda o
+     conjunto: login, nome ou sala; a posição não emite). Ouve: ui/juntos.js (botão 👥 e a tela "Quem está no reino"). */
+  JUNTOS: 'juntos',
   /* Respostas conferidas (as mesmas que contam na Aura: salas, treino, provas, pergunta surpresa).
      Carga: { certas, erradas } (números; nota parcial não entra). Emite: sistemas/aura.js (Reino.Aura.contar,
      antes de gravar a Aura). Ouve: sistemas/viagem.js (o combustível do foguete). */
   RESPOSTAS: 'respostas',
+  /* Algo aconteceu no Bosque dos Fantasmas ou noutra arena (docs/contratos/bosque.md, arenas.md). Carga: { tipo, ... }:
+     'vida' (+ n, max) (a vida dela mudou), 'golpe' (+ acertou) (ela atacou), 'vencido' (+ id, fantasma = o tipo,
+     arena = o id da arena) (um inimigo foi vencido), 'abate' (+ mortos, subiu, xp) (o placar e o XP subiram; a mosca e
+     o voador contam 2; subiu = o nível novo, ou null), 'desmaio' (a vida zerou), 'acerto' (+ materia, nivel, presente) (pergunta
+     certa; presente = { chave, movel } do baú, ou null), 'ponto' (+ nivel, h) (ponto de habilidade posto).
+     Emite: sistemas/bosque-combate.js (vida, golpe, vencido, desmaio), sistemas/bosque.js (abate, acerto, ponto).
+     Ouve: ui/bosque-hud.js (chip e botão da espada), ui/bosque-pergunta.js (abre a pergunta no 'vencido', processa
+     o 'abate' e recupera a pergunta pendente na entrada). */
+  BOSQUE: 'bosque',
+  /* Os itens dela mudaram (docs/contratos/itens.md §11). Carga: { tipo, ... }: 'ganhou' (+ uid, id, onde = 'mochila' |
+     'bau', arena, x, y) (um item caiu e já está gravado), 'estrelas' (+ n, arena, x, y) (caíram estrelas), 'mudou'
+     (+ motivo: 'vestir' | 'tirar' | 'mover' | 'usar' | 'jogar' | 'remoto') (vestiu, tirou, mudou de lugar, gastou, jogou
+     fora, ou veio de outro aparelho). x, y: onde o inimigo sumiu (px do jogo).
+     Emite: sistemas/itens.js (ganhou, mudou), sistemas/itens-drop.js (estrelas). Ouve: ui/hud-mochila.js,
+     ui/itens-aviso.js, ui/mochila.js, ui/guardados.js, ui/itens-pocao.js, sistemas/itens-chao.js,
+     sistemas/bosque-combate.js (relê dano e vida). */
+  ITENS: 'itens',
+  /* Os monstros dela mudaram (docs/contratos/monstros.md). Carga: { tipo, especie? }: 'capturou' (+ especie, arena)
+     (a MonsterBall pegou; já gravado), 'escapou' (+ especie, arena) (a bola abriu e ele fugiu), 'voltou' (+ especie, arena) (a bola não chegou: voltou para a mochila), 'jogou' (+ especie)
+     (a bola saiu da mão dela; já gastou), 'equipou' (+ especie, ou null = tirou).
+     Emite: sistemas/monstros.js (equipou), sistemas/monstros-bola.js (jogou, capturou, escapou, voltou).
+     Ouve: ui/monstros.js (aviso e a tela aberta), ui/monstros-bola.js (o botão da bola), ui/mochila.js (o botão). */
+  MONSTROS: 'monstros',
 };

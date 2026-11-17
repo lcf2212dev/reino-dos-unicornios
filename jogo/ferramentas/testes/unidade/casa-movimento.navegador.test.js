@@ -14,6 +14,7 @@ const PASTA = '/tmp/reino-testes/casa-movimento';
 const MOVEM = [
   'movel.fontinha', 'quarto-uni.bebedouro', 'movel.aquario', 'movel.relogio-cuco', 'movel.relogio-pe',
   'banheiro.banheira', 'movel.patinhos', 'movel.arco-iris', 'movel.ferradura', 'movel.cristal', 'movel.caminha-nuvem',
+  'movel.aquarinho',
 ];
 const TEMPOS = [300, 700, 1100, 1500, 2300];
 

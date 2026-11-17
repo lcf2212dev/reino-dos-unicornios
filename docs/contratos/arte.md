@@ -319,7 +319,9 @@ faixas de 4 px (`--arco-1` a `--arco-6`) em cor lisa, que troca a ordem das core
 3. Nome próprio e rótulo curto (até 12 letras: botão, chip, título de cabeçalho) não quebram (`nowrap`); se não
    couber, descem um degrau da escala (16 → 12), nunca para tamanho fora dela.
 4. Número, artigo e preposição de 1 a 2 letras, "R$" e o emoji do fim ficam colados à palavra vizinha com espaço
-   inquebrável (U+00A0). Palavra composta ("arco-íris") fica num `span` com `nowrap`.
+   inquebrável (U+00A0). Palavra composta ("arco-íris") fica num `span` com `nowrap`. Nas opções das questões, o
+   grupo mais largo que a caixa: o texto curto desce o degrau (item 3: "5 reais", «I jump.»); no longo, o grupo se
+   desfaz e as palavras quebram como texto comum (`desafios/quebra.js`).
 5. Balão (NPC e Claude, com ou sem botões, e o recado de cuidado do Pet Shop): `.claude-texto` em `--texto`. A
    paginação tem dois limites em `npcs-falas.js`: o da frase (`frases()`, 30 letras; é o que define o texto falado
    e não muda) e o da página, que junta frases até caber em 2 linhas do celular com o retrato de 4 px (§10.6). A

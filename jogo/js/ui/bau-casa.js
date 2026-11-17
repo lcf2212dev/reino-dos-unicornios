@@ -6,6 +6,8 @@
                o Claude: "Uma casa só sua!" e "Fica perto do Observatório!"
    "Fechar" (ou Esc no fim) fecha; Esc antes do fim abre na hora. Depois, UI.casaKitsPendentes() (ui/casa-kits.js).
    UI.abrirBauCasa() → Promise (resolve na hora se Casa.ganhou()). Sem animação: os mesmos passos, parados.
+   O desenho do baú (fechado/tremendo/abrindo/aberto) fica em UI.desenharBauPresente, para as outras telas de baú
+   (ui/bosque-bau.js).
    Estilos: css/ui-bau-casa.css. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI;
@@ -178,4 +180,6 @@
     });
   };
 
+  // o desenho do baú dourado, para as outras telas de presente (ui/bosque-bau.js)
+  UI.desenharBauPresente = desenharBau;
 })();

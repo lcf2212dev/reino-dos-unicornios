@@ -8,7 +8,7 @@ Para quem coordena; autorizado pelo `CLAUDE.md` da raiz, sem perguntar. Históri
 commit). Detalhe de cada opção: `--ajuda` da ferramenta.
 
 ## Começar uma frente
-`npm run worktree -- <tema> [--material <Pasta>] [--base <ref>]` → `/home/leandro/Development/projects/reino-<tema>`, branch `feat/<tema>`,
+`npm run worktree -- <tema> [--material <Pasta>] [--base <ref>]` → `/home/leandro/Development/projects/reino-dos-unicornios/worktrees/reino-<tema>`, branch `feat/<tema>`,
 `node_modules` por link, cópia dos NÃO rastreados de `matérias/<Pasta>/` (ex.: `Geografia`, `ciências/Revisão`).
 Prints: `npm run material -- <Pasta> --folha` (reduzidas e folhas em `/tmp/reino-testes/material/<pasta>/`; agente lê só essas).
 

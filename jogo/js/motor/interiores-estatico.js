@@ -29,6 +29,8 @@
 
   function desenharEscada(ctx, g, e) {
     var px = e.x * T, py = e.y * T;
+    // portal (porta de loja, portal mágico): o prédio desenha o que está ali (objeto); aqui, nada
+    if (e.sentido === 'portal') return;
     if (e.sentido !== 'desce') {
       // sobe: degraus que entram por um arco na parede do fundo (ou só no tile, longe da parede)
       var subeParede = g.dentro(e.x, e.y - 1) && g.parede[e.y - 1][e.x];
@@ -67,8 +69,11 @@
       ret(ctx, px + 3, py, 10, 1, C.madeiraClara);
     }
   }
-  function desenharSaida(ctx, g, s) {
+  // fundo de céu aberto com saída própria (I.FUNDOS[id].saida(ctx, px, py), ex.: o portal do Bosque) desenha no lugar
+  // do vão e do capacho; sem ela, a porta de sempre
+  function desenharSaida(ctx, g, s, ceu) {
     var px = s.x * T, py = s.y * T;
+    if (ceu && typeof ceu.saida === 'function') { ceu.saida(ctx, px, py); return; }
     // vão da porta no lábio de baixo, com a luz de fora
     if (g.dentro(s.x, s.y + 1) || true) {
       ret(ctx, px + 1, py + 16, 14, 5, '#fff4c8');
@@ -91,7 +96,9 @@
   }
   function setaEscada(ctx, e, t, animar) {
     var px = e.x * T, py = e.y * T, d = animar ? Math.round((Math.sin(t / 300) + 1) * 1) : 1;
-    var cima = e.sentido !== 'desce';
+    // portal: a seta de `seta` ('sobe' padrão, 'desce' ou false = sem seta)
+    if (e.sentido === 'portal' && e.seta === false) return;
+    var cima = e.sentido === 'portal' ? e.seta !== 'desce' : e.sentido !== 'desce';
     var linhas = ['...kk...', '..kwwk..', '.kwwwwk.', 'kwwwwwwk', 'kkkwwkkk', '..kwwk..', '..kwwk..', '..kkkk..'];
     if (!cima) linhas = linhas.slice().reverse();
     matriz(ctx, px + 4, py + 4 + (cima ? -d : d), linhas, { k: K, w: C.ouro });
@@ -181,7 +188,7 @@
     }
     // escadas e saída
     (def.escadas || []).forEach(function (e) { desenharEscada(ctx, g, e); });
-    if (saida) desenharSaida(ctx, g, saida);
+    if (saida) desenharSaida(ctx, g, saida, ceu);
     // luz das janelas no chão
     objs.forEach(function (it) { if (it.lib.luz) it.lib.luz(ctx, it.px, it.py, it.o); });
     // sombras automáticas sob os móveis

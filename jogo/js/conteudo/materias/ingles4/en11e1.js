@@ -9,7 +9,7 @@ Reino.registrarSala('ingles4',
       intro: 'Vamos ler a história do Pingo, um cachorrinho que ganha uma família! «A happy day!»',
       desafios: [
         { id: 'en11e1-01', tipo: 'escolha', origem: 'ENG-136-q1', pagina: 136, livro: 'en-e136',
-          pergunta: '«Look and think.» Olhe o primeiro quadrinho. «How does Pingo feel?» Como o Pingo se sente?',
+          pergunta: '«Look and think.» Leia o começo da história. «How does Pingo feel?» Como o Pingo se sente?',
           opcoes: [
             { img: '😢', t: '«Sad»' },
             { img: '😄', t: '«Happy»' },

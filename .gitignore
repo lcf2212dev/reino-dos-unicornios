@@ -4,3 +4,5 @@ node_modules
 jogo/js/versao.json
 __pycache__/
 .vercel
+worktrees/
+matérias/
