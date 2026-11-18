@@ -1,6 +1,6 @@
 /* Pixel art dos personagens: Mariana (moldes das 5 vistas, aparência padrão e opções,
    PA.mariana; corte, roupa e laço do Salão em pixelart-mariana-visual.js, os de menino em pixelart-menino-moldes.js), Mariana montada no unicórnio (PA.montada, com a cabeça do unicórnio por cima
-   dela) e o Claude, mascote (PA.claude). opcoes.vestes { cabeca, armadura, botas } (ids; itens.md §8): as roupas de
+   dela) e o Claude, mascote (PA.claude). opcoes.vestes { cabeca, armadura, calca, botas } (ids; itens.md §8): as roupas de
    aventura de arte/itens-vestir.js; sem elas o desenho sai pixel a pixel o de sempre. O resultado leva topoExtra
    (px a mais acima da cabeça, do chapéu ou do capacete). */
 (function () {

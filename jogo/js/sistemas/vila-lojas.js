@@ -12,6 +12,11 @@
                                  'loja:<id>:<n>', n = a próxima livre; peças: Itens.ganhar) → { ok, total, motivo?, falta? }
      vender(loja, uids)          tudo ou nada: Itens.jogarFora + P.ganharEstrelas → { ok, total, motivo? }
      perguntas() / pergunta()    as perguntas do bimestre config.vila.bimestre (filtros do Bosque); sorteio 'vila:pergunta'
+     conquistas(loja)            [{ id, def, tem }]: as peças `cursiva: true` da loja (conteudo/itens/pluma.js), que não
+                                 se compram nem se vendem; `tem` = ela tem uma viva (mochila, baú ou vestida)
+     frasesPorPeca()             quantas frases em letra cursiva valem uma peça (config.cursiva.frasesPorPeca)
+     conquistar(loja, id)        as frases ficaram prontas (UI.telaCursiva; cursiva.md §6): dá a peça (Itens.ganhar), sem
+                                 gastar nada; uma de cada → { ok, id, uid?, onde?, motivo?: 'sem-save' | 'itens' | 'ja-tem' }
    Módulo 'vila-lojas': porteira(npc) (lojista com ação vilaLoja → UI.perguntaVila) e a ação vilaLoja (abre a loja e
    resolve 'tchau': o lojista se despede). Nada novo no save. node: true: nada de DOM no carregamento. */
 (function () {
@@ -52,7 +57,8 @@
     if (!l || !l.familias.length || !It || !P().estado()) return [];
     var grupos = [], por = {};
     It.pecas().forEach(function (p) {
-      if (ONDE_VENDE[p.onde] !== 1 || l.familias.indexOf(p.def.tipo) < 0) return;
+      // a peça conquistada pela letra cursiva não se vende
+      if (ONDE_VENDE[p.onde] !== 1 || l.familias.indexOf(p.def.tipo) < 0 || p.def.cursiva) return;
       if (!por[p.id]) { por[p.id] = { id: p.id, def: p.def, uids: [], preco: precoVenda(p.def) }; grupos.push(por[p.id]); }
       por[p.id].uids.push(p.uid);
     });
@@ -148,6 +154,28 @@
     return { ok: true, total: t };
   }
 
+  /* ---------- as peças da letra cursiva (docs/contratos/cursiva.md §6) ---------- */
+  function conquistas(id) {
+    var C = R.ItensCatalogo, It = R.Itens, vivas = {};
+    if (!loja(id) || !C) return [];
+    if (It && P() && P().estado()) It.pecas().forEach(function (p) { vivas[p.id] = true; });
+    return C.todos().filter(function (d) { return d.cursiva === true && d.loja === id; })
+      .map(function (d) { return { id: d.id, def: d, tem: vivas[d.id] === true }; });
+  }
+  function frasesPorPeca() { return Math.max(1, Math.floor((R.config.cursiva || {}).frasesPorPeca) || 5); }
+  // uma de cada: quem já tem a peça viva não ganha outra (as frases ficam para quando ela não tiver mais)
+  function conquistar(id, pecaId) {
+    var Pr = P();
+    if (!Pr || !Pr.estado()) return { ok: false, motivo: 'sem-save', id: pecaId };
+    var o = conquistas(id).filter(function (c) { return c.id === pecaId; })[0];
+    if (!o || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', id: pecaId };
+    if (o.tem) return { ok: false, motivo: 'ja-tem', id: pecaId };
+    var g = R.Itens.ganhar(pecaId);
+    if (!g) return { ok: false, motivo: 'itens', id: pecaId };
+    avisar();
+    return { ok: true, id: pecaId, uid: g.uid, onde: g.onde };
+  }
+
   /* ---------- a pergunta do lojista ---------- */
   // todas as perguntas das matérias do bimestre da Vila, não arquivadas, com os filtros do Bosque (bosque.js: perguntas)
   function perguntas() {
@@ -183,16 +211,18 @@
   }
 
   R.VilaLojas = { LOJAS: LOJAS, loja: loja, aVenda: aVenda, compraveis: compraveis, precoVenda: precoVenda, total: total,
-    totalVenda: totalVenda, comprar: comprar, vender: vender, perguntas: perguntas, pergunta: pergunta };
+    totalVenda: totalVenda, comprar: comprar, vender: vender, perguntas: perguntas, pergunta: pergunta,
+    conquistas: conquistas, frasesPorPeca: frasesPorPeca, conquistar: conquistar };
 
   R.registrarModulo({
     id: 'vila-lojas',
     acoes: { vilaLoja: vilaLoja },
     porteira: porteira,
     depurar: function () {
-      var r = { perguntas: perguntas().length, aVenda: {}, compraveis: {} };
+      var r = { perguntas: perguntas().length, aVenda: {}, compraveis: {}, conquistas: {} };
       Object.keys(LOJAS).forEach(function (k) {
         r.aVenda[k] = aVenda(k).length;
+        r.conquistas[k] = conquistas(k).map(function (c) { return c.id + (c.tem ? ':tem' : ''); });
         if (P() && P().estado()) r.compraveis[k] = compraveis(k).reduce(function (s, g) { return s + g.uids.length; }, 0);
       });
       return r;

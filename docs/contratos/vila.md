@@ -72,6 +72,8 @@ itens de uma vez**.
   e `P.ganharEstrelas(total)`. `P.salvar()` e `MAPA_MUDOU`.
 - Tela: saldo, abas Comprar/Vender, cartões com ícone, nome, raridade, atributos e preço, carrinho com − e + (até
   `maxPorItem` de cada) e o total; confirma antes (`gasta: true`).
+- Peças épicas da Pluma (sem preço, conquistadas escrevendo 5 frases em letra cursiva; não se vendem): a faixa no alto
+  da aba Comprar das três lojas de peças e `VilaLojas.conquistas`/`conquistar`. Tudo em `cursiva.md` §6.
 
 ## 5. Pergunta antes da conversa
 - O módulo `'vila-lojas'` tem `porteira(npc)`: lojista com ação `vilaLoja` → `UI.perguntaVila(npc)`. Certo: a conversa
@@ -88,7 +90,8 @@ itens de uma vez**.
 
 ## 7. Testes
 `unidade/vila-lojas.test.js` (preços, compra/venda de vários, pergunta do 4º bimestre, porteira, móveis fora do
-sorteio), `unidade/vila-itens.test.js` (as 100 peças, moldes e ícones), `unidade/casa-moveis-loja.navegador.test.js` (os
+sorteio), `unidade/vila-itens.test.js` (as 100 peças, moldes e ícones), `unidade/vila-conquistas*.test.js` (as peças da
+letra cursiva), `unidade/casa-moveis-loja.navegador.test.js` (os
 50 enfeites), `unidade/vila.navegador.test.js` (portal, Vila, portas das lojas, lojistas, terrenos), `unidade/assombrada.navegador.test.js`
 (a porta da Casa Mal-Assombrada e a volta, as 6 jaulas, ganhar e levar o monstro, sem vaga) e
 `unidade/teleportadora.navegador.test.js` (no mapa e na Vila, as duas viagens).

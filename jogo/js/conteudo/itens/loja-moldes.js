@@ -1,7 +1,9 @@
 /* Vila Arco-Íris: o gerador das 100 peças das lojas (docs/contratos/vila.md §1; itens.md §3 e §8). Só dados e funções
    puras (node: true): nada de DOM no carregamento.
-   Cria o objeto INTERNO Reino._lojaMoldes, usado só por loja-armas.js, loja-cabecas.js e loja-armaduras.js:
+   Cria o objeto INTERNO Reino._lojaMoldes, usado só por loja-armas.js, loja-cabecas.js, loja-armaduras.js e pluma.js
+   (as peças da letra cursiva, que só usam o contornar):
      TEMAS  as paletas por tema (a: cor principal, b: escura, c: clara, d: enfeite, e: pedrinha)
+     contornar(desenho)  o ícone com o contorno 'k' em volta do preenchimento
      peca(id, nome, raridade, bonus, forma, tema)  registra a peça no catálogo (loja, preço da raridade, arenas: []),
        o molde de vestir (Reino.VESTES[id]) e o ícone 16×16 (item:<id>).
    As FORMAS de cada família (lâminas, capacetes, chapéus, armaduras e botas) moram aqui, com as letras do tema
@@ -705,6 +707,6 @@
     R.registrarIcones(ic);
   }
 
-  R._lojaMoldes = { TEMAS: TEMAS, peca: peca,
+  R._lojaMoldes = { TEMAS: TEMAS, peca: peca, contornar: contornar,
     FORMAS: { espada: Object.keys(ESPADAS), cabeca: Object.keys(CABECAS), armadura: Object.keys(ARMADURAS), botas: Object.keys(BOTAS) } };
 })();

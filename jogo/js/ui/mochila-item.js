@@ -10,7 +10,7 @@
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI, R = Reino._ui;
   var NOMES = { dano: 'Força', defesa: 'Proteção', vida: 'Vida', velocidade: 'Rapidez', sorte: 'Sorte' };
-  var SLOT_NOME = { espada: 'Espada', escudo: 'Escudo', cabeca: 'Cabeça', armadura: 'Armadura', botas: 'Botas' };
+  var SLOT_NOME = { espada: 'Espada', escudo: 'Escudo', cabeca: 'Cabeça', armadura: 'Armadura', calca: 'Calça', botas: 'Botas' };
   var TEXTOS = {
     pequena: 'Cura um pouco da vida.', grande: 'Enche toda a vida.', comida: 'Enche a barriga do unicórnio.',
     'fora-arena': 'Use a poção numa arena, quando a vida baixar.', 'vida-cheia': 'Sua vida já está cheia!',
