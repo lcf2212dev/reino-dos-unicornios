@@ -87,6 +87,11 @@
 }
 /* chip da Aura (js/ui/hud-aura.js), embaixo das estrelas, e o painel dela: a chama em pixel na cor da faixa (D8A-09) */
 .aura-chama { flex: none; }
+/* de 1.000 em diante: o número em cima e o nome abreviado embaixo, um degrau menor ("12,3" / "mil", "1,2" / "quatri") */
+.aura-chip-texto { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 2px; line-height: 1; }
+.aura-chip-unidade { font-size: var(--texto-aux); }
+/* o nome por extenso no painel ("quatrilhões"), menor que o número, para caber no celular */
+.aura-nome { font-size: var(--texto); }
 .aura-painel { text-align: center; }
 .aura-valor { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; font-size: var(--texto-t); margin: 4px 0 8px; }
 /* o número inteiro passa de 9 letras ("123.456,7"): desce um degrau para caber no painel do celular */

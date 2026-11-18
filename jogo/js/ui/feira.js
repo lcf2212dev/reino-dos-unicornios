@@ -117,7 +117,7 @@
       function resultado() {
         pecas.replaceChildren(); acoes.replaceChildren();
         mensagem(m.descoberta, 'Descoberta feita!');
-        if (ganhoAura) acoes.appendChild(el('p.feira-ganho', texto('✨ +' + Reino.Aura.texto(ganhoAura.depois - ganhoAura.antes) + ' de aura!')));
+        if (ganhoAura) acoes.appendChild(el('p.feira-ganho', texto('✨ +' + Reino.Aura.textoNome(ganhoAura.depois - ganhoAura.antes) + ' de aura!')));
         if (completa(sala)) acoes.appendChild(el('p.feira-carimbo', texto('Selo no passaporte!') + ' ' + texto(sala.selo)));
         var proxima = sala.missoes.find(function (x) { return !feitas.has(x.id); });
         var seguir = botao(proxima ? 'Próxima descoberta →' : 'Meu passaporte →', function () {

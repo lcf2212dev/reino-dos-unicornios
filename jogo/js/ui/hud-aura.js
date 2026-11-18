@@ -59,9 +59,11 @@
     ultimo = chave;
     b.innerHTML = '';
     b.appendChild(iconeAura(cor.cor));
-    // só o número, compacto ("12,3 mil", D13-01), como as estrelas; o nome e o valor inteiro ficam no aria-label
-    b.appendChild(el('span', A.textoCurto(d)));
-    b.setAttribute('aria-label', 'Aura ' + A.texto(d) + ', cor ' + cor.nome);
+    // só o número, compacto (D13-01): até 999,9 numa linha; daí o número em cima e o nome abreviado embaixo, menor
+    // ("12,3" / "mil", "1,2" / "quatri"), para caber ao lado dos botões no celular. O nome inteiro vai no aria-label
+    var pc = A.partesCurtas(d);
+    b.appendChild(pc ? el('span.aura-chip-texto', el('span', pc.numero), el('span.aura-chip-unidade', pc.unidade)) : el('span', A.texto(d)));
+    b.setAttribute('aria-label', 'Aura ' + A.textoNome(d) + ', cor ' + cor.nome);
   }
   UI.pintarChipAura = pintarChip;
 
@@ -74,7 +76,7 @@
     // a cor vem do save (a faixa dela); a branca um tico lilás, para aparecer no trilho branco
     if (cor.cor === 'arco-iris') cheio.classList.add('aura-barra-arco');
     else cheio.style.background = claro(cor.cor) ? misturar(cor.cor, '#3a2446', 0.3) : cor.cor;
-    return el('div.aura-barra', { role: 'img', 'aria-label': ultima ? 'Aura no máximo!' : 'Faltam ' + A.texto(fim - d) + ' para a aura ficar ' + corProx.nome },
+    return el('div.aura-barra', { role: 'img', 'aria-label': ultima ? 'Aura no máximo!' : 'Faltam ' + A.textoNome(fim - d) + ' para a aura ficar ' + corProx.nome },
       iconeAura(cor.cor), el('span.aura-barra-trilho', cheio), ultima ? null : iconeAura(corProx.cor));
   }
   // o selo da matéria do dia (Reino.config.aura.materiaDoDia): o emoji da matéria, o foguinho e "×4", sem frase
@@ -92,8 +94,11 @@
     if (!A) return;
     var pn = UI.painel('aura', '✨ Aura');
     var d = A.decimos(), f = A.faixa(d), cor = A.corDaFaixa(f), corProx = A.corDaFaixa(f + 1);
+    // o valor: inteiro até 999.999,9; de 1 milhão em diante, o número e o nome por extenso ("1,2" "quatrilhão"), que
+    // desce para a linha de baixo quando não cabe
+    var pn2 = A.partesNome(d), valor = pn2 ? [el('b', pn2.numero), el('span.aura-nome', pn2.nome)] : [el('b', A.texto(d))];
     pn.conteudo.appendChild(el('div.aura-painel',
-      el('p.aura-valor' + (A.texto(d).length > 9 ? '.aura-longa' : ''), iconeAura(cor.cor, 4), el('b', A.texto(d))),
+      el('p.aura-valor' + (!pn2 && A.texto(d).length > 9 ? '.aura-longa' : ''), iconeAura(cor.cor, 4), valor),
       barraAura(A, d, f, cor, corProx),
       seloDoDia(A)));
   }

@@ -106,17 +106,57 @@
     var inteiro = Math.floor(d / 10);
     return inteiro.toLocaleString('pt-BR') + ',' + (d % 10);
   };
-  // o do chip do HUD (D13-01), de até 8 letras: "1.234,5" até 9.999,9; daí "12,3 mil", "123 mil", "1,2 mi", "45 bi"…
-  // (arredonda para baixo: nunca mostra mais do que ela tem). O painel da Aura mostra o texto inteiro
-  var UNIDADES = ['mil', 'mi', 'bi', 'tri'];
-  A.textoCurto = function (d) {
+  // os números grandes, na escala curta (a do Brasil), de 1000 em 1000: [no chip (até 7 letras), singular, plural].
+  // Até o vigintilhão (10⁶³; pedido do Leandro, 18/11: "só vai até trilhão"): a Aura sobe 10× por faixa e para de
+  // subir o passo na faixa 60, então não chega lá; passou do último, o número cresce na frente dele
+  var GRANDES = [
+    ['mil', 'mil', 'mil'], ['mi', 'milhão', 'milhões'], ['bi', 'bilhão', 'bilhões'], ['tri', 'trilhão', 'trilhões'],
+    ['quatri', 'quatrilhão', 'quatrilhões'], ['quinti', 'quintilhão', 'quintilhões'], ['sexti', 'sextilhão', 'sextilhões'],
+    ['septi', 'septilhão', 'septilhões'], ['octi', 'octilhão', 'octilhões'], ['noni', 'nonilhão', 'nonilhões'],
+    ['deci', 'decilhão', 'decilhões'], ['undeci', 'undecilhão', 'undecilhões'], ['duodeci', 'duodecilhão', 'duodecilhões'],
+    ['tredeci', 'tredecilhão', 'tredecilhões'], ['quatuor', 'quatuordecilhão', 'quatuordecilhões'],
+    ['quindec', 'quindecilhão', 'quindecilhões'], ['sexdeci', 'sexdecilhão', 'sexdecilhões'],
+    ['septend', 'septendecilhão', 'septendecilhões'], ['octodec', 'octodecilhão', 'octodecilhões'],
+    ['novend', 'novendecilhão', 'novendecilhões'], ['viginti', 'vigintilhão', 'vigintilhões'],
+  ];
+  A.GRANDES = GRANDES;
+  // o inteiro com o nome grande, a partir de GRANDES[desde] (0 = mil, 1 = milhão): { numero: "1,2" | "12,3" | "123",
+  // nome: o índice em GRANDES, v }. Uma casa só abaixo de 100 e sem casa zero; sempre para baixo (nunca mostra mais do
+  // que ela tem). v ≥ 1: cada nome só vale de 1 dele para cima (comparações com o mesmo `div`)
+  function grande(inteiro, desde) {
+    // acima de 2⁵³ o número guardado já é aproximado: uma folga de 10⁻¹² para 5 × 10⁴⁷ não sair "499" (abaixo, exato)
+    var x = inteiro > 9007199254740991 ? inteiro * (1 + 1e-12) : inteiro, u = desde, div = Math.pow(1000, desde + 1);
+    while (x >= div * 1000 && u < GRANDES.length - 1) { div *= 1000; u++; }
+    var v = Math.floor(x / div), casa = v < 100 ? Math.floor(x * 10 / div) % 10 : 0;
+    return { numero: v.toLocaleString('pt-BR') + (casa ? ',' + casa : ''), nome: u, v: v };
+  }
+  // o do chip do HUD (D13-01): "999,9" até 999,9 (até 5 letras: o que cabe no celular ao lado dos botões); daí o
+  // número (até 4 letras) e a abreviação do nome (até 7): { numero: "12,3", unidade: "mil" }, que o chip põe em duas
+  // linhas. null = sem nome (use A.texto)
+  A.partesCurtas = function (d) {
     if (d === undefined) d = A.decimos();
     var inteiro = Math.floor(d / 10);
-    if (inteiro < 10000) return A.texto(d);
-    var u = 0, div = 1000;   // só inteiros: sem erro de vírgula flutuante
-    while (inteiro >= div * 1000 && u < UNIDADES.length - 1) { div *= 1000; u++; }
-    var v = Math.floor(inteiro / div), casa = v < 100 ? Math.floor(inteiro * 10 / div) % 10 : 0;
-    return v.toLocaleString('pt-BR') + (casa ? ',' + casa : '') + ' ' + UNIDADES[u];
+    if (inteiro < 1000) return null;
+    var g = grande(inteiro, 0);
+    return { numero: g.numero, unidade: GRANDES[g.nome][0] };
+  };
+  // o mesmo numa linha ("12,3 mil", "1,2 quatri"): leitor de tela, testes
+  A.textoCurto = function (d) {
+    var p = A.partesCurtas(d);
+    return p ? p.numero + ' ' + p.unidade : A.texto(d);
+  };
+  // com o nome por extenso, a partir de 1 milhão ("1,2 milhão", "45 quatrilhões"); abaixo, o texto inteiro. O painel
+  // da Aura, o "+N de aura" da Feira e o que o leitor de tela lê
+  A.partesNome = function (d) {
+    var inteiro = Math.floor(d / 10);
+    if (inteiro < 1000000) return null;
+    var g = grande(inteiro, 1), n = GRANDES[g.nome];
+    return { numero: g.numero, nome: g.v < 2 ? n[1] : n[2] };
+  };
+  A.textoNome = function (d) {
+    if (d === undefined) d = A.decimos();
+    var p = A.partesNome(d);
+    return p ? p.numero + ' ' + p.nome : A.texto(d);
   };
 
   /* ================= COMEMORAÇÃO ================= */
