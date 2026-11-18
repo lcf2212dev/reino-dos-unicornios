@@ -1,6 +1,6 @@
 // Teste de NAVEGADOR (Chromium, servidor de TESTE, save sintético): as roupas de aventura no desenho dela
 // (docs/contratos/itens.md §8). Sem vestes, PA.mariana e PA.montada saem pixel a pixel iguais aos do commit de base;
-// cada capacete, chapéu, armadura e botas aparece nas 5 vistas, a pé e montada (filhote e adulto), menina e menino,
+// cada capacete, chapéu, armadura, calça e botas aparece nas 5 vistas, a pé e montada (filhote e adulto), menina e menino,
 // com ela até 21 px de altura a pé e os pés no mesmo lugar; PA.espadaItem/PA.escudoItem; os ícones item:<id> e
 // bau-guardados; jogador-desenho.js passa Reino.Itens.vestes(). Pranchas para olhar em <REINO_TESTES>/itens-vestes/.
 // Rodar (da raiz): npm run unidade -- --so itens-vestes
@@ -18,6 +18,9 @@ const CABECA = ['capacete-panela', 'capacete-cavaleira', 'capacete-polar', 'capa
   'chapeu-flor', 'chapeu-bruxinha', 'chapeu-gorro', 'chapeu-palha', 'chapeu-coroa'];
 const ARMADURAS = ['armadura-colete', 'armadura-folhas', 'armadura-polar', 'armadura-cristal', 'armadura-dragao'];
 const BOTAS = ['botas-galocha', 'botas-neve', 'botas-vento', 'botas-cristal', 'botas-dragao'];
+// o Conjunto da Pluma (conteudo/itens/pluma.js): a única calça do jogo e as outras 5 peças da letra cursiva
+const CALCAS = ['calca-pluma'];
+const PLUMA = { espada: 'espada-pluma', escudo: 'escudo-pluma', cabeca: 'capacete-pluma', armadura: 'armadura-pluma', calca: 'calca-pluma', botas: 'botas-pluma' };
 const ESPADAS = ['espada-madeira', 'espada-bambu', 'espada-gelo', 'espada-sol', 'espada-cristal', 'espada-dragao'];
 const ESCUDOS = ['escudo-madeira', 'escudo-concha', 'escudo-neve', 'escudo-cristal', 'escudo-dragao'];
 const ITENS = [...ESPADAS, ...ESCUDOS, ...CABECA, ...ARMADURAS, ...BOTAS, 'pocao-pequena', 'pocao-grande'];
@@ -47,7 +50,8 @@ const MEDIR = (arg) => `(function (a) {
   var aps = { menina: Object.assign({}, PA.APARENCIA_PADRAO, { sexo: 'menina' }), menino: Object.assign({}, PA.APARENCIA_PADRAO, { sexo: 'menino' }) };
   var erros = [], medidas = {};
   // 1. sem vestes: igual ao de antes e igual com vestes vazias ou desconhecidas
-  var vazias = [undefined, null, {}, { cabeca: null, armadura: null, botas: null }, { cabeca: 'xx', armadura: 'espada-gelo', botas: 'chapeu-flor' }];
+  var vazias = [undefined, null, {}, { cabeca: null, armadura: null, calca: null, botas: null },
+    { cabeca: 'xx', armadura: 'espada-gelo', calca: 'botas-neve', botas: 'chapeu-flor' }];
   Object.keys(aps).forEach(function (sx) {
     var ap = aps[sx];
     VISTAS.forEach(function (v) {
@@ -69,9 +73,9 @@ const MEDIR = (arg) => `(function (a) {
   });
   // 2. cada peça: aparece, cabe na altura, os pés não saem do lugar
   var pecas = [].concat(a.cabeca.map(function (id) { return { cabeca: id }; }), a.armaduras.map(function (id) { return { armadura: id }; }),
-    a.botas.map(function (id) { return { botas: id }; }));
+    a.calcas.map(function (id) { return { calca: id }; }), a.botas.map(function (id) { return { botas: id }; }));
   pecas.forEach(function (vz) {
-    var id = vz.cabeca || vz.armadura || vz.botas, m = medidas[id] = { aPe: 0, montada: 0 };
+    var id = vz.cabeca || vz.armadura || vz.calca || vz.botas, m = medidas[id] = { aPe: 0, montada: 0 };
     Object.keys(aps).forEach(function (sx) {
       var ap = aps[sx];
       VISTAS.forEach(function (v) {
@@ -94,6 +98,29 @@ const MEDIR = (arg) => `(function (a) {
           if (u.topoExtra !== c.topoExtra) erros.push(id + ': topoExtra da montada');
         });
       });
+    });
+  });
+  // 2b. a calça: cobre as pernas (nenhum ponto de pele abaixo da cintura, a pé), o pé levantado do passo continua
+  // sapato, o cano das botas fica por cima dela e a armadura de saia por cima do quadril
+  function conta(s, cor, y0) {
+    var d = s.canvas.getContext('2d').getImageData(0, 0, s.w, s.h).data, n = 0, r = parseInt(cor.slice(1, 3), 16), g = parseInt(cor.slice(3, 5), 16), b = parseInt(cor.slice(5, 7), 16);
+    for (var y = y0 || 0; y < s.h; y++) for (var x = 0; x < s.w; x++) { var i = (y * s.w + x) * 4; if (d[i + 3] && d[i] === r && d[i + 1] === g && d[i + 2] === b) n++; }
+    return n;
+  }
+  var apC = aps.menina, CALCA = Reino.VESTES['calca-pluma'].paleta.a, SAPATO = '#6b3b5a';
+  VISTAS.forEach(function (v) {
+    [0, 1, 2].forEach(function (q) {
+      var s0 = PA.mariana(apC, false, q, { vista: v }), s = PA.mariana(apC, false, q, { vista: v, vestes: { calca: 'calca-pluma' } });
+      // da linha da saia para baixo (12 = contorno + 7 da cabeça + 4 do corpo)
+      if (conta(s, apC.pele, 12) !== 0) erros.push('calça: sobrou perna de fora ' + v + ' ' + q);
+      if (conta(s, CALCA) < 4) erros.push('calça: quase não aparece ' + v + ' ' + q);
+      if (conta(s, SAPATO) !== conta(s0, SAPATO)) erros.push('calça: mexeu no sapato ' + v + ' ' + q);
+      if (conta(s, apC.pele, 0) !== conta(s0, apC.pele, 0) - conta(s0, apC.pele, 12)) erros.push('calça: mexeu na pele de cima ' + v + ' ' + q);
+      var cb = PA.mariana(apC, false, q, { vista: v, vestes: { calca: 'calca-pluma', botas: 'botas-pluma' } });
+      if (conta(cb, SAPATO) !== 0 || conta(cb, CALCA) >= conta(s, CALCA) || conta(cb, CALCA) < 2) erros.push('calça com botas ' + v + ' ' + q);
+      // armadura de saia (a do Dragão): o quadril fica da armadura, a calça só nas pernas
+      var cs = PA.mariana(apC, false, q, { vista: v, vestes: { calca: 'calca-pluma', armadura: 'armadura-dragao' } });
+      if (conta(cs, CALCA) >= conta(s, CALCA)) erros.push('calça por cima da saia da armadura ' + v + ' ' + q);
     });
   });
   // 3. espadas e escudos
@@ -137,6 +164,9 @@ const MEDIR = (arg) => `(function (a) {
     pr['cabeca-' + sx] = prancha([linha(ap, null)].concat(a.cabeca.map(function (id) { return linha(ap, { cabeca: id }); })));
     pr['corpo-' + sx] = prancha([linha(ap, null)].concat(a.armaduras.map(function (id) { return linha(ap, { armadura: id }); }),
       a.botas.map(function (id) { return linha(ap, { botas: id }); })));
+    // a calça sozinha, com botas, com armadura curta e de saia, e o Conjunto da Pluma inteiro
+    pr['calca-' + sx] = prancha([{ calca: a.calcas[0] }, { calca: a.calcas[0], botas: a.botas[1] }, { calca: a.calcas[0], armadura: a.armaduras[0] },
+      { calca: a.calcas[0], armadura: a.armaduras[4], botas: a.botas[4] }, a.pluma].map(function (vz) { return linha(ap, vz); }));
     pr['conjuntos-' + sx] = prancha(a.armaduras.map(function (id, i) {
       return linha(ap, { cabeca: a.cabeca[i * 2 + (sx === 'menino' ? 0 : 1)], armadura: id, botas: a.botas[i] });
     }));
@@ -170,7 +200,9 @@ test('itens: roupas de aventura no desenho, armas e ícones', async () => {
   const c = await abrirCenario({ save: 'completo', tamanho: 'notebook', pasta: path.join(PASTA, 'cenario') });
   try {
     const base = personagensBase();
-    const r = await c.js(MEDIR({ base, cabeca: CABECA, armaduras: ARMADURAS, botas: BOTAS, espadas: ESPADAS, escudos: ESCUDOS, itens: ITENS }));
+    const r = await c.js(MEDIR({ base, cabeca: CABECA.concat(PLUMA.cabeca), armaduras: ARMADURAS.concat(PLUMA.armadura), calcas: CALCAS,
+      botas: BOTAS.concat(PLUMA.botas), espadas: ESPADAS.concat(PLUMA.espada), escudos: ESCUDOS.concat(PLUMA.escudo),
+      itens: ITENS.concat(Object.values(PLUMA)), pluma: PLUMA }));
     fs.mkdirSync(PASTA, { recursive: true });
     for (const [nome, url] of Object.entries(r.pranchas)) fs.writeFileSync(path.join(PASTA, `${nome}.png`), Buffer.from(url.split(',')[1], 'base64'));
     fs.writeFileSync(path.join(PASTA, 'medidas.json'), JSON.stringify(r.medidas, null, 1));

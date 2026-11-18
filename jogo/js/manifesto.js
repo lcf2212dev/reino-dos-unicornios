@@ -371,6 +371,7 @@
       { js: 'js/conteudo/itens/loja-armas.js', grupo: 'conteudo', node: true }, // Vila: as 20 espadas da Forja
       { js: 'js/conteudo/itens/loja-cabecas.js', grupo: 'conteudo', node: true }, // Vila: os 20 capacetes e 20 chapéus
       { js: 'js/conteudo/itens/loja-armaduras.js', grupo: 'conteudo', node: true }, // Vila: as 20 armaduras e 20 botas
+      { js: 'js/conteudo/itens/pluma.js', grupo: 'conteudo', node: true }, // Vila: as 6 peças épicas da Pluma, conquistadas pela letra cursiva (cursiva.md §6)
       { js: 'js/conteudo/materias/ciencias/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/matematica/icones.js', grupo: 'icones', node: true },
       { js: 'js/conteudo/materias/geografia/icones.js', grupo: 'icones', node: true },
@@ -553,6 +554,7 @@
       { js: 'js/ui/mochila.js', grupo: 'ui' }, // itens: a tela da Mochila, 20 espaços e a figura vestida (UI.telaMochila; itens.md §6)
       { js: 'js/ui/guardados.js', grupo: 'ui' }, // itens: a tela do Baú de Guardados da casa (UI.telaGuardados; itens.md §7)
       { js: 'js/ui/vila-pergunta.js', grupo: 'ui' }, // Vila: a pergunta do 4º bimestre antes de falar com o lojista (UI.perguntaVila)
+      { js: 'js/ui/vila-conquistas.js', grupo: 'ui' }, // Vila: a faixa "Peças épicas" das lojas, conquistadas pela letra cursiva (Reino._vilaEpicas; cursiva.md §6)
       { js: 'js/ui/vila-loja.js', grupo: 'ui' }, // Vila: a tela de comprar e vender, vários de uma vez (UI.telaVilaLoja)
       { js: 'js/ui/treinadores-loja.js', grupo: 'ui' }, // Treinadores de Monstros: a loja das MonsterBalls (UI.telaTreinadores; monstros.md)
       { js: 'js/ui/cursiva.js', grupo: 'ui' }, // Letra cursiva: a tela de escrever, que só pinta no sentido certo (UI.telaCursiva; cursiva.md)

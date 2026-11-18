@@ -62,7 +62,7 @@ test('itens: campo registrado (carimbo, mantém no Novo ciclo, na cópia); save 
   assert.strictEqual(def.copiaSeguranca, true);
   igual(j.P.estado().itens, {});
   igual(j.It.mochila(), []);
-  igual(j.It.vestes(), { espada: null, escudo: null, cabeca: null, armadura: null, botas: null });
+  igual(j.It.vestes(), { espada: null, escudo: null, cabeca: null, armadura: null, calca: null, botas: null });
   assert.strictEqual(j.It.temMochila(), false);
   // ao carregar, o aparelho novo grava exatamente o que o antigo gravaria (nada a mais, nada escrito na leitura)
   const a = jogo({ save: saveHoje() }), v = jogo({ save: saveHoje(), versaoAntiga: true });
