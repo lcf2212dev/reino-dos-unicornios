@@ -98,7 +98,7 @@
     // desce para a linha de baixo quando não cabe
     var pn2 = A.partesNome(d), valor = pn2 ? [el('b', pn2.numero), el('span.aura-nome', pn2.nome)] : [el('b', A.texto(d))];
     pn.conteudo.appendChild(el('div.aura-painel',
-      el('p.aura-valor' + (!pn2 && A.texto(d).length > 9 ? '.aura-longa' : ''), iconeAura(cor.cor, 4), valor),
+      el('p.aura-valor', iconeAura(cor.cor, 4), valor),   // até "999.999,9" (9 letras) cabe no celular
       barraAura(A, d, f, cor, corProx),
       seloDoDia(A)));
   }

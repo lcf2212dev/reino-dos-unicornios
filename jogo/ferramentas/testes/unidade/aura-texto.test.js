@@ -59,3 +59,11 @@ test('textoNome: por extenso de 1 milhão em diante, singular abaixo de 2; abaix
   ];
   casos.forEach(([d, esperado]) => assert.strictEqual(A.textoNome(d), esperado, 'd=' + d));
 });
+
+test('textoGanho: a diferença de dois números grandes volta ao passo certo ("800 trilhões", não "799")', () => {
+  const A = aura();
+  assert.strictEqual(A.textoGanho(16600002020420402, 24600002020420400), '800 trilhões');
+  assert.strictEqual(A.textoGanho(0, 2), '0,2');
+  assert.strictEqual(A.textoGanho(1000, 1000 + 8e7), '8 milhões');
+  assert.strictEqual(A.partesNome(), null, 'sem save: Aura 0');
+});

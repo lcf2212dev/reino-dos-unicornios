@@ -124,7 +124,8 @@
   // nome: o índice em GRANDES, v }. Uma casa só abaixo de 100 e sem casa zero; sempre para baixo (nunca mostra mais do
   // que ela tem). v ≥ 1: cada nome só vale de 1 dele para cima (comparações com o mesmo `div`)
   function grande(inteiro, desde) {
-    // acima de 2⁵³ o número guardado já é aproximado: uma folga de 10⁻¹² para 5 × 10⁴⁷ não sair "499" (abaixo, exato)
+    // acima de 2⁵³ o inteiro já vem aproximado (a soma dos passos em ponto flutuante): uma folga de 10⁻¹² para
+    // 5 × 10⁴⁷ não sair "499" (abaixo, exato: sempre para baixo)
     var x = inteiro > 9007199254740991 ? inteiro * (1 + 1e-12) : inteiro, u = desde, div = Math.pow(1000, desde + 1);
     while (x >= div * 1000 && u < GRANDES.length - 1) { div *= 1000; u++; }
     var v = Math.floor(x / div), casa = v < 100 ? Math.floor(x * 10 / div) % 10 : 0;
@@ -148,11 +149,15 @@
   // com o nome por extenso, a partir de 1 milhão ("1,2 milhão", "45 quatrilhões"); abaixo, o texto inteiro. O painel
   // da Aura, o "+N de aura" da Feira e o que o leitor de tela lê
   A.partesNome = function (d) {
+    if (d === undefined) d = A.decimos();
     var inteiro = Math.floor(d / 10);
     if (inteiro < 1000000) return null;
     var g = grande(inteiro, 1), n = GRANDES[g.nome];
     return { numero: g.numero, nome: g.v < 2 ? n[1] : n[2] };
   };
+  // quanto ela ganhou (depois − antes), por extenso: a diferença de dois números grandes carrega o arredondamento dos
+  // dois (8e15 saía "799 trilhões"); com 12 algarismos significativos volta ao passo certo, e o texto só mostra 3
+  A.textoGanho = function (antes, depois) { return A.textoNome(Number((depois - antes).toPrecision(12))); };
   A.textoNome = function (d) {
     if (d === undefined) d = A.decimos();
     var p = A.partesNome(d);
