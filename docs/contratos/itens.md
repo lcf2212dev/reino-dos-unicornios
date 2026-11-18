@@ -198,7 +198,8 @@ depois. Sem Animações: aparece parado no chão por `chao.brilhaMs` e some. Son
     da armadura e pinta detalhes (ombreira, cinto) por cima;
   - `calca` (molde `{ paleta, calca: { perna, sombra } }`, até 4 cores): depois da armadura e antes das botas. Em pé, a
     linha da saia vira quadril, estreito como as pernas (armadura com `saia: true` fica por cima do quadril), e as
-    pernas se cobrem até o pé; o pé levantado do passo continua sapato. Sentada: quadril, coxa e perna.
+    pernas se cobrem até o pé; o pé levantado do passo continua sapato. Sentada: quadril, coxa e perna. Nunca pinta
+    cabelo nem laço (`H L Z B`); a saia comprida de princesa, em pé, esconde a calça (montada, a calça aparece).
   - `botas`: troca `S` e as 2 últimas linhas das pernas (`K`, `J`) pelas cores das botas (até 6 cores; o cano cobre a calça).
   - `PA.montada` desconta o `topo` no lugar da cavaleira (o chapéu sobe, ela não desce). O resultado de `PA.mariana` e
     `PA.montada` leva `topoExtra` (px acima da cabeça), para a espada e o ícone de fome acharem a mão e a cabeça.

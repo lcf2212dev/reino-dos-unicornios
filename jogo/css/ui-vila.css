@@ -106,6 +106,8 @@
 .vila-epica-acao { flex: 1 1 100%; display: flex; align-items: center; justify-content: center; min-height: 44px; }
 .vila-epica-escrever { width: 100%; min-height: 44px; padding: 6px; font-size: var(--texto-aux); }
 .vila-epica-tem { font-size: var(--texto-aux); color: var(--rar-texto); }
+/* a peça que ela já tem: o cartão encolhe (sem raridade, atributos nem botão; "Você já tem!" embaixo do nome) */
+.vila-epica-ganha .vila-cartao-rar, .vila-epica-ganha .vila-cartao-atrib { display: none; }
 
 /* tablet em pé e celular: o carrinho embaixo da grade */
 @media (max-width: 860px) {

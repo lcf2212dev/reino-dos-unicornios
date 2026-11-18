@@ -163,7 +163,7 @@
       .map(function (d) { return { id: d.id, def: d, tem: vivas[d.id] === true }; });
   }
   function frasesPorPeca() { return Math.max(1, Math.floor((R.config.cursiva || {}).frasesPorPeca) || 5); }
-  // uma de cada: quem já tem a peça viva não ganha outra (as frases ficam para quando ela não tiver mais)
+  // uma de cada: quem já tem a peça viva não ganha outra ('ja-tem'; a tela gasta as frases e avisa)
   function conquistar(id, pecaId) {
     var Pr = P();
     if (!Pr || !Pr.estado()) return { ok: false, motivo: 'sem-save', id: pecaId };

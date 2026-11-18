@@ -123,6 +123,35 @@ const MEDIR = (arg) => `(function (a) {
       if (conta(cs, CALCA) >= conta(s, CALCA)) erros.push('calça por cima da saia da armadura ' + v + ' ' + q);
     });
   });
+  // 2c. roupas e cortes do Salão com a calça (conferência de 18/11): a saia comprida de princesa esconde a calça em
+  // pé (o desenho sai igual ao de sem calça; montada, a calça aparece) e a calça nunca pinta cabelo nem laço
+  // (montada de costas, a ponta do Cacheado e o laço da Trança caem na linha do quadril)
+  var princesa = Object.assign({}, apC, { modelo: 'princesa', corte: 'solto', semLaco: false });
+  VISTAS.forEach(function (v) {
+    [0, 1, 2].forEach(function (q) {
+      if (px(PA.mariana(princesa, false, q, { vista: v, vestes: { calca: 'calca-pluma' } })) !== px(PA.mariana(princesa, false, q, { vista: v })))
+        erros.push('calça por cima da saia comprida ' + v + ' ' + q);
+    });
+    if (px(PA.mariana(princesa, true, 0, { vista: v, vestes: { calca: 'calca-pluma' } })) === px(PA.mariana(princesa, true, 0, { vista: v })))
+      erros.push('princesa montada sem calça ' + v);
+  });
+  var CABELO2 = PA.cor.misturar(apC.cabelo, '#ffe3c4', 0.2);
+  (PA.CORTES || []).forEach(function (ct) {
+    (PA.MODELOS || []).forEach(function (md) {
+      var ap = Object.assign({}, apC, { corte: ct.id, modelo: md.id, semLaco: false });
+      VISTAS.forEach(function (v) {
+        [[false, 0], [false, 1], [false, 2], [true, 0]].forEach(function (qq) {
+          var s0 = PA.mariana(ap, qq[0], qq[1], { vista: v });
+          [{ calca: 'calca-pluma' }, { calca: 'calca-pluma', botas: 'botas-pluma' }].forEach(function (vz) {
+            var s = PA.mariana(ap, qq[0], qq[1], { vista: v, vestes: vz });
+            [ap.cabelo, CABELO2, ap.laco].forEach(function (cor) {
+              if (conta(s, cor) !== conta(s0, cor)) erros.push('calça mexeu no cabelo ou no laço: ' + ct.id + ' ' + md.id + ' ' + v + ' ' + qq);
+            });
+          });
+        });
+      });
+    });
+  });
   // 3. espadas e escudos
   a.espadas.forEach(function (id) { var c = PA.espadaItem(id); if (!c || c.width !== 5 || c.height !== 11) erros.push('espada ' + id); });
   a.escudos.forEach(function (id) { var c = PA.escudoItem(id); if (!c || c.width > 8 || c.height > 9) erros.push('escudo ' + id); });
