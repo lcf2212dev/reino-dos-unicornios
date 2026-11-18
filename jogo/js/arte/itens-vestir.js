@@ -4,7 +4,7 @@
    (conteudo/itens/vestes-a.js: cabeça; vestes-b.js: armaduras, botas, espadas e escudos; pluma.js: a calça). Quem
    chama: PA.mariana e PA.montada (pixelart-personagens.js, opcoes.vestes = { cabeca, armadura, calca, botas } com ids).
    Registra PA._interno.aplicarVestes, PA._interno.chaveVestes, PA.espadaItem e PA.escudoItem.
-   As letras dos moldes (minúsculas) são trocadas por letras próprias de cada parte (CORES): os três moldes se somam
+   As letras dos moldes (minúsculas) são trocadas por letras próprias de cada parte (CORES): os quatro moldes se somam
    numa paleta só, sem uma cor pisar na outra (as botas usam até 6 cores; a calça, até 4). */
 (function () {
   var PA = window.PA, I = PA._interno;
@@ -116,22 +116,27 @@
   // calca: { perna, sombra } (letras do molde). Em pé: a linha da saia vira quadril, estreito como as pernas (com
   // armadura de saia, a saia fica por cima: saiaCoberta), e as pernas se cobrem até o pé; o pé levantado do passo
   // continua sapato. Sentada: quadril, coxa e perna. A sombra é o último ponto de cada trecho de 2 ou mais.
+  // Nunca pinta cabelo nem laço (montada de costas, a ponta do Cacheado e o laço da Trança caem na linha do quadril).
+  // Saia comprida em pé (a de princesa cobre as pernas com as letras da roupa, C e G): a calça fica escondida.
+  var CABELO_E_LACO = 'HLZB';
   function calca(g, m, sentada, mapa, topo, saiaCoberta) {
     var c = m.calca || {}, papeis = sentada ? PAPEIS_SENTADA : PAPEIS_PE;
     var iSaia = topo + 7 + papeis.indexOf('saia'), ult = topo + 7 + papeis.length - 1, pe = g[ult];
     var cor = mapa[c.perna], sombra = mapa[c.sombra] || cor;
+    function roupa(ch) { return ch !== '.' && CABELO_E_LACO.indexOf(ch) < 0; }
+    if (!sentada && g[iSaia + 1].some(function (ch) { return ch === 'C' || ch === 'G'; })) return;
     function pintar(r, vale) {
       for (var x = 0, n = 0; x <= r.length; x++) {
-        if (x < r.length && r[x] !== '.' && vale(x)) { r[x] = cor; n++; continue; }
+        if (x < r.length && roupa(r[x]) && vale(x)) { r[x] = cor; n++; continue; }
         if (n > 1) r[x - 1] = sombra;
         n = 0;
       }
     }
     if (!saiaCoberta) {
-      var saia = g[iSaia], ls = limites(saia, function (ch) { return ch !== '.'; });
-      var lp = sentada ? ls : limites(g[iSaia + 1], function (ch) { return ch !== '.'; });
+      var saia = g[iSaia], ls = limites(saia, roupa);
+      var lp = sentada ? ls : limites(g[iSaia + 1], roupa);
       var a = Math.max(ls[0], lp[0]), b = Math.min(ls[1], lp[1]);
-      for (var x = 0; x < saia.length; x++) if (saia[x] !== '.' && (x < a || x > b)) saia[x] = '.';
+      for (var x = 0; x < saia.length; x++) if (roupa(saia[x]) && (x < a || x > b)) saia[x] = '.';
       pintar(saia, function () { return true; });
     }
     for (var y = iSaia + 1; y < ult; y++) (function (r, ultima) {

@@ -129,6 +129,9 @@ test('pluma: escrever 5 frases na loja dá a peça épica, sem estrela; a calça
     const f3 = await c.js(FAIXA);
     assert.deepStrictEqual(f3.cartoes.map((x) => [x.botao, x.tem]), [['Escrever 5 frases', false], [null, true], ['Escrever 5 frases', false]], 'Você já tem!');
     assert.deepStrictEqual(f3.fora, []);
+    // o cartão da peça que ela já tem encolhe (sem atributos): sobra tela para a mercadoria comum
+    const alturas = await c.js(`Array.from(document.querySelectorAll('.tela-vila-loja .vila-epica')).map((x) => Math.round(x.getBoundingClientRect().height))`);
+    assert.ok(alturas[1] < alturas[0] * 0.7, 'o cartão ganho é mais baixo: ' + alturas.join(', '));
     assert.deepStrictEqual(await c.js(`Reino.VilaLojas.conquistar('armaduras', 'calca-pluma')`), { ok: false, motivo: 'ja-tem', id: 'calca-pluma' });
     // não se vende
     await c.tocar('.vila-aba[data-aba="vender"]');
@@ -198,6 +201,14 @@ test('pluma: a faixa nas 3 lojas e nos 3 tamanhos; pelo teclado no notebook', { 
         await c.avancar(600);
         assert.strictEqual(await c.js(`!!document.querySelector('.tela-cursiva')`), false, 'Esc fecha');
         assert.match(await c.js(texto(BOTAO('capacete-pluma'))), /Continuar a escrever/);
+        assert.strictEqual(await c.js(`document.activeElement === document.querySelector('${BOTAO('capacete-pluma')}')`), true, 'o foco volta para o botão');
+        // com 1 frase só, o texto vai no singular
+        await c.js('Reino.config.cursiva.frasesPorPeca = 1; Reino.UI.fecharTodas(); 1');
+        await c.js(abrirLoja('armas'));
+        await c.avancar(600);
+        const um = await c.js(FAIXA);
+        assert.match(um.dica, /conquiste escrevendo 1 frase em letra cursiva/);
+        assert.deepStrictEqual(um.cartoes.map((x) => x.botao), ['Escrever 1 frase', 'Escrever 1 frase']);
         assert.strictEqual(await c.js(TEM('capacete-pluma')), 0);
       }
       assert.deepStrictEqual(c.erros, [], `${tamanho}: sem erro no console`);
