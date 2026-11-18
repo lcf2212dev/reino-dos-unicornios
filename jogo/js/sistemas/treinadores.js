@@ -1,9 +1,9 @@
 /* Treinadores de Monstros, na Vila Arco-Íris (docs/contratos/monstros.md): comprar MonsterBalls e Super MonsterBalls e
    a pergunta antes da conversa com a Treinadora Kiara (a mesma das lojas da Vila, vila.md §5). Reino.Treinadores:
      ID, ID_SUPER, ID_MINI 'bola-monster', 'bola-super' e 'bola-mini' (os itens, conteudo/itens/catalogo.js)
-     ofertas()             [{ id, def, preco, cheio, chance }] das bolas que existem no catálogo, na ordem da loja: Mini
-                           (config.monstros.precoMini / chanceMini), MonsterBall (precoBola / chanceCaptura) e Super
-                           (precoSuper / chanceSuper); preco = cheio com o desconto de agora
+     ofertas()             [{ id, def, preco, cheio, chance, frases }] das bolas que existem no catálogo, na ordem da
+                           loja: Mini (config.monstros.precoMini / chanceMini), MonsterBall (precoBola / chanceCaptura)
+                           e Super (precoSuper / chanceSuper); preco = cheio com o desconto de agora
      desconto()            { desconto, feitas, proxima: { salas, desconto } | null }: salas feitas de
                            config.monstros.desconto.materia (Matemática do Dia a Dia) contra as faixas (5 → 10%,
                            16 → 25%, 32 → 50%); lido na hora (P.salasFeitas), nada no save
@@ -13,8 +13,11 @@
      total(itens)          o preço de [{ id, qtd }] (0 se algo não fecha); um número n = n MonsterBalls
      comprar(itens)        tudo ou nada: confere o saldo, gasta e dá as bolas (Itens.ganhar; mochila cheia, o baú)
                            → { ok, total, motivo?: 'sem-save' | 'itens' | 'saldo', falta?, ganhos? }
-     ganharEscrevendo()    a bola de config.cursiva.bola (a MonsterBall) de graça, depois das frases em letra cursiva
-                           (UI.telaCursiva; docs/contratos/cursiva.md) → { ok, id, onde?, motivo?: 'sem-save' | 'itens' }
+     frases(id?)           quantas frases em letra cursiva valem 1 bola daquela: config.cursiva.frasesMini (1),
+                           frasesPorBola (2, a MonsterBall) e frasesSuper (3); 0 = essa bola não se ganha escrevendo
+     ganharEscrevendo(id?) 1 bola daquela (sem id: a de config.cursiva.bola, a MonsterBall) de graça, depois das
+                           frases em letra cursiva (UI.telaCursiva; docs/contratos/cursiva.md §5)
+                           → { ok, id, onde?, motivo?: 'sem-save' | 'itens' }
    Módulo 'treinadores': porteira(npc) (NPC com a ação 'treinadores' → UI.perguntaVila) e a ação 'treinadores' (abre
    UI.telaTreinadores e resolve 'tchau'). Nada novo no save (as bolas são itens, o campo `itens`). node: true: nada
    de DOM no carregamento. */
@@ -53,9 +56,15 @@
     var c = cheio(id), d = desconto().desconto;
     return d ? Math.max(1, Math.round(c * (1 - d))) : c;
   }
+  // quantas frases em letra cursiva valem 1 bola daquela (0: não se ganha escrevendo)
+  function frases(id) {
+    var c = (R.config && R.config.cursiva) || {}, alvo = id || ID;
+    var n = alvo === ID_MINI ? c.frasesMini : alvo === ID_SUPER ? c.frasesSuper : alvo === ID ? c.frasesPorBola : 0;
+    return def(alvo) && typeof n === 'number' && n >= 1 ? Math.floor(n) : 0;
+  }
   function ofertas() {
     return [ID_MINI, ID, ID_SUPER].filter(function (id) { return !!def(id); })
-      .map(function (id) { return { id: id, def: def(id), preco: preco(id), cheio: cheio(id), chance: chance(id) }; });
+      .map(function (id) { return { id: id, def: def(id), preco: preco(id), cheio: cheio(id), chance: chance(id), frases: frases(id) }; });
   }
   function tem(id) {
     var It = R.Itens, alvo = id || ID;
@@ -98,11 +107,11 @@
     return { ok: true, total: t, ganhos: ganhos };
   }
 
-  // as frases da letra cursiva ficaram prontas: 1 bola de graça (sem gastar estrela)
-  function ganharEscrevendo() {
-    var Pr = P(), id = (R.config && R.config.cursiva && R.config.cursiva.bola) || ID;
+  // as frases da letra cursiva ficaram prontas: 1 bola daquela de graça (sem gastar estrela)
+  function ganharEscrevendo(qual) {
+    var Pr = P(), id = qual || (R.config && R.config.cursiva && R.config.cursiva.bola) || ID;
     if (!Pr || !Pr.estado()) return { ok: false, motivo: 'sem-save', id: id };
-    if (!def(id) || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', id: id };
+    if (!def(id) || !frases(id) || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', id: id };
     var g = R.Itens.ganhar(id);
     Pr.salvar();
     U.emit(R.EVENTOS.MAPA_MUDOU);
@@ -124,14 +133,14 @@
   }
 
   R.Treinadores = { ID: ID, ID_SUPER: ID_SUPER, ID_MINI: ID_MINI, ofertas: ofertas, desconto: desconto, cheio: cheio, preco: preco, chance: chance, max: max, tem: tem,
-    total: total, comprar: comprar, ganharEscrevendo: ganharEscrevendo };
+    total: total, comprar: comprar, frases: frases, ganharEscrevendo: ganharEscrevendo };
 
   R.registrarModulo({
     id: 'treinadores',
     acoes: { treinadores: abrir },
     porteira: porteira,
     depurar: function () {
-      return { ofertas: ofertas().map(function (o) { return [o.id, o.preco, o.chance]; }), tem: P() && P().estado() ? [tem(ID_MINI), tem(ID), tem(ID_SUPER)] : null };
+      return { ofertas: ofertas().map(function (o) { return [o.id, o.preco, o.chance, o.frases]; }), tem: P() && P().estado() ? [tem(ID_MINI), tem(ID), tem(ID_SUPER)] : null };
     },
   });
 })();
