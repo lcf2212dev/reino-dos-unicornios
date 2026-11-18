@@ -15,8 +15,8 @@
                            → { ok, total, motivo?: 'sem-save' | 'itens' | 'saldo', falta?, ganhos? }
      frases(id?)           quantas frases em letra cursiva valem 1 bola daquela: config.cursiva.frasesMini (1),
                            frasesPorBola (2, a MonsterBall) e frasesSuper (3); 0 = essa bola não se ganha escrevendo
-     ganharEscrevendo(id?) 1 bola daquela (sem id: a de config.cursiva.bola, a MonsterBall) de graça, depois das
-                           frases em letra cursiva (UI.telaCursiva; docs/contratos/cursiva.md §5)
+     ganharEscrevendo(id?) 1 bola daquela (sem id: a MonsterBall) de graça, depois das frases em letra cursiva
+                           (UI.telaCursiva; docs/contratos/cursiva.md §5)
                            → { ok, id, onde?, motivo?: 'sem-save' | 'itens' }
    Módulo 'treinadores': porteira(npc) (NPC com a ação 'treinadores' → UI.perguntaVila) e a ação 'treinadores' (abre
    UI.telaTreinadores e resolve 'tchau'). Nada novo no save (as bolas são itens, o campo `itens`). node: true: nada
@@ -109,7 +109,7 @@
 
   // as frases da letra cursiva ficaram prontas: 1 bola daquela de graça (sem gastar estrela)
   function ganharEscrevendo(qual) {
-    var Pr = P(), id = qual || (R.config && R.config.cursiva && R.config.cursiva.bola) || ID;
+    var Pr = P(), id = qual || ID;
     if (!Pr || !Pr.estado()) return { ok: false, motivo: 'sem-save', id: id };
     if (!def(id) || !frases(id) || !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', id: id };
     var g = R.Itens.ganhar(id);
