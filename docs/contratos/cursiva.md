@@ -86,7 +86,8 @@ op = { tol, pegar, contra, passada } em x-altura (padrão: config.cursiva)
   as frases (`sortearFrases(N)`: diferentes, sem repetir as da última vez enquanto der; chave `'cursiva:frases'` no
   modo congelado) e abre a tela, com `premio: 'Pegar a <bola>'`. Pronto: `Treinadores.ganharEscrevendo(id)` põe 1 bola
   daquele cartão na mochila (cheia: no baú), grava, e a loja diz "Você ganhou 1 Super MonsterBall! ✨". Sem estrela,
-  sem limite por dia. `ganharEscrevendo()` sem id dá a de `config.cursiva.bola` (a MonsterBall).
+  sem limite por dia. `ganharEscrevendo()` sem id dá a MonsterBall (o `config.cursiva.bola` de antes saiu: cada botão
+  dá a bola do cartão dele). O recado entra na tela mesmo com ela rolada (o cartão da Super, no celular).
 - Fechou no meio: as mesmas frases e o ponto onde parou ficam na memória da loja, **por bola** (até recarregar o
   jogo), e o botão dela vira "✏ Continuar a escrever".
 - O botão de escrever não se desliga com a tela de escrever aberta (quem impede abrir duas é a trava da loja): pelo
@@ -114,6 +115,6 @@ só existem pela letra cursiva: não têm preço, não caem de monstro (`arenas:
 - Aparelho com a versão de antes guarda as peças sem mostrar (`itens.md` §10.5).
 
 ## 7. Números
-`Reino.config.cursiva` (comentados lá): `frasesMini` 1, `frasesPorBola` 2, `frasesSuper` 3, `frasesPorPeca` 5, `bola`
-`'bola-monster'`, `inclinacao`, `tolerancia`,
+`Reino.config.cursiva` (comentados lá): `frasesMini` 1, `frasesPorBola` 2, `frasesSuper` 3, `frasesPorPeca` 5,
+`inclinacao`, `tolerancia`,
 `toleranciaPx`, `toleranciaMax`, `pegar`, `pegarPx`, `contra`, `passadaPx`, `espaco`, `xAlturaMax`, `esperaPalavraMs`.

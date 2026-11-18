@@ -40,6 +40,19 @@
     var pecas = V.conquistas(lojaId), n = V.frasesPorPeca(), cartoes = {}, ocupado = false;
     if (!pecas.length) return null;
 
+    // o recado da loja mora no alto do conteúdo: com a tela rolada (o 3º cartão, no celular), ele entra na tela
+    function dizer(t) {
+      op.recado(t);
+      var m = op.tela.querySelector('.vila-recado');
+      if (m && !m.hidden && m.scrollIntoView) m.scrollIntoView({ block: 'nearest' });
+    }
+    // pelo teclado, o foco nunca cai no nada: fica no botão; se ele sumiu (ela já tem a peça), vai para a próxima
+    // peça ou para o ✕ da loja
+    function focar(botao) {
+      if (!UI.porTeclado || !UI.porTeclado()) return;
+      var alvo = !botao.hidden ? botao : caixa.querySelector('.vila-epica-escrever:not([hidden])') || op.tela.querySelector('.btn-fechar');
+      if (alvo) alvo.focus();
+    }
     function escrever(d) {
       if (ocupado) return;
       R.Som.tocar('toque');
@@ -55,23 +68,20 @@
         if (!op.tela.isConnected) return;
         if (!r.ok) {
           R.Som.tocar('erro');
-          op.recado(r.motivo === 'ja-tem' ? 'Você já tem ' + comArtigo(d) + '! ✨' : 'Ops! Algo mudou. Tente de novo.');
+          dizer(r.motivo === 'ja-tem' ? 'Você já tem ' + comArtigo(d) + '! ✨' : 'Ops! Algo mudou. Tente de novo.');
           repintar();
+          focar(cartoes[d.id].botao);
           return;
         }
         R.Som.tocar('estrela');
-        op.recado('Você conquistou ' + comArtigo(d) + '! ✨ ' + (r.onde === 'bau'
+        dizer('Você conquistou ' + comArtigo(d) + '! ✨ ' + (r.onde === 'bau'
           ? 'A mochila encheu: ' + (plural(d) ? 'foram' : 'foi') + ' para o baú.'
           : (plural(d) ? 'Estão' : 'Está') + ' na sua mochila.'));
         if (UI.atualizarHUD) UI.atualizarHUD();
         repintar();
         // conquista: nível 1, sem confete (a festa das frases já foi na tela de escrever), o brilho no cartão (arte.md §16)
         UI.festa(1, { som: false, item: cartoes[d.id].cartao });
-        // o botão dela sumiu: pelo teclado, o foco vai para a próxima peça (ou para o ✕ da loja), não para o nada
-        if (UI.porTeclado && UI.porTeclado()) {
-          var prox = caixa.querySelector('.vila-epica-escrever:not([hidden])') || op.tela.querySelector('.btn-fechar');
-          if (prox) prox.focus();
-        }
+        focar(cartoes[d.id].botao);
       });
     }
 

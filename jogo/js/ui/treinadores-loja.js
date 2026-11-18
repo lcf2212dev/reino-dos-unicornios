@@ -125,6 +125,8 @@
           if (!r.ok) { Reino.Som.tocar('erro'); recado('Ops! Algo mudou. Tente de novo.'); repintar(); return; }
           Reino.Som.tocar('estrela');
           recado('Você ganhou 1 ' + nome + '! ✨ ' + (r.onde === 'bau' ? 'A mochila encheu: ela foi para o baú.' : 'Está na sua mochila.'));
+          // o recado mora no alto do conteúdo: com a tela rolada (o cartão da Super, no celular), ele entra na tela
+          if (msg.scrollIntoView) msg.scrollIntoView({ block: 'nearest' });
           repintar();
           UI.festa(1, { som: false, item: cartoes[o.id].tem });
         });

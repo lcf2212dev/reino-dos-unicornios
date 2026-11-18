@@ -8,7 +8,6 @@
     frasesPorBola: 2,       // quantas frases ela escreve para ganhar 1 MonsterBall (pedido do Leandro, 17/11: 2 frases)
     frasesMini: 1,          // ... 1 Mini MonsterBall (pedido do Leandro, 18/11: 1 frase)
     frasesSuper: 3,         // ... 1 Super MonsterBall (pedido do Leandro, 18/11: 3 frases). 0 numa delas tira o botão
-    bola: 'bola-monster',   // a bola das frasesPorBola: a MonsterBall, 40% de chance (pedido)
     frasesPorPeca: 5,       // quantas frases ela escreve para conquistar 1 peça épica da Pluma nas lojas da Vila
                             // (pedido do Leandro, 18/11: 5 frases; as peças: conteudo/itens/pluma.js)
     inclinacao: 0.15,       // quanto a letra deita para a direita (0 = em pé)

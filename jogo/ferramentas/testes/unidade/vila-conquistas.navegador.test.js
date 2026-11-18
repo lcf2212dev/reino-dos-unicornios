@@ -29,6 +29,9 @@ const PONTOS = `(() => {
   for (let j = k; j < tr.n + 3; j += 3) { const q = Math.min(j, tr.n - 1); pts.push([r.left + (ox + tr.x[q] * E) * s, r.top + (base - tr.y[q] * E) * s]); }
   return { pts };
 })()`;
+// o recado está à vista dentro do conteúdo que rola (não ficou para cima da tela)
+const RECADO_A_VISTA = (tela) => `(() => { const m = document.querySelector('${tela} .vila-recado'), c = document.querySelector('${tela} .painel-conteudo');
+  if (!m || m.hidden || !c) return false; const r = m.getBoundingClientRect(), k = c.getBoundingClientRect(); return r.top >= k.top - 1 && r.bottom <= k.bottom + 1; })()`;
 const PONTA = `document.querySelector('.tela-cursiva .cursiva-palco').dataset.ponta`;
 const FRASE = `document.querySelector('.tela-cursiva .cursiva-palco').dataset.texto`;
 // a faixa na tela: os cartões, o que cada um mostra e se alguma coisa passa do painel ou fica cortada
@@ -126,6 +129,7 @@ test('pluma: escrever 5 frases na loja dá a peça épica, sem estrela; a calça
     assert.strictEqual(await c.js(TEM('calca-pluma')), 1, '1 Calça da Pluma');
     assert.strictEqual(await c.js('Reino.Progresso.estrelas()'), 7, 'sem gastar estrela');
     assert.match(await c.js(texto('.tela-vila-loja .vila-recado')), /Você conquistou a Calça da Pluma!.*Está na sua mochila\./);
+    assert.strictEqual(await c.js(RECADO_A_VISTA('.tela-vila-loja')), true, 'no celular, o recado entra na tela');
     const f3 = await c.js(FAIXA);
     assert.deepStrictEqual(f3.cartoes.map((x) => [x.botao, x.tem]), [['Escrever 5 frases', false], [null, true], ['Escrever 5 frases', false]], 'Você já tem!');
     assert.deepStrictEqual(f3.fora, []);

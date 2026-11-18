@@ -32,6 +32,9 @@ const PONTOS = `(() => {
   for (let j = k; j < tr.n + 3; j += 3) { const q = Math.min(j, tr.n - 1); pts.push([r.left + (ox + tr.x[q] * E) * s, r.top + (base - tr.y[q] * E) * s]); }
   return { pts, ponta: cv.dataset.ponta, palavra: p.texto, xa: E * s };
 })()`;
+// o recado está à vista dentro do conteúdo que rola (não ficou para cima da tela)
+const RECADO_A_VISTA = (tela) => `(() => { const m = document.querySelector('${tela} .vila-recado'), c = document.querySelector('${tela} .painel-conteudo');
+  if (!m || m.hidden || !c) return false; const r = m.getBoundingClientRect(), k = c.getBoundingClientRect(); return r.top >= k.top - 1 && r.bottom <= k.bottom + 1; })()`;
 const DICA = `document.querySelector('.tela-cursiva .cursiva-dica').textContent`;
 const PONTA = `document.querySelector('.tela-cursiva .cursiva-palco').dataset.ponta`;
 
@@ -197,6 +200,7 @@ test('cursiva: a Mini MonsterBall por 1 frase e a Super por 3, cada uma no cart�
     await c.avancar(600);
     assert.deepStrictEqual(await c.js(`[${TEM('bola-mini')}, ${TEM('bola-monster')}, ${TEM('bola-super')}, Reino.Progresso.estrelas()]`), [1, 0, 1, 3], '1 Super, sem gastar estrela');
     assert.match(await c.js(`document.querySelector('.tela-treinadores .vila-recado').textContent`), /Você ganhou 1 Super MonsterBall!/);
+    assert.strictEqual(await c.js(RECADO_A_VISTA('.tela-treinadores')), true, 'no celular, o recado da Super (3º cartão) entra na tela');
     assert.deepStrictEqual(await botoes(), ['Escrever 1 frase', 'Escrever 2 frases', 'Escrever 3 frases']);
     // os 3 botões cabem no cartão (nada cortado nem para fora)
     assert.deepStrictEqual(await c.js(`Array.from(document.querySelectorAll('.treinadores-escrever')).filter((b) => { const r = b.getBoundingClientRect(), k = b.closest('.treinadores-cartao').getBoundingClientRect(); return b.scrollWidth > b.clientWidth + 1 || r.left < k.left || r.right > k.right || r.height < 44; }).length`), 0);

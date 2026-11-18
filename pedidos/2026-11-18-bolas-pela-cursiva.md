@@ -40,6 +40,8 @@ A compra com estrelas (preços, desconto, carrinho) e a MonsterBall pelas 2 fras
 - Um botão por cartão, e cada bola guarda as suas frases começadas (dá para parar a Super no meio e fazer a Mini).
 - 0 no número de uma bola tira o botão dela (quem quiser desligar).
 - O botão de escrever não se desliga com a tela de escrever aberta: pelo teclado, o Esc devolve o foco a ele.
+- O número `config.cursiva.bola` (qual bola as 2 frases davam) saiu: agora cada botão dá a bola do cartão dele.
+- No celular, o recado "Você ganhou 1 Super MonsterBall!" entra na tela mesmo com ela rolada até o 3º cartão.
 
 # 15. Até onde ir
 Padrão: construir, testar, pôr na main e mandar para o GitHub (a Vercel publica sozinha).
