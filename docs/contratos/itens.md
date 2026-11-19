@@ -48,7 +48,8 @@ guardados|itens-pocao` depois de `ui/bosque-pergunta`; `css/ui-itens|ui-itens-po
   `item:<id>` (as comidas usam o emoji delas, que já tem desenho).
 - Cada item ganho é uma peça com `uid` próprio: `<Date.now() em base 36>-<4 letras base 36>` (ex.: `mhn3k2a1-x7q2`).
   No modo congelado, as 4 letras saem de `Reino.sorteioDaChave('itens:uid')` (não gasta o `Math.random`).
-- Slots do corpo (`Reino.Itens.SLOTS`): `espada`, `escudo`, `cabeca`, `armadura`, `botas`.
+- Slots do corpo (`Reino.Itens.SLOTS`): `espada`, `escudo`, `cabeca`, `armadura`, `calca`, `botas`. A `calca` entrou em
+  18/11 com o Conjunto da Pluma (`cursiva.md` §6): tipo e slot `calca`, só a `calca-pluma` existe.
 - **Capacete e chapéu dividem o slot `cabeca`** (decidido pelo Claude): os dois ficam no alto da cabeça e não cabem
   juntos no desenho (o chapéu pode subir só 4 px acima dela, `arte.md` §12); a escolha vira um jogo: o capacete
   protege, o chapéu dá sorte e enfeita. No catálogo, `tipo` (`capacete` ou `chapeu`) é a família; `slot` é onde veste.
@@ -105,6 +106,8 @@ dá o conjunto "do Dragão" (lendário). Formato de cada definição (`ItensCata
   arenas: ['bosque', …],                                     // ids de Reino.Arenas onde cai
   peso?: n,                                                  // consumíveis: peso no sorteio da categoria
   cura?: 'pequena'|'grande',  comida?: '<id de config.comidas>',
+  loja?, preco?,                                             // peça de loja (`vila.md` §4); bolas (`monstros.md`)
+  cursiva?: true, artigo?,                                   // peça da letra cursiva: `loja` sem `preco` (`cursiva.md` §6)
   icone: 'item:<id>' | '<emoji da comida>' }
 ```
 Sem espada vestida vale a espada que ela ganhou no Bosque ("Espada do Bosque", Força +0, `bosque.md` §5): ela não é
@@ -179,13 +182,13 @@ depois. Sem Animações: aparece parado no chão por `chao.brilhaMs` e some. Son
 - Sem baú fora de casa: a tela só abre pelo objeto.
 
 ## 8. Vestir (como aparece no desenho)
-- Cabeça, armadura e botas aparecem em todo lugar onde `personagens/jogador-desenho.js` a desenha: mapa, interiores e
+- Cabeça, armadura, calça e botas aparecem em todo lugar onde `personagens/jogador-desenho.js` a desenha: mapa, interiores e
   arenas, a pé e montada, nas 8 direções (as da esquerda, espelhadas). Espada e escudo só nas arenas (decidido pelo
   Claude: a espada já é assim; na cidade ela anda sem armas e o desenho fica limpo).
 - Não aparecem (ela "tira para descansar"): poses da casa (`casa-usos`), banho e retrato do balão. A tela da Mochila mostra
   a figura dela vestida (`PA.mariana(ap, false, 0, { vista: 'frente', vestes })`, escala 8, `arte.md` §10.7).
 - `PA.mariana(ap, sentada, quadro, { capa, vista, vestes })` e `PA.montada(def, estagio, quadro, ap, { …, vestes })`:
-  `vestes = { cabeca?, armadura?, botas? }` (ids). A chave do cache leva os três ids. **Sem `vestes` (ou tudo vazio) o
+  `vestes = { cabeca?, armadura?, calca?, botas? }` (ids). A chave do cache leva os quatro ids. **Sem `vestes` (ou tudo vazio) o
   desenho sai pixel a pixel igual ao de hoje** (as fotos do e2e não mudam).
 - `PA._interno.aplicarVestes(linhas, vista, sentada, vestes) → { linhas, paletaExtra, topo }`, chamado em `PA.mariana`
   depois do `aplicarVisual` (vale para todo corte e roupa do Salão e para os de menino):
@@ -193,7 +196,11 @@ depois. Sem Animações: aparece parado no chão por `chao.brilhaMs` e some. Son
     do lugar); pode esconder o laço (`B`);
   - `armadura`: troca as letras da roupa (`C`, `D`, `A`, e `W`/`M` dos modelos do Salão) nas linhas do corpo (7+) pelas
     da armadura e pinta detalhes (ombreira, cinto) por cima;
-  - `botas`: troca `S` e as 2 últimas linhas das pernas (`K`, `J`) pelas cores das botas.
+  - `calca` (molde `{ paleta, calca: { perna, sombra } }`, até 4 cores): depois da armadura e antes das botas. Em pé, a
+    linha da saia vira quadril, estreito como as pernas (armadura com `saia: true` fica por cima do quadril), e as
+    pernas se cobrem até o pé; o pé levantado do passo continua sapato. Sentada: quadril, coxa e perna. Nunca pinta
+    cabelo nem laço (`H L Z B`); a saia comprida de princesa, em pé, esconde a calça (montada, a calça aparece).
+  - `botas`: troca `S` e as 2 últimas linhas das pernas (`K`, `J`) pelas cores das botas (até 6 cores; o cano cobre a calça).
   - `PA.montada` desconta o `topo` no lugar da cavaleira (o chapéu sobe, ela não desce). O resultado de `PA.mariana` e
     `PA.montada` leva `topoExtra` (px acima da cabeça), para a espada e o ícone de fome acharem a mão e a cabeça.
 - Molde (`Reino.VESTES[id]`, dados de B; letras minúsculas, que a paleta da Mariana não usa):
@@ -273,8 +280,8 @@ Reino.Itens (sistemas/itens.js; node: true)
   mochila() → [{ id, def, uids, qtd }]              // os espaços, em ordem de tela
   espacos() → { usados, total }   cabe(id) → bool   temMochila() → bool
   bau() → [{ id, def, uids, qtd }]
-  vestido() → { espada, escudo, cabeca, armadura, botas: { uid, id, def } | null }
-  vestes() → { cabeca, armadura, botas, escudo, espada: id | null }   // memorizado: pode ser chamado a cada quadro
+  vestido() → { espada, escudo, cabeca, armadura, calca, botas: { uid, id, def } | null }
+  vestes() → { cabeca, armadura, calca, botas, escudo, espada: id | null }   // memorizado: pode ser chamado a cada quadro
   bonus() → { dano, defesa, vida, velocidade, sorte }
   ganhar(id, info?) → { uid, onde: 'mochila' | 'bau' } | null       // grava; emite 'ganhou'
   vestir(uid) → bool   tirar(slot) → { ok, onde }   guardar(uid) → bool   retirar(uid) → bool (false: não cabe)
@@ -313,8 +320,8 @@ estrelas); um equipamento a cada ~17 inimigos, perto de um nível a cada 30. Os 
 ## 13. Telas e textos (só na tela, sem voz)
 Painel de 720 px (`UI.painel`, `arte.md` §21), teclado (Tab, Enter, Esc), 3 tamanhos, `UI.escolher` com `gasta: true`
 nos botões que apagam (guarda de toque, `ui.md` §5).
-- **Mochila** (`UI.telaMochila`): título "🎒 Mochila"; à esquerda a figura dela vestida e os 5 slots ("Espada", "Escudo",
-  "Cabeça", "Armadura", "Botas"; vazio: "Vazio"; espada vazia: "Espada do Bosque"); à direita "Espaços: N de 20" e a grade
+- **Mochila** (`UI.telaMochila`): título "🎒 Mochila"; à esquerda a figura dela vestida e os 6 slots ("Espada", "Escudo",
+  "Cabeça", "Armadura", "Calça", "Botas"; vazio: "Vazio"; espada vazia: "Espada do Bosque"); à direita "Espaços: N de 20" e a grade
   de 20 (4 × 5; no celular 5 × 4), com o número da pilha no canto (`--texto-p`). Tocar num espaço abre o cartão: ícone, nome,
   raridade, atributos ("Força +2", "Proteção +1", "Vida +4", "Rapidez +5%", "Sorte +10%"), "Agora: …" com o do slot e os
   botões ("Vestir", "Tirar", "Usar", "Dar ao unicórnio", "Jogar fora"). Poção: "Cura um pouco da vida." /

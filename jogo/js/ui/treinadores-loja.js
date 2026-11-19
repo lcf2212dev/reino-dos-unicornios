@@ -7,10 +7,12 @@
    antes (UI.confirmar com gasta) e compra tudo ou nada; sem saldo, "Faltam N estrelas!" e o botão apagado. Com a tela
    dos monstros (UI.telaMonstros, da outra frente), o botão "Meus monstros" abre por cima. Só texto na tela (sem voz
    nova). Estilos: os da loja da Vila (css/ui-vila.css) mais css/ui-treinadores.css.
-   No cartão da MonsterBall, "ou" e "Escrever N frases" (docs/contratos/cursiva.md): sorteia as frases
-   (Cursiva.sortearFrases), abre UI.telaCursiva e, com todas prontas, dá a bola (Treinadores.ganharEscrevendo), sem
-   estrela. Fechou no meio: as mesmas frases e o ponto onde parou ficam guardados (até recarregar o jogo) e o botão vira
-   "Continuar a escrever". */
+   Em cada cartão, "ou" e "Escrever N frases" (Treinadores.frases: Mini 1, MonsterBall 2, Super 3;
+   docs/contratos/cursiva.md §5): sorteia as frases (Cursiva.sortearFrases), abre UI.telaCursiva e, com todas prontas,
+   dá 1 bola daquele cartão (Treinadores.ganharEscrevendo), sem estrela. Fechou no meio: as mesmas frases e o ponto
+   onde parou ficam guardados, por bola (até recarregar o jogo), e o botão dela vira "Continuar a escrever". O botão
+   de escrever não se desliga com a tela de escrever aberta (quem impede abrir duas é `ocupado`): o Esc devolve o
+   foco do teclado a ele. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI;
 
@@ -26,9 +28,10 @@
     return c;
   }
   function textoChance(c) { return c >= 1 ? 'Pega sempre: 100%' : 'Chance de pegar: ' + Math.round(c * 100) + '%'; }
+  function textoFrases(n) { return n === 1 ? '1 frase' : n + ' frases'; }
 
   var aberta = null;
-  var escrita = null;   // { frases, estado } das frases começadas e não terminadas (só na memória)
+  var escritas = {};    // { <id da bola>: { frases, estado } } das frases começadas e não terminadas (só na memória)
   // a tela saiu da pilha sem o ✕ (UI.fecharTodas, troca de cena): a promessa resolve do mesmo jeito
   U.on(Reino.EVENTOS.TELAS, function () { if (aberta && Reino._ui.pilha.indexOf(aberta.tela) < 0) aberta.fim(); });
   // a mochila mudou por fora (outra aba, nuvem, uma bola jogada): o "Você tem" se refaz
@@ -57,10 +60,8 @@
         meus = el('button.btn-secundario.treinadores-meus', { type: 'button', 'data-foco': 'meus' }, 'Meus monstros');
         meus.addEventListener('click', function () { Reino.Som.tocar('toque'); UI.telaMonstros(); });
       }
-      var corpo = el('div.treinadores-corpo'), C = Reino.Cursiva, nFrases = ((Reino.config.cursiva || {}).frasesPorBola) || 2;
-      var escrever = UI.telaCursiva && C && C.frases().length && Tr.ganharEscrevendo
-        ? el('button.btn-secundario.treinadores-escrever', { type: 'button', 'data-foco': 'escrever' }) : null;
-      if (escrever) escrever.addEventListener('click', escreverFrases);
+      var corpo = el('div.treinadores-corpo'), C = Reino.Cursiva;
+      var daParaEscrever = !!(UI.telaCursiva && C && C.frases().length && Tr.ganharEscrevendo);
       ofs.forEach(function (o) {
         var menos = el('button.btn-icone.vila-menos', { type: 'button', 'aria-label': 'Uma a menos', 'data-foco': 'menos:' + o.id }, '-');
         var mais = el('button.btn-icone.vila-mais', { type: 'button', 'aria-label': 'Uma a mais', 'data-foco': 'mais:' + o.id }, '+');
@@ -75,8 +76,14 @@
           temEl,
           el('span.vila-cartao-preco', '⭐ ' + o.preco, o.preco < o.cheio ? el('s.treinadores-cheio', String(o.cheio)) : null),
           el('div.treinadores-escolha', menos, n, mais));
-        cartoes[o.id] = { menos: menos, mais: mais, n: n, tem: temEl };
-        if (o.id === Tr.ID && escrever) cartao.appendChild(el('div.treinadores-ou', el('span.treinadores-ou-txt', 'ou'), escrever));
+        // "ou" e o botão de escrever desta bola (só a que tem frases: Treinadores.frases)
+        var escrever = daParaEscrever && o.frases
+          ? el('button.btn-secundario.treinadores-escrever', { type: 'button', 'data-foco': 'escrever:' + o.id }) : null;
+        if (escrever) {
+          escrever.addEventListener('click', function () { escreverFrases(o); });
+          cartao.appendChild(el('div.treinadores-ou', el('span.treinadores-ou-txt', 'ou'), escrever));
+        }
+        cartoes[o.id] = { menos: menos, mais: mais, n: n, tem: temEl, escrever: escrever };
         corpo.appendChild(cartao);
       });
       pn.conteudo.appendChild(el('div.vila-topo', saldo, meus));
@@ -100,26 +107,28 @@
         recado('');
         repintar();
       }
-      function escreverFrases() {
+      function escreverFrases(o) {
         if (ocupado || gravando) return;
         Reino.Som.tocar('toque');
-        if (!escrita) escrita = { frases: C.sortearFrases(nFrases), estado: {} };
-        var esta = escrita;
+        if (!escritas[o.id]) escritas[o.id] = { frases: C.sortearFrases(o.frases), estado: {} };
+        var esta = escritas[o.id], nome = o.def.nome;
         ocupado = true;
         repintar();
-        UI.telaCursiva({ frases: esta.frases, estado: esta.estado, titulo: 'Letra cursiva', premio: 'Pegar a MonsterBall' }).then(function (ok) {
+        UI.telaCursiva({ frases: esta.frases, estado: esta.estado, titulo: 'Letra cursiva', premio: 'Pegar a ' + nome }).then(function (ok) {
           ocupado = false;
           if (!ok) { repintar(); return; }
           gravando = true;
           var r;
-          try { r = Tr.ganharEscrevendo(); } finally { gravando = false; }
-          if (r.ok && escrita === esta) escrita = null;   // deu errado: as frases prontas continuam guardadas
+          try { r = Tr.ganharEscrevendo(o.id); } finally { gravando = false; }
+          if (r.ok && escritas[o.id] === esta) delete escritas[o.id];   // deu errado: as frases prontas continuam guardadas
           if (!pn.tela.isConnected) return;
           if (!r.ok) { Reino.Som.tocar('erro'); recado('Ops! Algo mudou. Tente de novo.'); repintar(); return; }
           Reino.Som.tocar('estrela');
-          recado(r.onde === 'bau' ? 'Você ganhou 1 MonsterBall! ✨ A mochila encheu: ela foi para o baú.' : 'Você ganhou 1 MonsterBall! ✨ Está na sua mochila.');
+          recado('Você ganhou 1 ' + nome + '! ✨ ' + (r.onde === 'bau' ? 'A mochila encheu: ela foi para o baú.' : 'Está na sua mochila.'));
+          // o recado mora no alto do conteúdo: com a tela rolada (o cartão da Super, no celular), ele entra na tela
+          if (msg.scrollIntoView) msg.scrollIntoView({ block: 'nearest' });
           repintar();
-          UI.festa(1, { som: false, item: cartoes[Tr.ID].tem });
+          UI.festa(1, { som: false, item: cartoes[o.id].tem });
         });
       }
       function repintar() {
@@ -132,12 +141,12 @@
           U.preencher(c.n, String(qtd[o.id]));
           c.menos.disabled = qtd[o.id] <= 0;
           c.mais.disabled = qtd[o.id] >= Tr.max();
+          if (c.escrever) U.preencher(c.escrever, escritas[o.id] ? '✏ Continuar a escrever' : '✏ Escrever ' + textoFrases(o.frases));
         });
         U.preencher(total, q ? (q === 1 ? '1 bola' : q + ' bolas') + ' · ' + t + ' ⭐' : 'Escolha as bolas');
         U.preencher(aviso, falta > 0 ? 'Faltam ' + estrelas(falta) + '!' : '');
         aviso.hidden = !(falta > 0);
         U.preencher(botao, 'Comprar (' + t + ' ⭐)');
-        if (escrever) { U.preencher(escrever, escrita ? '✏ Continuar a escrever' : '✏ Escrever ' + nFrases + ' frases'); escrever.disabled = ocupado; }
         botao.disabled = !q || falta > 0 || ocupado;
         botao.classList.toggle('btn-secundario', !!botao.disabled);
         if (foco) {

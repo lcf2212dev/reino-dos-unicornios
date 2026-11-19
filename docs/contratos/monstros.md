@@ -115,9 +115,9 @@ Item `bola-mini` "Mini MonsterBall" (tipo `bola`, loja `treinadores`, ícone `it
 (25) e `chanceMini` (0,2). Na loja é o primeiro cartão (`Treinadores.ID_MINI`). Na arena, `Monstros.podeJogar('mini')`/`jogar('mini')`; botão
 `monstros-mini` à esquerda do da MonsterBall, só com Mini na Mochila; a bola que volta (`'voltou'`) volta do mesmo tipo.
 
-## 9. MonsterBall pela letra cursiva
-No cartão da MonsterBall, "ou" e "Escrever 2 frases": as frases em letra cursiva dão 1 MonsterBall sem estrela
-(`Treinadores.ganharEscrevendo`). Tudo em `cursiva.md`.
+## 9. As bolas pela letra cursiva
+Em cada cartão, "ou" e "Escrever N frases": as frases em letra cursiva dão 1 bola daquele cartão sem estrela (Mini 1
+frase, MonsterBall 2, Super 3; `Treinadores.frases` e `ganharEscrevendo`). Tudo em `cursiva.md` §5.
 
 ## 10. Os monstros das matérias (Casa Mal-Assombrada)
 Pedido: `pedidos/2026-11-17-casa-mal-assombrada.md`. Um monstro por matéria (`'assombrada-<assunto>'`: matematica,

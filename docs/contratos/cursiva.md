@@ -1,8 +1,10 @@
-# Letra cursiva (escrever frases na loja da Kiara, com o traçado no sentido certo)
+# Letra cursiva (escrever frases na loja da Kiara e nas lojas de peças, com o traçado no sentido certo)
 
 Pedido: `pedidos/2026-11-17-escrita-cursiva.md`. No cartão da MonsterBall da loja da Treinadora Kiara
 (`monstros.md`), "ou" e **Escrever 2 frases**: ela escreve, em letra cursiva, as frases sorteadas do banco e ganha 1
-MonsterBall (40%) sem gastar estrela. O dedo só pinta seguindo o caminho certo de cada letra.
+MonsterBall (40%) sem gastar estrela. O dedo só pinta seguindo o caminho certo de cada letra. Desde 18/11
+(`pedidos/2026-11-18-bolas-pela-cursiva.md`), a Mini sai por **1 frase** e a Super por **3** (§5). Nas lojas de peças
+da Vila, **5 frases** conquistam cada peça épica do Conjunto da Pluma (§6).
 
 ## 1. Onde está no código
 | Parte | Arquivo |
@@ -12,8 +14,9 @@ MonsterBall (40%) sem gastar estrela. O dedo só pinta seguindo o caminho certo 
 | o desenho das letras, na ordem do traço | `js/conteudo/cursiva-letras.js` (dados) |
 | o banco de frases | `js/conteudo/cursiva-frases.js` (dados) |
 | a tela de escrever | `js/ui/cursiva.js` (`UI.telaCursiva`), `css/ui-cursiva.css` |
-| o botão e o prêmio na loja | `js/ui/treinadores-loja.js`, `Reino.Treinadores.ganharEscrevendo` (`sistemas/treinadores.js`) |
-| testes | `unidade/cursiva.test.js` (o caminho e os bloqueios), `unidade/cursiva.navegador.test.js` (com o dedo de verdade) |
+| o botão e o prêmio na loja | `js/ui/treinadores-loja.js`, `Reino.Treinadores.frases` e `ganharEscrevendo` (`sistemas/treinadores.js`) |
+| as peças épicas das lojas de peças (§6) | `js/conteudo/itens/pluma.js` (dados), `Reino.VilaLojas.conquistas`/`conquistar` (`sistemas/vila-lojas.js`), `js/ui/vila-conquistas.js` |
+| testes | `unidade/cursiva.test.js` (o caminho e os bloqueios), `unidade/cursiva.navegador.test.js` (com o dedo de verdade), `unidade/treinadores-cursiva.test.js` (§5), `unidade/vila-conquistas.test.js` e `vila-conquistas.navegador.test.js` (§6) |
 
 ## 2. As letras (`cursiva-letras.js`)
 - Unidade = x-altura: base `y = 0`, meio `1`, haste `2`, perna `-1`; `y` para cima, letra em pé (a inclinação vem de
@@ -78,13 +81,40 @@ op = { tol, pegar, contra, passada } em x-altura (padrão: config.cursiva)
 - Só texto na tela (sem voz nova). Nada no save.
 
 ## 5. Na loja da Kiara
-- No cartão da MonsterBall: "ou" e "✏ Escrever N frases" (`frasesPorBola`). Sorteia as frases
-  (`sortearFrases`: diferentes, sem repetir as da última vez enquanto der; chave `'cursiva:frases'` no modo
-  congelado) e abre a tela. Pronto: `Treinadores.ganharEscrevendo()` põe 1 `config.cursiva.bola` na mochila (cheia:
-  no baú), grava, e a loja diz "Você ganhou 1 MonsterBall! ✨". Sem estrela, sem limite por dia.
-- Fechou no meio: as mesmas frases e o ponto onde parou ficam na memória da loja (até recarregar o jogo) e o botão
-  vira "✏ Continuar a escrever".
+- Em cada cartão de bola: "ou" e "✏ Escrever N frases" (`Treinadores.frases(id)`: Mini `frasesMini` 1 ("Escrever 1
+  frase"), MonsterBall `frasesPorBola` 2, Super `frasesSuper` 3; número 0 ou torto tira o botão daquela bola). Sorteia
+  as frases (`sortearFrases(N)`: diferentes, sem repetir as da última vez enquanto der; chave `'cursiva:frases'` no
+  modo congelado) e abre a tela, com `premio: 'Pegar a <bola>'`. Pronto: `Treinadores.ganharEscrevendo(id)` põe 1 bola
+  daquele cartão na mochila (cheia: no baú), grava, e a loja diz "Você ganhou 1 Super MonsterBall! ✨". Sem estrela,
+  sem limite por dia. `ganharEscrevendo()` sem id dá a MonsterBall (o `config.cursiva.bola` de antes saiu: cada botão
+  dá a bola do cartão dele). O recado entra na tela mesmo com ela rolada (o cartão da Super, no celular).
+- Fechou no meio: as mesmas frases e o ponto onde parou ficam na memória da loja, **por bola** (até recarregar o
+  jogo), e o botão dela vira "✏ Continuar a escrever".
+- O botão de escrever não se desliga com a tela de escrever aberta (quem impede abrir duas é a trava da loja): pelo
+  teclado, o Esc devolve o foco a ele. Vale também para a faixa do §6.
 
-## 6. Números
-`Reino.config.cursiva` (comentados lá): `frasesPorBola` 2, `bola` `'bola-monster'`, `inclinacao`, `tolerancia`,
+## 6. Nas lojas de peças da Vila: o Conjunto da Pluma
+Pedido: `pedidos/2026-11-18-pecas-epicas-cursiva.md`. Seis peças épicas, uma por lugar do corpo (`itens.md` §2), que
+só existem pela letra cursiva: não têm preço, não caem de monstro (`arenas: []`) e não se vendem.
+- **Dados** (`conteudo/itens/pluma.js`): `espada-pluma` e `escudo-pluma` (loja `armas`), `capacete-pluma` (`cabecas`),
+  `armadura-pluma`, `calca-pluma` e `botas-pluma` (`armaduras`). No catálogo, `cursiva: true` (o `registrar` exige
+  `loja` e recusa `preco`) e `artigo` (`'a' | 'o' | 'as'`, para as frases da tela). Atributos, moldes e ícones: lá.
+- **Regras** (`Reino.VilaLojas`): `conquistas(loja) → [{ id, def, tem }]` (`tem` = ela tem uma viva: mochila, baú ou
+  vestida); `frasesPorPeca()`; `conquistar(loja, id) → { ok, id, uid?, onde?, motivo?: 'sem-save' | 'itens' | 'ja-tem' }`
+  dá a peça por `Itens.ganhar` (mochila; cheia, o baú), grava e emite `MAPA_MUDOU`. **Uma de cada**: com a peça viva,
+  `'ja-tem'`; jogou fora, conquista de novo. `aVenda` e `compraveis` nunca as trazem. Nada novo no save.
+- **Tela** (`ui/vila-conquistas.js`, interno `Reino._vilaEpicas.faixa`, chamado por `ui/vila-loja.js`): no alto da aba
+  Comprar (escondida em Vender; a Casa Bonita não tem), a faixa "✏ Peças épicas" com a dica "Não se compram: conquiste
+  escrevendo 5 frases em letra cursiva!" e um cartão por peça (desenho, nome, raridade, atributos), fora do carrinho.
+  Botão "✏ Escrever N frases": sorteia (`sortearFrases(N)`), abre `UI.telaCursiva` com `premio: 'Pegar a Espada da
+  Pluma'` e, pronto, `conquistar`: "Você conquistou a Espada da Pluma! ✨ Está na sua mochila." (cheia: "A mochila
+  encheu: foi para o baú."; as Botas, no plural: "Estão…", "foram…"). Com a peça: o cartão encolhe (só o desenho, o
+  nome e "Você já tem! ✨", sem botão), para a mercadoria comum caber na primeira tela do celular.
+- Fechou no meio: as frases e o ponto onde parou ficam na memória, **por peça** (até recarregar o jogo), e o botão
+  dela vira "✏ Continuar a escrever".
+- Aparelho com a versão de antes guarda as peças sem mostrar (`itens.md` §10.5).
+
+## 7. Números
+`Reino.config.cursiva` (comentados lá): `frasesMini` 1, `frasesPorBola` 2, `frasesSuper` 3, `frasesPorPeca` 5,
+`inclinacao`, `tolerancia`,
 `toleranciaPx`, `toleranciaMax`, `pegar`, `pegarPx`, `contra`, `passadaPx`, `espaco`, `xAlturaMax`, `esperaPalavraMs`.
