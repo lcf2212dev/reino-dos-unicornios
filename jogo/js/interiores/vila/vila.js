@@ -2,7 +2,7 @@
    { x: 1, y: 1, w: 38, h: 30 } (chão nas fileiras 3 a 30), céu aberto (fundo 'vila', fundo.js), spawn (2, 19), parte do
    Bosque (lugar 'bosque', entrada: false, pacote 'interior-bosque'). Sem saída: entra e sai pelo portal (1, 19), na borda esquerda.
    No alto, as 4 fachadas das lojas (a porta é a escada `portal` na fileira 8: x = 6, 15, 24, 33); a rua das lojas
-   (fileiras 8–9), a avenida da praça até ela (x 19–21) e a travessa da praça, do portal da esquerda aos terrenos (fileira 19) são `corredores`. No meio,
+   (fileiras 8–9), a avenida da praça até ela (x 19–21) e a travessa da praça, do portal da esquerda aos prédios dos antigos terrenos (fileira 19) são `corredores`. No meio,
    a praça com a fonte e uma Teleportadora (o objeto 'vila-teleportadora' é de vila/teleportadora.js); na borda esquerda, a
    entrada com o portal de volta e a placa de boas-vindas; à esquerda, em cima a Casa Mal-Assombrada (assombrada-objetos.js),
    com a porta em (5, 17), e embaixo o Shopping Terrazo (shopping-objetos.js), com a porta em (5, 27) e o totem do "T";
