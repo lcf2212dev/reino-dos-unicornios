@@ -134,4 +134,5 @@
 # @ = Casa Mal-Assombrada: a fachada na Vila (abóbora no lugar da placa do terreno de cima), o interior vila-assombrada com as 6 jaulas, falas e vozes novas, aviso da tela de início
 # @ = Todos os bichinhos atacam no modo aventura: o unicórnio (e o ET levado) acertam o inimigo perto dela nas fotos das arenas (comodo-<arena>), config.monstros.ajuda.pets
 # @ = Conjunto da Pluma e bolas pela letra cursiva: config.cursiva (frasesPorPeca, frasesMini e frasesSuper entram; bola sai)
+# @ = Garagem da casa (porta na Cozinha), o Mercado de Lugares Famosos e a Vila dos Lugares Famosos: interiores casa-garagem e casa-lugares, a seta da porta nova na Cozinha, config da novidade e das lojas
 @
