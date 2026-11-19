@@ -86,10 +86,10 @@ Reino.config = {
   // passos: as frases da barra da atualização de mentira (a última é a do fim)
   // id: a 1ª vez que o aparelho vê esta novidade, o botão é "Atualizar" e passa a atualização de mentira (atualizarMs,
   // com Animações; sem elas, atualizarParadoMs); depois volta o "Entrar no Reino". Trocar o id mostra de novo
-  // A Casa Mal-Assombrada (pedido de 17/11; monstros.md §10): na Vila Arco-Íris, um monstro por matéria
-  novidadeInicio: { id: 'assombrada-2026-11-17', faixa: 'Nova atualização!', texto: 'A Casa Mal-Assombrada', tema: 'fantasmas', desenho: '🎃',
-    detalhe: 'Termine uma matéria e ganhe o monstro dela!', ate: '2026-12-15', atualizarMs: 3600, atualizarParadoMs: 1500,
-    passos: ['Abrindo o mapa do Reino…', 'Montando a casa velha…', 'Acordando os monstros…', 'Acendendo as velas…', 'Pronto!'] },
+  // A Garagem da casa com o Mercado de Construções Famosas (pedido de 19/11; casa.md, vila.md §4)
+  novidadeInicio: { id: 'garagem-2026-11-19', faixa: 'Nova atualização!', texto: 'A Garagem da Casa', desenho: '🗽',
+    detalhe: 'Compre construções famosas com estrelas!', ate: '2026-12-31', atualizarMs: 3600, atualizarParadoMs: 1500,
+    passos: ['Abrindo o mapa do Reino…', 'Abrindo a garagem…', 'Arrumando as construções…', 'Contando as estrelas…', 'Pronto!'] },
   // jogadores: tamanho do login e da senha; senhaMariana = senha da conta 'mariana' (sem segurança). Ninguém entra
   // direto: vale quando não há banco ou ele não responde (com banco, vale a senha guardada nele); vazio = não entra
   // sem rede ao abrir, com o save no aparelho: joga e tenta a nuvem de novo a cada reconectarMs (e quando a rede volta)

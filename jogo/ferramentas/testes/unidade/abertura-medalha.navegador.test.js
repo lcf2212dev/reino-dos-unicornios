@@ -44,17 +44,17 @@ test('abertura: festa da medalha só para a Mariana e até a data; Enter no "Ent
     [true, true, false, false]);
 
     // 0) a novidade em destaque: para todos até a data dela, no lugar da medalha
-    assert.deepStrictEqual(await c.js("[Reino.UI.novidadeInicio.ativa('2026-12-15'), Reino.UI.novidadeInicio.ativa('2026-12-16')]"), [true, false]);
+    assert.deepStrictEqual(await c.js("[Reino.UI.novidadeInicio.ativa('2026-12-31'), Reino.UI.novidadeInicio.ativa('2027-01-01')]"), [true, false]);
     await c.js("localStorage.setItem('reino-jogador-atual', 'mariana'); localStorage.removeItem('reino-novidade-vista'); 1");
     // 1ª vez deste aparelho: o botão é "Atualizar"; o toque passa a atualização (no modo congelado, na hora) e grava
     assert.strictEqual((await c.js(ABRIR_E_LER)).botao, 'Atualizar [ícone]');
     await c.js("document.querySelector('.tela-inicio .btn-comecar').click(); 1");
     await c.avancar(400);
     assert.deepStrictEqual(await c.js("({ vista: localStorage.getItem('reino-novidade-vista'), fim: __fimInicio, primeira: Reino.UI.novidadeInicio.primeiraVez() })"),
-      { vista: 'assombrada-2026-11-17', fim: true, primeira: false });
+      { vista: 'garagem-2026-11-19', fim: true, primeira: false });
     const nova = await c.js(ABRIR_E_LER);
     assert.deepStrictEqual(nova, { medalha: false, faixa: null, parabens: null, bimestre: null, titulo: 'Reino dos Unicórnios',
-      novidade: '[ícone] Nova atualização! [ícone]', novidadeTexto: 'A Casa Mal-Assombrada', casinha: true, botao: 'Entrar no Reino [ícone]' });
+      novidade: '[ícone] Nova atualização! [ícone]', novidadeTexto: 'A Garagem da Casa', casinha: true, botao: 'Entrar no Reino [ícone]' });
     await c.js("window.__novAte = Reino.config.novidadeInicio.ate; Reino.config.novidadeInicio.ate = '2026-09-20'; 1");
 
     // 1) última jogadora: a Mariana (o save dela no aparelho de teste), data virtual dentro → festa
@@ -85,7 +85,7 @@ test('abertura: festa da medalha só para a Mariana e até a data; Enter no "Ent
     assert.strictEqual(outro.novidade, null);
     // outro jogador também vê a novidade, enquanto ela vale
     await c.js("Reino.config.novidadeInicio.ate = __novAte; 1");
-    assert.strictEqual((await c.js(ABRIR_E_LER)).novidadeTexto, 'A Casa Mal-Assombrada');
+    assert.strictEqual((await c.js(ABRIR_E_LER)).novidadeTexto, 'A Garagem da Casa');
     await c.js("Reino.UI.fecharTodas(); 1");
   } finally { await c.fechar(); }
 });
