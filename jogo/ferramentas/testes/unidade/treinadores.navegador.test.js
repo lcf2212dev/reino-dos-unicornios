@@ -40,7 +40,7 @@ test('treinadores: prédio na Vila, porta e volta, Kiara com a pergunta, compra 
       return {
         predio: v.objetos.filter((o) => o.tipo === 'vila-treinadores-predio').map((o) => [o.x, o.y]),
         porta: v.escadas.filter((e) => e.para === 'vila-treinadores').map((e) => [e.x, e.y, e.sentido]),
-        terrenos: v.objetos.filter((o) => o.tipo === 'vila-terreno').length,
+        terrenos: v.objetos.filter((o) => /terreno/.test(o.tipo)).length,
         interior: [t.lugar, t.entrada, t.pacote, t.tamanho.w, t.tamanho.h, t.escadas[0].x, t.escadas[0].y, t.escadas[0].para],
         kiara: [n.id, n.nome, n.voz, n.acao.tipo, (n.falas.oi || []).length > 0],
         porteira: typeof Reino.modulo('treinadores').porteira,
@@ -48,7 +48,7 @@ test('treinadores: prédio na Vila, porta e volta, Kiara com a pergunta, compra 
     })()`);
     assert.deepStrictEqual(d.predio, [[31, 12]]);
     assert.deepStrictEqual(d.porta, [[33, 17, 'portal']]);
-    assert.strictEqual(d.terrenos, 1, 'o terreno de baixo da esquerda continua livre (o de cima é a Casa Mal-Assombrada)');
+    assert.strictEqual(d.terrenos, 0, 'nenhum terreno livre (o de cima da esquerda é a Casa Mal-Assombrada; o de baixo, o Shopping Terrazo)');
     assert.deepStrictEqual(d.interior, ['bosque', false, 'interior-bosque', 16, 12, 8, 10, 'vila']);
     assert.deepStrictEqual(d.kiara, ['kiara', 'Treinadora Kiara', 'npc-kiara', 'treinadores', true]);
     assert.strictEqual(d.porteira, 'function');

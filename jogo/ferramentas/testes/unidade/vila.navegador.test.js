@@ -1,9 +1,10 @@
 // Vila Arco-Íris por dentro (docs/contratos/vila.md §2): pisar no portal do Bosque (53, 22), colado na borda direita, leva à Vila (chega em
 // (2, 19)); a porta da Forja (15, 8) leva à loja (chega em (8, 9)) e a saída (8, 10) traz de volta para a frente da
 // porta (15, 9); o portal da borda esquerda (1, 19) volta ao Bosque, à esquerda do portal (52, 22). E os dados: os 4 lojistas com a
-// ação vilaLoja da loja deles, 1 terreno cercado com a placa "Terreno livre" (o da direita virou os Treinadores de Monstros,
-// porta em (33, 17): treinadores.navegador.test.js; o de cima da esquerda, a Casa Mal-Assombrada, porta em (5, 17):
-// assombrada.navegador.test.js) e 1 Teleportadora (a da praça) levando à cidade.
+// ação vilaLoja da loja deles, nenhum terreno livre (o da direita virou os Treinadores de Monstros, porta em (33, 17):
+// treinadores.navegador.test.js; o de cima da esquerda, a Casa Mal-Assombrada, porta em (5, 17): assombrada.navegador.test.js;
+// o de baixo da esquerda, o Shopping Terrazo, porta em (5, 27): shopping.navegador.test.js) e 1 Teleportadora (a da praça)
+// levando à cidade.
 // Anda de verdade (tecla de seta), no jogo congelado; servidor e banco de TESTE novos (cenario.js).
 const { test } = require('node:test');
 const assert = require('assert');
@@ -35,8 +36,7 @@ test('vila: portal do Bosque, Vila, porta da loja e volta; lojistas, terrenos e 
         portal: b.objetos.filter((o) => o.tipo === 'bosque-portal-vila').map((o) => [o.x, o.y]),
         vila: [v.lugar, v.entrada, v.pacote, v.fundo, v.tamanho.w, v.tamanho.h, v.spawn.x, v.spawn.y],
         portas: v.escadas.map((e) => [e.x, e.y, e.para]),
-        terrenos: v.objetos.filter((o) => o.tipo === 'vila-terreno').length,
-        placas: v.objetos.filter((o) => o.tipo === 'vila-placa-terreno' && o.nome === 'Terreno livre' && o.fala.length).length,
+        terrenos: v.objetos.filter((o) => /terreno/.test(o.tipo)).length,
         teles: v.objetos.filter((o) => o.tipo === 'vila-teleportadora' && o.acao && o.acao.tipo === 'teleportadora' && o.acao.para === 'cidade').length,
         lojistas: ['casa', 'armas', 'cabecas', 'armaduras'].map((l) => {
           const dl = I.def('vila-' + l), n = (dl.npcs || [])[0];
@@ -47,9 +47,8 @@ test('vila: portal do Bosque, Vila, porta da loja e volta; lojistas, terrenos e 
     assert.deepStrictEqual(d.bosque, [[53, 22, 'portal']]);
     assert.deepStrictEqual(d.portal, [[53, 20]]);
     assert.deepStrictEqual(d.vila, ['bosque', false, 'interior-bosque', 'vila', 40, 32, 2, 19]);
-    assert.deepStrictEqual(d.portas, [[6, 8, 'vila-casa'], [15, 8, 'vila-armas'], [24, 8, 'vila-cabecas'], [33, 8, 'vila-armaduras'], [1, 19, 'bosque'], [33, 17, 'vila-treinadores'], [5, 17, 'vila-assombrada']]);
-    assert.strictEqual(d.terrenos, 1);
-    assert.strictEqual(d.placas, 1);
+    assert.deepStrictEqual(d.portas, [[6, 8, 'vila-casa'], [15, 8, 'vila-armas'], [24, 8, 'vila-cabecas'], [33, 8, 'vila-armaduras'], [1, 19, 'bosque'], [33, 17, 'vila-treinadores'], [5, 17, 'vila-assombrada'], [5, 27, 'vila-shopping']]);
+    assert.strictEqual(d.terrenos, 0, 'nenhum terreno livre: os três viraram prédios');
     assert.strictEqual(d.teles, 1);
     assert.deepStrictEqual(d.lojistas, [
       ['bosque', 'interior-bosque', 'lavanda', 'Dona Lavanda', 'vilaLoja', 'casa', true],

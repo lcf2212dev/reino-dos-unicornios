@@ -69880,22 +69880,22 @@
    "fala": "Ela brilha com todas as cores."
   },
   {
-   "chave": "cdb761a7y",
+   "chave": "0e3ee08510",
    "voz": "narradora",
-   "texto": "Este terreno está livre!",
+   "texto": "O Shopping Terrazo chegou!",
    "pacotes": [
     "interior-bosque"
    ],
-   "fala": "Este terreno está livre!"
+   "fala": "O Shopping Terrazo chegou!"
   },
   {
-   "chave": "a9890ce613",
+   "chave": "01752a94y",
    "voz": "narradora",
-   "texto": "Um dia vai ter novidade aqui.",
+   "texto": "Venha passear lá dentro!",
    "pacotes": [
     "interior-bosque"
    ],
-   "fala": "Um dia vai ter novidade aqui."
+   "fala": "Venha passear lá dentro!"
   },
   {
    "chave": "2dafba1011",
@@ -70301,6 +70301,159 @@
     "interior-bosque"
    ],
    "fala": "Eu sou um fantasminha amigo!"
+  },
+  {
+   "chave": "6d8e1aca13",
+   "voz": "narradora",
+   "texto": "Pizza de queijo saindo agora!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Pizza de queijo saindo agora!"
+  },
+  {
+   "chave": "620bc51510",
+   "voz": "narradora",
+   "texto": "Um hambúrguer bem gostoso!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um hambúrguer bem gostoso!"
+  },
+  {
+   "chave": "0e57073011",
+   "voz": "narradora",
+   "texto": "Sushi bonitinho e colorido!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Sushi bonitinho e colorido!"
+  },
+  {
+   "chave": "274b90b913",
+   "voz": "narradora",
+   "texto": "Sorvete geladinho de morango!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Sorvete geladinho de morango!"
+  },
+  {
+   "chave": "6da7876011",
+   "voz": "narradora",
+   "texto": "Cheirinho bom de churrasco!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Cheirinho bom de churrasco!"
+  },
+  {
+   "chave": "9be308e0z",
+   "voz": "narradora",
+   "texto": "Roupas novas e coloridas!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Roupas novas e coloridas!"
+  },
+  {
+   "chave": "d590140210",
+   "voz": "narradora",
+   "texto": "Quantos brinquedos lindos!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Quantos brinquedos lindos!"
+  },
+  {
+   "chave": "23be9ae412",
+   "voz": "narradora",
+   "texto": "Hoje tem filme de unicórnio!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Hoje tem filme de unicórnio!"
+  },
+  {
+   "chave": "fef9e34914",
+   "voz": "narradora",
+   "texto": "Pipoca quentinha para o filme!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Pipoca quentinha para o filme!"
+  },
+  {
+   "chave": "13be5ed210",
+   "voz": "narradora",
+   "texto": "Sapatos para todos os pés!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Sapatos para todos os pés!"
+  },
+  {
+   "chave": "c0f5f54c13",
+   "voz": "narradora",
+   "texto": "Um carro antigo bem lustroso!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Um carro antigo bem lustroso!"
+  },
+  {
+   "chave": "4d8e115110",
+   "voz": "narradora",
+   "texto": "A girafa estica o pescoço!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A girafa estica o pescoço!"
+  },
+  {
+   "chave": "74c68db413",
+   "voz": "narradora",
+   "texto": "O leão faz um rugido fofinho!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O leão faz um rugido fofinho!"
+  },
+  {
+   "chave": "914d5af512",
+   "voz": "narradora",
+   "texto": "O elefante balança a tromba!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O elefante balança a tromba!"
+  },
+  {
+   "chave": "904c5b7413",
+   "voz": "narradora",
+   "texto": "Escorregar é muito divertido!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "Escorregar é muito divertido!"
+  },
+  {
+   "chave": "ea06307711",
+   "voz": "narradora",
+   "texto": "A zebra é cheia de listras!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "A zebra é cheia de listras!"
+  },
+  {
+   "chave": "1eb1672914",
+   "voz": "narradora",
+   "texto": "O cachorrinho quer um petisco!",
+   "pacotes": [
+    "interior-bosque"
+   ],
+   "fala": "O cachorrinho quer um petisco!"
   },
   {
    "chave": "7c425675u",
