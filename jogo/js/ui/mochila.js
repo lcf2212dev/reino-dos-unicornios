@@ -1,5 +1,5 @@
 /* A tela da Mochila (docs/contratos/itens.md §6, §13): UI.telaMochila({ uid? }) → Promise (resolve ao fechar).
-   À esquerda a figura dela vestida (PA.mariana com as vestes, escala 8) e os 5 slots do corpo; à direita
+   À esquerda a figura dela vestida (PA.mariana com as vestes, escala 8) e os 6 slots do corpo; à direita
    "Espaços: N de 20" e a grade de 20 (4 × 5; no celular 5 × 4, css/ui-itens.css). Tocar num espaço ou num slot
    abre o cartão do item (ui/mochila-item.js); { uid } abre direto no cartão daquele item. Com monstro ou MonsterBall,
    o botão "Meus monstros" (UI.telaMonstros; monstros.md). Repinta no EVENTOS.ITENS
@@ -12,7 +12,7 @@
 
   function figura() {
     var ap = Reino._ui.aparencia(), v = Reino.Itens.vestes();
-    var vestes = { cabeca: v.cabeca, armadura: v.armadura, botas: v.botas };
+    var vestes = { cabeca: v.cabeca, armadura: v.armadura, calca: v.calca, botas: v.botas };
     return PA.paraDOM(PA.mariana(ap, false, 0, { vista: 'frente', vestes: vestes }), 8, 'moch-figura-canvas');
   }
 

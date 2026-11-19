@@ -1,5 +1,6 @@
 /* Vila Arco-Íris: a pergunta do lojista (js/ui/vila-pergunta.js) e a tela das 4 lojas, com a grade, o carrinho e o
-   rodapé do total (js/ui/vila-loja.js). docs/contratos/vila.md §4, §5. */
+   rodapé do total (js/ui/vila-loja.js), e a faixa "Peças épicas" da letra cursiva (js/ui/vila-conquistas.js).
+   docs/contratos/vila.md §4, §5; cursiva.md §6. */
 
 /* ---------- a pergunta antes da conversa ---------- */
 .tela-vila-pergunta .painel { max-width: 600px; }
@@ -91,6 +92,23 @@
 .vila-aviso { margin: 2px 0 0; font-size: var(--texto-aux); color: var(--erro); }
 .vila-botao-total { flex: none; }
 
+/* ---------- as peças épicas da letra cursiva: uma faixa no alto, um cartão deitado por peça ---------- */
+.vila-epicas {
+  margin: 0 0 10px; padding: 8px 10px;
+  border: var(--borda-fina) solid var(--borda); border-radius: var(--canto-grande); background: var(--epico-fundo);
+}
+.vila-epicas-titulo { margin: 0; font-size: var(--texto); }
+.vila-epicas-dica { margin: 2px 0 8px; font-size: var(--texto-aux); line-height: var(--entrelinha); }
+/* o desenho e o texto lado a lado; o botão (ou "Você já tem!") embaixo, na largura do cartão */
+.vila-epicas-lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 290px)); gap: 8px; }
+.vila-cartao.vila-epica { flex-flow: row wrap; align-items: center; align-content: space-between; gap: 8px; padding: 8px; text-align: left; cursor: default; }
+.vila-epica-texto { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.vila-epica-acao { flex: 1 1 100%; display: flex; align-items: center; justify-content: center; min-height: 44px; }
+.vila-epica-escrever { width: 100%; min-height: 44px; padding: 6px; font-size: var(--texto-aux); }
+.vila-epica-tem { font-size: var(--texto-aux); color: var(--rar-texto); }
+/* a peça que ela já tem: o cartão encolhe (sem raridade, atributos nem botão; "Você já tem!" embaixo do nome) */
+.vila-epica-ganha .vila-cartao-rar, .vila-epica-ganha .vila-cartao-atrib { display: none; }
+
 /* tablet em pé e celular: o carrinho embaixo da grade */
 @media (max-width: 860px) {
   .vila-corpo { flex-direction: column; align-items: stretch; }
@@ -100,6 +118,7 @@
 /* celular: grade de 2, rodapé em coluna, pergunta mais justa */
 @media (max-width: 480px) {
   .vila-grade { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .vila-epicas-lista { grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .vila-cartao { padding: 6px 4px; }
   .vila-topo { gap: 6px; }
   .vila-abas { width: 100%; }

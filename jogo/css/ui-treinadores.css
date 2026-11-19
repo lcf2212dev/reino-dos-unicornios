@@ -1,7 +1,7 @@
 /* Treinadores de Monstros: a loja das MonsterBalls da Treinadora Kiara (js/ui/treinadores-loja.js;
    docs/contratos/monstros.md). Usa as peças da loja da Vila (css/ui-vila.css): saldo, recado, cartão e rodapé.
-   Um cartão por bola (MonsterBall e Super MonsterBall), lado a lado; no celular, um embaixo do outro. */
-.tela-treinadores .painel { width: min(680px, 100%); }
+   Um cartão por bola (Mini, MonsterBall e Super), os 3 lado a lado; no celular, um embaixo do outro. */
+.tela-treinadores .painel { width: min(760px, 100%); }
 .treinadores-corpo { display: flex; align-items: stretch; justify-content: center; gap: 12px; flex-wrap: wrap; }
 .treinadores-cartao { flex: 1 1 220px; max-width: 300px; cursor: default; padding: 12px 10px; }
 .treinadores-cartao .vila-cartao-nome { font-size: var(--texto); }
@@ -20,7 +20,7 @@
   .treinadores-corpo { flex-direction: column; gap: 8px; }
   .treinadores-cartao { flex: none; width: 100%; max-width: none; padding: 8px 6px; }
 }
-/* "ou" e "Escrever 2 frases" no cartão da MonsterBall (a bola de graça pela letra cursiva; docs/contratos/cursiva.md) */
-.treinadores-ou { display: flex; flex-direction: column; align-items: center; gap: 4px; margin-top: 8px; }
+/* "ou" e "Escrever N frases" em cada cartão (a bola de graça pela letra cursiva; docs/contratos/cursiva.md §5) */
+.treinadores-ou { display: flex; flex-direction: column; align-items: center; gap: 4px; width: 100%; margin-top: 8px; }
 .treinadores-ou-txt { font-size: var(--texto-aux); color: var(--tinta-suave); }
-.treinadores-escrever { min-height: 44px; padding: 6px 12px; font-size: var(--texto-aux); }
+.treinadores-escrever { width: 100%; min-height: 44px; padding: 6px; font-size: var(--texto-aux); }

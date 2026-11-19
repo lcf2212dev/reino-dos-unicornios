@@ -1,15 +1,15 @@
-/* As roupas de aventura no desenho dela (docs/contratos/itens.md §8): cabeça (capacete ou chapéu), armadura e botas por
-   cima dos moldes já montados (cabeça + corpo, 11 colunas, depois do aplicarVisual: vale para todo corte e roupa do
-   Salão e para os de menino), nas 5 vistas, a pé e sentada (montada). Os moldes são dados de Reino.VESTES
-   (conteudo/itens/vestes-a.js: cabeça; vestes-b.js: armaduras, botas, espadas e escudos). Quem chama:
-   PA.mariana e PA.montada (pixelart-personagens.js, opcoes.vestes = { cabeca, armadura, botas } com ids).
+/* As roupas de aventura no desenho dela (docs/contratos/itens.md §8): cabeça (capacete ou chapéu), armadura, calça e
+   botas por cima dos moldes já montados (cabeça + corpo, 11 colunas, depois do aplicarVisual: vale para todo corte e
+   roupa do Salão e para os de menino), nas 5 vistas, a pé e sentada (montada). Os moldes são dados de Reino.VESTES
+   (conteudo/itens/vestes-a.js: cabeça; vestes-b.js: armaduras, botas, espadas e escudos; pluma.js: a calça). Quem
+   chama: PA.mariana e PA.montada (pixelart-personagens.js, opcoes.vestes = { cabeca, armadura, calca, botas } com ids).
    Registra PA._interno.aplicarVestes, PA._interno.chaveVestes, PA.espadaItem e PA.escudoItem.
-   As letras dos moldes (minúsculas) são trocadas por letras próprias de cada parte (CORES): os três moldes se somam
-   numa paleta só, sem uma cor pisar na outra. */
+   As letras dos moldes (minúsculas) são trocadas por letras próprias de cada parte (CORES): os quatro moldes se somam
+   numa paleta só, sem uma cor pisar na outra (as botas usam até 6 cores; a calça, até 4). */
 (function () {
   var PA = window.PA, I = PA._interno;
-  var CORES = { cabeca: 'abcdefgh', armadura: 'ijklmnop', botas: 'qrstuvwy' };
-  var PARTES = ['cabeca', 'armadura', 'botas'];
+  var CORES = { cabeca: 'abcdefgh', armadura: 'ijklmnop', botas: 'qrstuv', calca: 'wxyz' };
+  var PARTES = ['cabeca', 'armadura', 'calca', 'botas'];
   // o papel de cada linha do corpo (a partir da 7ª), como em pixelart-mariana-visual.js
   var PAPEIS_PE = ['ombro', 'tronco', 'tronco', 'cintura', 'saia', 'perna', 'perna', 'pe'];
   var PAPEIS_SENTADA = ['ombro', 'tronco', 'cintura', 'saia', 'coxa', 'perna', 'pe'];
@@ -18,7 +18,7 @@
   var DE_FRENTE = { frente: true, diagFrente: true };
 
   // a parte vem do começo do id (itens.md §2: <tipo>-<nome>; capacete e chapéu dividem a cabeça)
-  var PARTE_DO_TIPO = { capacete: 'cabeca', chapeu: 'cabeca', armadura: 'armadura', botas: 'botas', espada: 'espada', escudo: 'escudo' };
+  var PARTE_DO_TIPO = { capacete: 'cabeca', chapeu: 'cabeca', armadura: 'armadura', calca: 'calca', botas: 'botas', espada: 'espada', escudo: 'escudo' };
   // o molde de um id, só se for da parte pedida (id desconhecido, sem molde ou de outra parte: null)
   function molde(id, parte) {
     var V = window.Reino && window.Reino.VESTES;
@@ -112,6 +112,38 @@
     if (m.saia && m.pregas) (feito[iSaia] || []).forEach(function (x) { g[iSaia][x] = mapa[m.pregas[x % 2]]; });
   }
 
+  /* ---------- CALÇA ---------- */
+  // calca: { perna, sombra } (letras do molde). Em pé: a linha da saia vira quadril, estreito como as pernas (com
+  // armadura de saia, a saia fica por cima: saiaCoberta), e as pernas se cobrem até o pé; o pé levantado do passo
+  // continua sapato. Sentada: quadril, coxa e perna. A sombra é o último ponto de cada trecho de 2 ou mais.
+  // Nunca pinta cabelo nem laço (montada de costas, a ponta do Cacheado e o laço da Trança caem na linha do quadril).
+  // Saia comprida em pé (a de princesa cobre as pernas com as letras da roupa, C e G): a calça fica escondida.
+  var CABELO_E_LACO = 'HLZB';
+  function calca(g, m, sentada, mapa, topo, saiaCoberta) {
+    var c = m.calca || {}, papeis = sentada ? PAPEIS_SENTADA : PAPEIS_PE;
+    var iSaia = topo + 7 + papeis.indexOf('saia'), ult = topo + 7 + papeis.length - 1, pe = g[ult];
+    var cor = mapa[c.perna], sombra = mapa[c.sombra] || cor;
+    function roupa(ch) { return ch !== '.' && CABELO_E_LACO.indexOf(ch) < 0; }
+    if (!sentada && g[iSaia + 1].some(function (ch) { return ch === 'C' || ch === 'G'; })) return;
+    function pintar(r, vale) {
+      for (var x = 0, n = 0; x <= r.length; x++) {
+        if (x < r.length && roupa(r[x]) && vale(x)) { r[x] = cor; n++; continue; }
+        if (n > 1) r[x - 1] = sombra;
+        n = 0;
+      }
+    }
+    if (!saiaCoberta) {
+      var saia = g[iSaia], ls = limites(saia, roupa);
+      var lp = sentada ? ls : limites(g[iSaia + 1], roupa);
+      var a = Math.max(ls[0], lp[0]), b = Math.min(ls[1], lp[1]);
+      for (var x = 0; x < saia.length; x++) if (roupa(saia[x]) && (x < a || x > b)) saia[x] = '.';
+      pintar(saia, function () { return true; });
+    }
+    for (var y = iSaia + 1; y < ult; y++) (function (r, ultima) {
+      pintar(r, function (x) { return 'ST'.indexOf(r[x]) < 0 && (sentada || !ultima || pe[x] !== '.'); });
+    })(g[y], y === ult - 1);
+  }
+
   /* ---------- BOTAS ---------- */
   // troca: { S: o pé, K: o cano }. Nas 2 últimas linhas do corpo: o pé (a última) inteiro; na de cima, o que está em
   // cima de um pé (a perna) e o pé levantado do passo. Saia comprida (princesa) não vira bota: só a perna.
@@ -127,12 +159,13 @@
     }
   }
 
-  /** Veste cabeça, armadura e botas nas linhas da personagem (depois do aplicarVisual).
-      @param {string[]} linhas @param {string} vista @param {boolean} sentada @param {any} vestes { cabeca, armadura, botas }
+  /** Veste cabeça, armadura, calça e botas nas linhas da personagem (depois do aplicarVisual).
+      @param {string[]} linhas @param {string} vista @param {boolean} sentada @param {any} vestes { cabeca, armadura, calca, botas }
       @returns {{ linhas: string[], paletaExtra: Object<string, string>, topo: number }} topo = linhas a mais em cima */
   I.aplicarVestes = function (linhas, vista, sentada, vestes) {
     vestes = vestes || {};
     var mc = molde(vestes.cabeca, 'cabeca'), ma = molde(vestes.armadura, 'armadura'), mb = molde(vestes.botas, 'botas'), pal = {};
+    var mq = molde(vestes.calca, 'calca');
     // o topo é o maior das 5 vistas: virar não faz a cabeça pular
     var topo = mc ? topoCabeca(mc, PA.VISTAS || [vista]) : 0, w = linhas[0].length, vazia = new Array(w + 1).join('.');
     var g = [];
@@ -145,6 +178,8 @@
       fazer(tl.mapa);
     }
     parte(ma, 'armadura', function (mapa) { armadura(g, ma, sentada, vista, mapa, topo); });
+    // depois da armadura (a saia dela fica por cima do quadril) e antes das botas (o cano fica por cima da perna)
+    parte(mq, 'calca', function (mapa) { calca(g, mq, sentada, mapa, topo, !!(ma && ma.saia)); });
     parte(mb, 'botas', function (mapa) { botas(g, mb, sentada, mapa, topo); });
     parte(mc, 'cabeca', function (mapa) { cabeca(g, mc, vista, mapa, topo); });
     return { linhas: g.map(function (r) { return r.join(''); }), paletaExtra: pal, topo: topo };

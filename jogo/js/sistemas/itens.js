@@ -12,11 +12,11 @@
 (function () {
   var R = window.Reino, U = R.util, P = R.Progresso, I = R._progresso, EV = R.EVENTOS;
   var objeto = I.objeto, numeroOu = I.numeroOu;
-  var SLOTS = ['espada', 'escudo', 'cabeca', 'armadura', 'botas'];
+  var SLOTS = ['espada', 'escudo', 'cabeca', 'armadura', 'calca', 'botas'];
   var VIVOS = { mochila: 1, bau: 1, vestido: 1 };
   var UID = /^[0-9a-z]{1,12}-[0-9a-z]{4}$/;
-  // ordem de tela: espadas, escudos, cabeça, armaduras, botas, poções, comidinhas; dentro, raridade maior primeiro
-  var ORDEM = { espada: 0, escudo: 1, cabeca: 2, armadura: 3, botas: 4, pocao: 5, comida: 6 };
+  // ordem de tela: espadas, escudos, cabeça, armaduras, calças, botas, poções, comidinhas; dentro, raridade maior primeiro
+  var ORDEM = { espada: 0, escudo: 1, cabeca: 2, armadura: 3, calca: 4, botas: 5, pocao: 6, comida: 7 };
   var RARIDADE = { lendario: 0, epico: 1, raro: 2, comum: 3 };
 
   P.registrarCampo('itens', {

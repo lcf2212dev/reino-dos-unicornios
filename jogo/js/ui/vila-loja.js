@@ -6,6 +6,8 @@
    (embaixo, no celular), com − e + por item (até config.vila.maxPorItem; na venda, até as que ela tem, com "Vender
    todas"). Rodapé: o total e o botão "Comprar (N ⭐)"/"Vender (+N ⭐)", que pergunta antes (UI.confirmar com gasta);
    sem saldo, "Faltam N estrelas!" e o botão apagado. Depois: som, brilho leve, HUD e a lista de novo.
+   Nas lojas de peças, no alto da aba Comprar, a faixa "Peças épicas" (ui/vila-conquistas.js, Reino._vilaEpicas): as
+   peças que só se conquistam escrevendo em letra cursiva (docs/contratos/cursiva.md §6).
    Só texto na tela (nenhuma voz nova). Estilos: css/ui-vila.css. */
 (function () {
   var U = Reino.util, el = U.el, UI = Reino.UI;
@@ -89,6 +91,9 @@
       var botao = el('button.btn-grande.vila-botao-total', { type: 'button', 'data-foco': 'total' });
       pn.conteudo.appendChild(el('div.vila-topo', saldo, barra));
       pn.conteudo.appendChild(msg);
+      // as peças épicas da letra cursiva (só nas lojas que têm): fora do carrinho, com a tela de escrever delas
+      var epicas = Reino._vilaEpicas ? Reino._vilaEpicas.faixa(lojaId, { tela: pn.tela, recado: recado }) : null;
+      if (epicas) pn.conteudo.appendChild(epicas.el);
       pn.conteudo.appendChild(el('div.vila-corpo', grade, carrinhoEl));
       pn.card.appendChild(el('footer.vila-rodape', el('div.vila-rodape-texto', total, aviso), botao));
       botao.addEventListener('click', fechar);
@@ -174,6 +179,7 @@
         U.preencher(saldo, '⭐ Você tem ' + estrelas(n));
         Object.keys(abas).forEach(function (k) { abas[k].setAttribute('aria-selected', k === aba ? 'true' : 'false'); });
         var ofs = ofertas(), l = itens(), t = soma(l), venda = aba === 'vender';
+        if (epicas) { epicas.el.hidden = venda; epicas.repintar(); }
         grade.textContent = '';
         if (!ofs.length) grade.appendChild(el('p.vila-vazio', venda ? 'Você não tem nada que esta loja compra.' : 'Nada à venda por enquanto.'));
         ofs.forEach(function (o) { grade.appendChild(cartao(o)); });

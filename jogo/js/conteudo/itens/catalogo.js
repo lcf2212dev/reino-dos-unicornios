@@ -5,12 +5,14 @@
    Atributos (`bonus`): dano = Força, defesa = Proteção, vida = Vida, velocidade = Rapidez e sorte = Sorte (as duas
    últimas em fração: 0.05 = 5%). `arenas`: os ids de Reino.Arenas onde o item cai.
    Os desenhos ficam com as roupas (conteudo/itens/vestes-*.js) e os ícones (`item:<id>`, conteudo/itens/icones-*.js).
+   Tipo `calca` (lugar próprio no corpo): só as peças de conteudo/itens/pluma.js. `cursiva: true` = peça que não se
+   compra nem cai: conquista-se na loja dela (`loja`), escrevendo em letra cursiva (docs/contratos/cursiva.md §6).
    Só dados (node: true): nada de DOM no carregamento. */
 (function () {
   var R = window.Reino;
   var ARENAS = ['bosque', 'pantano', 'gelo', 'dunas', 'cristal', 'vulcao'];   // as 6 arenas, na ordem do caminho
-  var TIPOS = ['espada', 'escudo', 'capacete', 'chapeu', 'armadura', 'botas', 'pocao', 'comida', 'bola'];
-  var SLOT = { espada: 'espada', escudo: 'escudo', capacete: 'cabeca', chapeu: 'cabeca', armadura: 'armadura', botas: 'botas' };
+  var TIPOS = ['espada', 'escudo', 'capacete', 'chapeu', 'armadura', 'calca', 'botas', 'pocao', 'comida', 'bola'];
+  var SLOT = { espada: 'espada', escudo: 'escudo', capacete: 'cabeca', chapeu: 'cabeca', armadura: 'armadura', calca: 'calca', botas: 'botas' };
   var RARIDADES = ['comum', 'raro', 'epico', 'lendario'];
   var BONUS = ['dano', 'defesa', 'vida', 'velocidade', 'sorte'];
   var lista = [], porId = {};
@@ -24,7 +26,9 @@
     if (typeof def.nome !== 'string' || !def.nome) erro(def, 'falta o nome');
     // item de loja (a Vila Arco-Íris: `loja` = id da loja, `preco` em estrelas) pode não cair em arena nenhuma
     if (!Array.isArray(def.arenas) || (!def.arenas.length && !def.loja)) erro(def, 'falta arenas');
-    if (def.loja && !(typeof def.preco === 'number' && def.preco > 0)) erro(def, 'item de loja precisa de preco');
+    // ... e a peça da letra cursiva (`cursiva: true`) tem loja e nunca tem preço: não se compra
+    if (def.cursiva && (!def.loja || def.preco !== undefined)) erro(def, 'peça da letra cursiva tem loja e não tem preco');
+    if (def.loja && !def.cursiva && !(typeof def.preco === 'number' && def.preco > 0)) erro(def, 'item de loja precisa de preco');
     var equip = !!SLOT[def.tipo];
     if (equip && def.slot !== SLOT[def.tipo]) erro(def, 'slot precisa ser "' + SLOT[def.tipo] + '"');
     if (equip && RARIDADES.indexOf(def.raridade) < 0) erro(def, 'raridade desconhecida');
