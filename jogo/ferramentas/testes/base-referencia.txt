@@ -136,4 +136,5 @@
 # @ = Conjunto da Pluma e bolas pela letra cursiva: config.cursiva (frasesPorPeca, frasesMini e frasesSuper entram; bola sai)
 # @ = Garagem da casa (porta na Cozinha), o Mercado de Lugares Famosos e a Vila dos Lugares Famosos: interiores casa-garagem e casa-lugares, a seta da porta nova na Cozinha, config da novidade e das lojas
 # @ = Shopping Terrazo na Vila Arco-Íris: a fachada e o totem no terreno de baixo da esquerda (flores sorteadas andam 1 tile), o interior vila-shopping com 3 cômodos, 19 falas e vozes
+# @ = Entrar nos lugares famosos: 12 interiores casa-lugar-*, as portas dos lotes na Vila dos Lugares; as cestas de enfeite sorteadas dos Treinadores e do Observatório trocam de conteúdo (a sequência do sorteio anda com os interiores novos)
 @
