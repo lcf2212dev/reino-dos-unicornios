@@ -38,6 +38,8 @@ const CONGELADA = {
   'vila:5': { para: 'vila-treinadores', x: 8, y: 9 }, 'vila-treinadores:0': { para: 'vila', x: 33, y: 18 },
   // Casa Mal-Assombrada (vila.md §2): a porta no terreno de cima da esquerda ↔ a saída da casa
   'vila:6': { para: 'vila-assombrada', x: 8, y: 9 }, 'vila-assombrada:0': { para: 'vila', x: 5, y: 18 },
+  // Shopping Terrazo (vila.md §2): a porta no terreno de baixo da esquerda ↔ a saída do Corredor das Lojas
+  'vila:7': { para: 'vila-shopping', x: 18, y: 11 }, 'vila-shopping:0': { para: 'vila', x: 5, y: 28 },
   'vila-casa:0': { para: 'vila', x: 6, y: 9 }, 'vila-armas:0': { para: 'vila', x: 15, y: 9 },
   'vila-cabecas:0': { para: 'vila', x: 24, y: 9 }, 'vila-armaduras:0': { para: 'vila', x: 33, y: 9 },
   // Bosques de dentro do Bosque (arenas.md §8): aqui as pastas carregam em ordem alfabética (lua, neblina, orvalho),

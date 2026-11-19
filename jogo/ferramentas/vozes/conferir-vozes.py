@@ -117,7 +117,8 @@ def carregar_modelo(nome=None, threads=0):
 # soam errado ("Róbux", com ó aberto: "robos") continuam reprovando (conferido por transcrição em 2026-10-16)
 # (cúrcuma e taninos: os cartões da Química, 2026-10-31; sem a dica saíam "cor com uma" e "chatentaninos")
 VOCABULARIO = {'robux': 'Robux é a moeda do Roblox.', 'cúrcuma': 'A cúrcuma é um tempero amarelo.',
-               'taninos': 'O chá tem taninos.', 'monsterball': 'A MonsterBall pega monstros.'}
+               'taninos': 'O chá tem taninos.', 'monsterball': 'A MonsterBall pega monstros.',
+               'terrazo': 'O Shopping Terrazo fica no Eusébio.'}   # sem a dica saía "Terrazzo" (o Shopping, 19/11)
 
 
 def dica(texto):

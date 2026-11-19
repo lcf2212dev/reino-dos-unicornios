@@ -1,9 +1,10 @@
 # Vila Arco-Íris (portal no Bosque, 4 lojas e a Teleportadora)
 
 Pedido: `pedidos/2026-11-06-vila-arco-iris.md`. No centro-direita do Bosque dos Fantasmas há um portal que leva a uma
-cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, **1 terreno livre** (o da direita virou os **Treinadores de
-Monstros** e o de cima da esquerda, a **Casa Mal-Assombrada**: `monstros.md`) e a **Teleportadora**, um unicórnio branco de crina arco-íris
-arco-íris (uma na praça da Vila e uma na praça da cidade principal). Para conversar com um
+cidade menor, a **Vila Arco-Íris**: praça, **4 lojas**, nenhum terreno livre (o da direita virou os **Treinadores de
+Monstros** e o de cima da esquerda, a **Casa Mal-Assombrada**: `monstros.md`; o de baixo da esquerda, o **Shopping
+Terrazo**) e a **Teleportadora**, um unicórnio branco de crina arco-íris (uma na praça da Vila e uma na praça da cidade
+principal). Para conversar com um
 lojista ela responde certo uma pergunta sorteada entre todas as do **4º bimestre**; comprar e vender aceitam **vários
 itens de uma vez**.
 
@@ -22,6 +23,7 @@ itens de uma vez**.
 | o portal no Bosque | `js/interiores/bosque/portal-vila.js` + a escada no fim de `bosque.js` |
 | os Treinadores de Monstros (o terreno da direita) | `js/interiores/vila/treinadores*.js`, `js/sistemas/treinadores.js`, `js/ui/treinadores-loja.js` (`monstros.md`) |
 | a Casa Mal-Assombrada (o terreno de cima da esquerda) | `js/interiores/vila/assombrada*.js` (falas, objetos, o salão e a ação das jaulas, módulo `'assombrada'`); os monstros das matérias: `js/sistemas/monstros-materias.js` (`monstros.md`) |
+| o Shopping Terrazo (o terreno de baixo da esquerda) | `js/interiores/vila/shopping*.js` (falas, objetos em 3 partes e o interior) |
 | a Teleportadora | desenho `js/arte/teleportadora.js`; no mapa `js/mundo/teleportadora.js`; na Vila `js/interiores/vila/teleportadora.js`; falas e viagem `js/sistemas/teleportadora.js` |
 
 ## 2. Ids
@@ -39,7 +41,16 @@ itens de uma vez**.
   - Casa Mal-Assombrada: fachada `vila-assombrada-predio` (6 × 5) em (3, 12), no lugar do terreno de cima da esquerda (uma
     `vila-assombrada-abobora` em (9, 16), no lugar da placa); porta = escada `portal` em (5, 17), `chegar: { x: 0, y: 1 }`
     ↔ interior `vila-assombrada` "Casa Mal-Assombrada" (16 × 12, um cômodo `{ x: 1, y: 1, w: 14, h: 10 }`), saída (8, 10)
-    como as lojas. O terreno de baixo da esquerda, (3, 22), segue livre, com a placa em (9, 26).
+    como as lojas.
+  - Shopping Terrazo (pedido do Leandro, 19/11: as atrações e os tipos de loja do shopping do Eusébio, sem marca de loja):
+    fachada `vila-shopping-predio` (6 × 5) em (3, 22), no lugar do terreno de baixo da esquerda (o totem
+    `vila-shopping-totem` em (9, 26), no lugar da placa, fala); porta = escada `portal` em (5, 27), `chegar: { x: 0, y: 1 }`
+    ↔ interior `vila-shopping` "Shopping Terrazo" (37 × 14), saída (18, 12) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
+    Três cômodos (chão nas fileiras 3 a 12) ligados por portas em (11, 8) e (25, 8): `vila-shopping-gourmet` "Terraço
+    Gourmet" `{ x: 1, y: 1, w: 10, h: 12 }` (a praça de alimentação), `vila-shopping-lojas` "Corredor das Lojas"
+    `{ x: 12, y: 1, w: 13, h: 12 }`, o da entrada, placa "Shopping Terrazo" (lojas, cinema e o carro antigo) e
+    `vila-shopping-zoo` "Zoo Parque" `{ x: 26, y: 1, w: 10, h: 12 }` (os bichos de brinquedo e o cantinho Pet Park). Os
+    objetos que falam: voz da narradora, pacote `interior-bosque` (`shopping-falas.js`).
   - Porta de cada loja na Vila, na fileira 8, em x = 6, 15, 24, 33 (casa, armas, cabecas, armaduras), seta padrão,
     `chegar: { x: 0, y: 1 }` ↔ saída da loja em (8, 10) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
 - Lojistas (`Reino.registrarPersonagem`, com voz): `lavanda` "Dona Lavanda" (casa), `bigorna` "Seu Bigorna" (armas),
@@ -94,6 +105,7 @@ itens de uma vez**.
 `unidade/vila-lojas.test.js` (preços, compra/venda de vários, pergunta do 4º bimestre, porteira, móveis fora do
 sorteio), `unidade/vila-itens.test.js` (as 100 peças, moldes e ícones), `unidade/vila-conquistas*.test.js` (as peças da
 letra cursiva), `unidade/casa-moveis-loja.navegador.test.js` (os
-50 enfeites), `unidade/vila.navegador.test.js` (portal, Vila, portas das lojas, lojistas, terrenos), `unidade/assombrada.navegador.test.js`
-(a porta da Casa Mal-Assombrada e a volta, as 6 jaulas, ganhar e levar o monstro, sem vaga) e
-`unidade/teleportadora.navegador.test.js` (no mapa e na Vila, as duas viagens).
+50 enfeites), `unidade/vila.navegador.test.js` (portal, Vila, portas das lojas, lojistas, nenhum terreno livre), `unidade/assombrada.navegador.test.js`
+(a porta da Casa Mal-Assombrada e a volta, as 6 jaulas, ganhar e levar o monstro, sem vaga),
+`unidade/shopping.navegador.test.js` (a porta do Shopping Terrazo e a volta, os três cômodos, o totem e os objetos que
+falam) e `unidade/teleportadora.navegador.test.js` (no mapa e na Vila, as duas viagens).

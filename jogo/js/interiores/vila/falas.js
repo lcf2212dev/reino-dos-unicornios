@@ -40,7 +40,6 @@
         nova: ['Quer ver armaduras e botas?'], depois: ['Agora você está {protegida|protegido}!'] },
     },
     objetos: {
-      'terreno': ['Este terreno está livre!', 'Um dia vai ter novidade aqui.'],
       'placa': ['{Bem-vinda|Bem-vindo} à Vila Arco-Íris!', 'Aqui tem quatro lojas.'],
       'fonte': ['A fonte tem água de arco-íris.', 'Ela brilha com todas as cores.'],
       'poco': ['Um poço dos desejos.', 'Faça um pedido bem bonito!'],

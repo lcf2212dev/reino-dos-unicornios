@@ -1,7 +1,7 @@
 /* Vila Arco-Íris, os objetos da rua (prefixo vila-; docs/contratos/vila.md): as 4 fachadas das lojas (sólidas, a porta
    desenhada embaixo, logo acima do tile da escada `portal`), a fonte arco-íris, o poste, as bandeirolas, o canteiro,
-   a árvore florida, o poço, a placa de boas-vindas, o terreno livre cercado e a placa dele, o carrinho de flores e o
-   portal de volta para o Bosque (as cores do bosque/portal-vila.js). Os da dentro das lojas estão em objetos-2.js.
+   a árvore florida, o poço, a placa de boas-vindas, o carrinho de flores e o portal de volta para o Bosque (as cores do
+   bosque/portal-vila.js). Os da dentro das lojas estão em objetos-2.js.
    Usa Reino._predios.vila (V, de fundo.js). Animações (fumaça da forja, água da fonte, portal) só no `anim`. */
 (function () {
   var R = window.Reino;
@@ -188,30 +188,6 @@
       for (var i = 0; i < 8; i++) { var x = px + 3 + i * 3, y = py - 3 - (i % 3) * 2; ret(ctx, x, y + 2, 1, 4, '#3f8f45'); ret(ctx, x - 1, y, 3, 3, K); ret(ctx, x, y + 1, 1, 1, ARCO[i % 6]); }
       ret(ctx, px + 1, py - 10, 30, 2, K); [0, 1, 2, 3, 4].forEach(function (i) { ret(ctx, px + 2 + i * 6, py - 9, 6, 3, i % 2 ? '#ffffff' : '#ff5c8a'); });
       ret(ctx, px + 2, py - 7, 1, 10, K); ret(ctx, px + 29, py - 7, 1, 5, K);
-    } });
-
-  /* ---------- os terrenos livres ---------- */
-  // lote de grama aparada com cerquinha branca em volta (pegada var.w × var.h; sólido: ela não entra)
-  I.objeto('vila-terreno', { w: 6, h: 5, solido: true, semSombra: true,
-    desenhar: function (ctx, px, py, o) {
-      var w = (o.w || 6) * 16, h = (o.h || 5) * 16, x, y;
-      ret(ctx, px + 2, py + 4, w - 4, h - 6, '#b2e283');
-      for (y = 8; y < h - 6; y += 8) for (x = 6 + (y % 16 ? 4 : 0); x < w - 8; x += 12) ret(ctx, px + x, py + y, 3, 1, '#8ccc5c');
-      ret(ctx, px + w / 2 - 6, py + h / 2 - 2, 3, 2, '#3f8f45'); ret(ctx, px + w / 2 - 5, py + h / 2 - 4, 1, 2, '#3f8f45');   // brotinho
-      function ripa(x0, y0) { ret(ctx, x0, y0 - 6, 4, 9, K); ret(ctx, x0 + 1, y0 - 5, 2, 7, '#ffffff'); }
-      ret(ctx, px + 2, py + 2, w - 4, 1, K); ret(ctx, px + 2, py + 3, w - 4, 1, '#ffffff');
-      ret(ctx, px + 2, py + h - 4, w - 4, 1, K); ret(ctx, px + 2, py + h - 3, w - 4, 1, '#ffffff');
-      ret(ctx, px + 2, py + 2, 1, h - 5, K); ret(ctx, px + w - 3, py + 2, 1, h - 5, K);
-      for (x = 2; x < w - 2; x += 8) { ripa(px + x, py + 6); ripa(px + x, py + h - 2); }
-      for (y = 14; y < h - 6; y += 8) { ripa(px + 1, py + y); ripa(px + w - 5, py + y); }
-    } });
-  // a placa do terreno: uma casinha tracejada e o "+" de novidade (interativa)
-  I.objeto('vila-placa-terreno', { w: 1, h: 1, solido: true, alto: true, topo: 12,
-    desenhar: function (ctx, px, py) {
-      ret(ctx, px + 7, py, 3, 15, K); ret(ctx, px + 8, py, 1, 14, MADEIRA[1]);
-      caixa(ctx, px, py - 12, 17, 13, '#fff4d8');
-      triangulo(ctx, px + 3, py - 10, 8, 3, '#ff86bb'); ret(ctx, px + 4, py - 7, 6, 5, '#ffd1e6'); ret(ctx, px + 6, py - 5, 2, 3, '#c86aa0');
-      ret(ctx, px + 12, py - 8, 1, 5, '#6fdc8c'); ret(ctx, px + 10, py - 6, 5, 1, '#6fdc8c');
     } });
 
   /* ---------- o portal de volta para o Bosque (não sólido: pisou, viaja) ---------- */

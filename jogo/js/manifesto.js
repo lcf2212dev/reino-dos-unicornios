@@ -850,18 +850,23 @@
       { js: 'js/interiores/vila/treinadores-falas.js', grupo: 'interiores', node: true }, // Treinadores de Monstros (monstros.md): a Treinadora Kiara e as falas do prédio
       { js: 'js/interiores/vila/assombrada-icones.js', grupo: 'interiores', node: true }, // Casa Mal-Assombrada: o ícone da abóbora acesa (🎃), o desenho do aviso na tela de início
       { js: 'js/interiores/vila/assombrada-falas.js', grupo: 'interiores', node: true }, // Casa Mal-Assombrada (vila.md §2): as falas dos enfeites e das 6 jaulas dos monstros das matérias
+      { js: 'js/interiores/vila/shopping-falas.js', grupo: 'interiores', node: true }, // Shopping Terrazo (vila.md §2): as falas do totem e dos objetos do shopping
       { js: 'js/interiores/vila/fundo.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/objetos-2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/treinadores-objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/assombrada-objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/assombrada-objetos-2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/vila/shopping-objetos.js', grupo: 'interiores', node: true }, // Shopping Terrazo: a fachada, o totem e o Corredor das Lojas
+      { js: 'js/interiores/vila/shopping-objetos-2.js', grupo: 'interiores', node: true }, // Shopping Terrazo: o cinema e o Terraço Gourmet
+      { js: 'js/interiores/vila/shopping-objetos-3.js', grupo: 'interiores', node: true }, // Shopping Terrazo: o Zoo Parque e o Pet Park
       { js: 'js/interiores/vila/teleportadora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/vila.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/lojas.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/treinadores.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/assombrada.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/vila/assombrada-acoes.js', grupo: 'interiores', node: true }, // Casa Mal-Assombrada: a ação das jaulas (módulo 'assombrada'; levar o monstro com Reino.Monstros.equipar)
+      { js: 'js/interiores/vila/shopping.js', grupo: 'interiores', node: true }, // Shopping Terrazo por dentro: Terraço Gourmet, Corredor das Lojas e Zoo Parque
       // Bosques de dentro do Bosque (arenas.md §8): no fim do grupo interiores (as fotos das cenas de antes do e2e não mudam);
       // depois do Bosque, que carrega antes, para chamarem Reino._predios.bosque.portalNovo
       { js: 'js/interiores/orvalho/falas.js', grupo: 'interiores', node: true }, // Bosque do Orvalho (arenas.md §8): bosque de dentro do Bosque (falas, objetos, inimigos, chão/céu, interior e portal)
