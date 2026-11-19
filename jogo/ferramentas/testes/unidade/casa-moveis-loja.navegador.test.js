@@ -27,7 +27,7 @@ const MEDIR = `(function () {
     return { cv: cv, fora: fora, dentro: dentro, dados: cv.toDataURL() };
   }
   var res = [], pranchas = {}, linhas = {};
-  (Reino.moveisCasa || []).filter(function (m) { return !!m.loja; }).forEach(function (m) {
+  (Reino.moveisCasa || []).filter(function (m) { return m.loja === true; }).forEach(function (m) {   // os lugares da Garagem: lugares.test.js
     var def = OBJ[m.objeto], r = { uso: Reino.CasaUsos.uso(m.objeto), loja: m.loja, id: m.id, nome: m.nome, objeto: m.objeto, comodo: m.comodo, direcoes: m.direcoes, parede: !!m.parede, existe: !!def, dirs: {} };
     res.push(r);
     if (!def) return;
@@ -86,6 +86,6 @@ test('casa, enfeites da loja: 50, objetos, cômodos, nomes, pegadas e direções
       if (it.direcoes >= 2) assert.notStrictEqual(it.dirs.esq.dados, it.dirs.baixo.dados, `${onde}: esq difere de baixo`);
       if (it.direcoes === 4) assert.notStrictEqual(it.dirs.cima.dados, it.dirs.baixo.dados, `${onde}: cima difere de baixo`);
     }
-    for (const k of kits) assert.ok(porComodo[k] >= 5, `${k}: ${porComodo[k] || 0} enfeites (5 ou mais por cômodo)`);
+    for (const k of kits.filter((c) => c !== 'garagem')) assert.ok(porComodo[k] >= 5, `${k}: ${porComodo[k] || 0} enfeites (5 ou mais por cômodo)`);
   } finally { await c.fechar(); }
 });

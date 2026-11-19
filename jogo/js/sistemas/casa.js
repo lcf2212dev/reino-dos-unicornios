@@ -7,12 +7,13 @@
    tem é ignorada; duas peças no mesmo lugar (dois aparelhos): a mais nova fica, a outra conta como guardada.
    Peça (uid) = '<kit>.<item>.<n>', n de 1 a qtd; móvel avulso (§12, sistemas/casa-moveis.js) = 'movel.<id>.<n>'.
    Abas do modo decorar = os cômodos (config.casa.comodos) com kit ou móvel avulso. A ação 'casaDecorar' é a da
-   caixa de mudança.
+   caixa de mudança. Os andares decoráveis (Casa.ANDARES: térreo, 2º andar e a Garagem) são uma lista só, que
+   sistemas/casa-usos.js e ui/casa-decorar*.js leem daqui.
    node: true: nada de DOM, canvas nem Progresso no carregamento (só o registrarCampo). */
 (function () {
   var R = window.Reino, P = R.Progresso, I = R._progresso;
   var objeto = I.objeto, numeroOu = I.numeroOu;
-  var ANDARES = ['casa', 'casa-2'], MOVEL = 'movel';
+  var ANDARES = Object.freeze(['casa', 'casa-2', 'casa-garagem']), MOVEL = 'movel';
 
   /* ---------- os 3 campos do save ---------- */
   P.registrarCampo('casaBau', {
@@ -126,6 +127,7 @@
     if (p.length !== 3) return null;
     if (p[0] === MOVEL) {   // móvel avulso: tantas peças quantas salas o escolheram
       item = R.movelCasa && R.movelCasa(p[1]);
+      if (item && !daCasa(item)) return null;   // os lugares famosos ficam na Vila dos Lugares (casa/vila-lugares.js)
       max = item && R.CasaMoveis ? R.CasaMoveis.qtd(item.id) : 0;
     } else {
       if (kitsGanhos().indexOf(p[0]) < 0) return null;
@@ -268,8 +270,11 @@
   // abas do modo decorar: os cômodos (na ordem de config.casa.comodos) com o kit ganho ou algum móvel avulso
   function moveisDe(comodo) {
     var CM = R.CasaMoveis;
-    return (R.moveisCasa || []).filter(function (m) { return (!comodo || m.comodo === comodo) && CM && CM.qtd(m.id) > 0; });
+    return (R.moveisCasa || []).filter(function (m) { return daCasa(m) && (!comodo || m.comodo === comodo) && CM && CM.qtd(m.id) > 0; });
   }
+  // os móveis que vão para dentro da casa: todos, menos os lugares famosos do Mercado (`loja: 'lugares'`), que ficam em
+  // pé na Vila dos Lugares Famosos, cada um no seu lote (pedido de 19/11)
+  function daCasa(m) { return !!m && m.loja !== 'lugares'; }
   function comodos() { return cfg().comodos || cfg().kits; }
   function abas() {
     var ganhos = kitsGanhos();
@@ -364,6 +369,7 @@
 
   R.Casa = {
     FALAS: FALAS,
+    ANDARES: ANDARES,
     ganhou: function () { return !!campo('casaBau').em; },
     abrirBau: function () {
       if (R.Casa.ganhou()) return false;
@@ -383,7 +389,7 @@
     depurar: function () {
       if (!P.estado()) return null;
       return { ganhou: R.Casa.ganhou(), kits: kitsGanhos(), livres: kitsLivres(), pendentes: kitsPendentes(),
-        casa: objetosDoAndar('casa').length, casa2: objetosDoAndar('casa-2').length };
+        casa: objetosDoAndar('casa').length, casa2: objetosDoAndar('casa-2').length, garagem: objetosDoAndar('casa-garagem').length };
     },
   });
 })();

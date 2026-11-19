@@ -1,5 +1,6 @@
 /* Minha Casa, térreo (interior `casa`): o layout e o registro. 4 cômodos vazios lado a lado, para ela mobiliar
-   (casa.md §4): Cozinha | Sala de Jantar | Sala de Estar (entrada, com a escada que sobe) | Banheiro. Cada cômodo
+   (casa.md §4): Cozinha (com a porta da Garagem embaixo) | Sala de Jantar | Sala de Estar (entrada, com a escada que
+   sobe) | Banheiro. Cada cômodo
    tem só a janela e a caixa de mudança (abre o modo decorar com o kit dele); os móveis vêm de Reino.Casa. Na Sala de
    Estar, ao lado da caixa, o Baú de Guardados (casa/guardados.js; itens.md §7).
    Formato: docs/contratos/interiores.md §3. Confira com node jogo/ferramentas/validar/validar-interiores.js --so casa --detalhes. */
@@ -34,8 +35,10 @@
     tamanho: { w: 49, h: 13 },
     saida: { x: EST.x + 6, y: 11 },
     spawn: { x: EST.x + 6, y: 10 },
-    // sobe para os quartos (casa/andar2.js), no canto de cima à direita da Sala de Estar; quem desce chega logo abaixo
-    escadas: [{ x: EST.x + 11, y: 3, para: 'casa-2', olhar: { x: 0, y: -1 }, sentido: 'sobe' }],
+    // sobe para os quartos (casa/andar2.js), no canto de cima à direita da Sala de Estar; quem desce chega logo abaixo.
+    // A porta de baixo da Cozinha leva à Garagem (casa/garagem.js); quem volta chega logo acima dela
+    escadas: [{ x: EST.x + 11, y: 3, para: 'casa-2', olhar: { x: 0, y: -1 }, sentido: 'sobe' },
+      { x: COZ.x + 4, y: COZ.h, para: 'casa-garagem', sentido: 'portal', seta: 'desce', chegar: { x: 0, y: -1 }, olhar: { x: 0, y: -1 } }],
     comodos: [
       comodo('estar', 'Sala de Estar', EST, 'taco', 'papel',
         { piso: '#f3cfa0', piso2: '#dcae78', parede: '#fff3e6', parede2: '#ffe0cc', rodape: '#e9877a', detalhe: '#ffc94d' }),

@@ -37,6 +37,10 @@ function jogo() {
   ['vl-vaso', 'vl-quadro'].forEach((id) => {
     if (!R.movelCasa(id)) R.registrarMovelCasa({ id, nome: id, objeto: 't-vaso', comodo: 'estar', direcoes: 1, loja: true });
   });
+  // miniaturas de mentira do Mercado de Lugares Famosos (as de verdade: conteudo/casa/lugares.js), cada uma com o seu preço
+  [['vl-mini-a', 75], ['vl-mini-b', 120]].forEach(([id, preco]) => {
+    if (!R.movelCasa(id)) R.registrarMovelCasa({ id, nome: id, objeto: 't-vaso', comodo: 'garagem', direcoes: 1, loja: 'lugares', preco });
+  });
   R.materias.splice(0, R.materias.length, ...copia(MATERIAS));
   j.P.carregar();
   j.V = R.VilaLojas; j.It = R.Itens; j.cfg = R.config.vila;
@@ -49,7 +53,7 @@ function darEstrelas(j, n) { j.P.ganharEstrelas(n - j.P.estrelas()); }
 
 test('vila: 4 lojas com nome e famílias; à venda: as peças da loja e os enfeites loja:true a 30', () => {
   const j = jogo(), V = j.V;
-  igual(Object.keys(V.LOJAS), ['casa', 'armas', 'cabecas', 'armaduras']);
+  igual(Object.keys(V.LOJAS), ['casa', 'armas', 'cabecas', 'armaduras', 'lugares']);
   igual(V.LOJAS.cabecas.familias, ['capacete', 'chapeu']);
   igual(V.LOJAS.armaduras.familias, ['armadura', 'botas']);
   assert.strictEqual(V.LOJAS.armas.nome, 'Forja Brilhante');
@@ -169,6 +173,28 @@ test('vila: porteira só para o lojista; sem pergunta, conversa; ação vilaLoja
   R.UI.telaVilaLoja = (l) => { aberta = l; return Promise.resolve(); };
   assert.strictEqual(await m.acoes.vilaLoja({ tipo: 'vilaLoja', loja: 'cabecas' }), 'tchau');
   assert.strictEqual(aberta, 'cabecas');
+});
+
+test('lugares: o Mercado da Garagem vende só as miniaturas, pelo preço de cada uma, e guarda como móvel da casa', () => {
+  const j = jogo(), V = j.V;
+  assert.strictEqual(V.LOJAS.lugares.nome, 'Mercado de Lugares Famosos');
+  assert.ok(V.LOJAS.lugares.moveis && V.LOJAS.casa.moveis);
+  const lug = V.aVenda('lugares');
+  assert.ok(lug.length >= 2 && lug.every((o) => o.def.loja === 'lugares'), 'só as da loja lugares');
+  assert.strictEqual(lug.find((o) => o.id === 'vl-mini-b').preco, 120);
+  assert.ok(!V.aVenda('casa').some((o) => o.def.loja === 'lugares'), 'a Casa Bonita não vende as miniaturas');
+  darEstrelas(j, 300);
+  assert.strictEqual(V.comprar('lugares', [{ id: 'vl-mini-a', qtd: 1 }, { id: 'vl-mini-b', qtd: 1 }]).ok, true);
+  assert.strictEqual(j.P.estrelas(), 300 - 75 - 120);
+  const cm = j.lido().casaMoveis;
+  assert.strictEqual(cm['loja:vl-mini-a:1'].movel, 'vl-mini-a');
+  assert.strictEqual(j.R.CasaMoveis.qtd('vl-mini-b'), 1);
+  // um de cada: o que ela já tem sai da lista e não se compra de novo; mais de 1 numa compra também não
+  assert.ok(!V.aVenda('lugares').some((o) => o.id === 'vl-mini-b'), 'o que ela já tem sai da lista');
+  assert.strictEqual(V.comprar('lugares', [{ id: 'vl-mini-b', qtd: 1 }]).ok, false, 'não compra de novo');
+  assert.strictEqual(V.maxDa('lugares'), 1);
+  assert.strictEqual(V.maxDa('casa'), j.cfg.maxPorItem);
+  igual(V.compraveis('lugares'), []);
 });
 
 test('vila: os móveis da loja ficam fora do presente surpresa', () => {

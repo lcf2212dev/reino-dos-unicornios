@@ -81,6 +81,7 @@ test('casa, móveis avulsos: 50 móveis, objetos, cômodos, pegadas e direções
       if (it.direcoes >= 2) assert.notStrictEqual(it.dirs.esq.dados, it.dirs.baixo.dados, `${onde}: esq difere de baixo`);
       if (it.direcoes === 4) assert.notStrictEqual(it.dirs.cima.dados, it.dirs.baixo.dados, `${onde}: cima difere de baixo`);
     }
-    for (const k of kits) assert.ok(porComodo[k] >= 5, `${k}: ${porComodo[k] || 0} móveis (5 ou mais por cômodo)`);
+    // a Garagem (19/11) não tem móveis das salas: lá ficam os enfeites da loja e o que ela levar
+    for (const k of kits.filter((x) => x !== 'garagem')) assert.ok(porComodo[k] >= 5, `${k}: ${porComodo[k] || 0} móveis (5 ou mais por cômodo)`);
   } finally { await c.fechar(); }
 });

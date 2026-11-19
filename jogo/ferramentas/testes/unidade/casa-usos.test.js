@@ -257,7 +257,7 @@ test('efeito: o desligar refaz o andar onde a peça está agora (ou os dois, se 
   await j.U.usar(pia, CTX);
   j.refeitos.length = 0;
   timers[timers.length - 1].fn();
-  igual(j.refeitos, ['casa', 'casa-2'], 'peça não achada: refaz os dois andares');
+  igual(j.refeitos, ['casa', 'casa-2', 'casa-garagem'], 'peça não achada: refaz os 3 andares (o térreo, o de cima e a Garagem)');
   casa.objetosDoAndar = orig;
 });
 

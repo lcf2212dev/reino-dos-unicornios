@@ -5,11 +5,14 @@
    miniatura (o desenho do objeto, de frente), o nome e "Na casa" ou "Guardado". Tocar numa peça (ou num móvel da
    casa, por cima do painel) entra no modo colocar (ui/casa-decorar-fantasma.js); colocou, guardou ou cancelou,
    o painel volta. A cena fica ocupada (Cena.ocupar('decorar')) do começo ao fim: ela não anda.
-   Botão do HUD (casinha com pincel): só dentro de `casa`/`casa-2`; faz o mesmo que a caixa de mudança (a ação
-   'casaDecorar' de sistemas/casa.js: escolha de kit pendente, o painel ou a fala de quem ainda não tem kit). */
+   Botão do HUD (casinha com pincel): só dentro da casa (Casa.ANDARES: `casa`, `casa-2` e a Garagem `casa-garagem`);
+   faz o mesmo que a caixa de mudança (a ação 'casaDecorar' de sistemas/casa.js: escolha de kit pendente, o painel ou
+   a fala de quem ainda não tem kit). */
 (function () {
   var R = window.Reino, U = R.util, el = U.el, UI = R.UI, I = R._ui, EV = R.EVENTOS;
-  var ANDARES = ['casa', 'casa-2'], T = 16, CALMA_MS = 400;
+  var T = 16, CALMA_MS = 400;
+  // os andares da casa (térreo, 2º andar e Garagem): a lista única de sistemas/casa.js, que carrega depois desta parte
+  function daCasa(id) { return !!(R.Casa && R.Casa.ANDARES.indexOf(id) >= 0); }
 
   /* ---------- ícone do botão: casinha com pincel ---------- */
   R.registrarIcones({ 'casa-pincel': { n: 'casa com pincel', p: { k: '#3a2446', R: '#ffb3c1', r: '#ff6b8a', 2: '#d63d63', C: '#ffffff', c: '#fff8ee',
@@ -34,7 +37,7 @@
 
   function F() { return I.casaDecorar; }
   function C() { return R.Casa; }
-  function naCasa() { var c = R.Cena && R.Cena.atual(); return !!c && ANDARES.indexOf(c.id) >= 0; }
+  function naCasa() { var c = R.Cena && R.Cena.atual(); return !!c && daCasa(c.id); }
 
   /* ---------- a sessão ---------- */
   // S = { kit, modo: 'painel' | 'colocar', tela, ultima (uid tocado por último), calmaAte, resolver, promessa }
@@ -50,7 +53,7 @@
   }
   // a tela do painel saiu da pilha sem o ✕ (UI.fecharTodas, outra parte): a sessão acaba junto
   U.on(EV.TELAS, function () { if (S && S.modo === 'painel' && S.tela && I.pilha.indexOf(S.tela) < 0) sair(); });
-  U.on(EV.CENA, function (c) { if (S && ANDARES.indexOf(c && c.para) < 0) sair(); });
+  U.on(EV.CENA, function (c) { if (S && !daCasa(c && c.para)) sair(); });
 
   // a aba de partida: a pedida, a última usada, a do cômodo onde ela está, a primeira
   function abaInicial(pedida) {

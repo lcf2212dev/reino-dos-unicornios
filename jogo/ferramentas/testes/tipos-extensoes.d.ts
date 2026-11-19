@@ -176,8 +176,13 @@ interface MovelCasaDef {
   comodo: string;
   direcoes: 1 | 2 | 4;
   parede?: boolean;
-  /** móvel da loja da Vila (só se compra; fora do sorteio das salas e dos presentes) */
-  loja?: boolean;
+  /** móvel de loja (só se compra; fora do sorteio das salas e dos presentes): true = Casa Bonita da Vila (preço
+   *  config.vila.precoDecor); 'lugares' = Mercado da Garagem (preço no `preco`) */
+  loja?: boolean | string;
+  /** preço em estrelas (móveis com `loja` em texto) */
+  preco?: number;
+  /** o país do lugar famoso (legenda do cartão no Mercado da Garagem) */
+  pais?: string;
 }
 /** Outra fonte de móvel avulso além das salas (Reino.CasaMoveis.registrarFonte; casa.md §12). Chaves próprias
  *  (ex.: 'bosque:3'), que não colidem com ids de sala. */

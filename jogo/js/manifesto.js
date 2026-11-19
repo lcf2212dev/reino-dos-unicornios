@@ -361,6 +361,7 @@
       { js: 'js/conteudo/casa/kits-b.js', grupo: 'conteudo', node: true }, // casa: kits Banheiro, Quarto do jogador e Quarto do unicórnio
       { js: 'js/conteudo/casa/moveis-salas.js', grupo: 'conteudo', node: true }, // casa: os 42 móveis avulsos, um à escolha por sala feita (casa.md §12)
       { js: 'js/conteudo/casa/moveis-loja.js', grupo: 'conteudo', node: true }, // casa: os 50 enfeites da loja Casa Bonita da Vila, 30 estrelas cada (loja: true; vila.md)
+      { js: 'js/conteudo/casa/lugares.js', grupo: 'conteudo', node: true }, // casa: as 12 miniaturas de lugares famosos do Mercado da Garagem (loja: 'lugares', preço de cada)
       { js: 'js/conteudo/itens/catalogo.js', grupo: 'conteudo', node: true }, // itens dos monstros: o catálogo (Reino.ItensCatalogo; itens.md §3, §4)
       { js: 'js/conteudo/itens/vestes-a.js', grupo: 'conteudo', node: true }, // itens: moldes da cabeça (Reino.VESTES; itens.md §8)
       { js: 'js/conteudo/itens/vestes-b.js', grupo: 'conteudo', node: true }, // itens: moldes de armaduras, botas, espadas e escudos
@@ -784,11 +785,16 @@
       { js: 'js/interiores/casa/moveis-loja-a.js', grupo: 'interiores', node: true }, // casa: desenhos dos enfeites da loja da Vila (casa-movel-<id>)
       { js: 'js/interiores/casa/moveis-loja-b.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/moveis-loja-c.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/lugares-a.js', grupo: 'interiores', node: true }, // casa: desenhos das miniaturas de lugares famosos (casa-movel-lugar-<nome>)
+      { js: 'js/interiores/casa/lugares-b.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/falas.js', grupo: 'interiores', node: true }, // casa: o prédio (falas, caixa de mudança, térreo, 2º andar, fora, lugar)
       { js: 'js/interiores/casa/objetos.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/guardados.js', grupo: 'interiores', node: true }, // o Baú de Guardados da casa e a ação 'guardados' (itens.md §7)
       { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/garagem-objetos.js', grupo: 'interiores', node: true }, // a Garagem da casa (pedido de 19/11): os objetos e o interior, com o balcão do Mercado de Lugares Famosos
+      { js: 'js/interiores/casa/garagem.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/vila-lugares.js', grupo: 'interiores', node: true }, // a Vila dos Lugares Famosos, pelo portão da Garagem: os lugares comprados no Mercado, um por lote
       { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/icones.js', grupo: 'interiores', node: true }, // Bosque dos Fantasmas (bosque.md): ícones, o interior de céu aberto, o portal no mapa e o lugar (o último prédio)

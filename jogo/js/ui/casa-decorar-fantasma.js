@@ -10,7 +10,9 @@
    soltarCamera, ativo } (o painel, ui/casa-decorar.js, usa). */
 (function () {
   var R = window.Reino, U = R.util, el = U.el, EV = R.EVENTOS;
-  var T = 16, ANDARES = ['casa', 'casa-2'];
+  var T = 16;
+  // os andares da casa (térreo, 2º andar e Garagem): a lista única de sistemas/casa.js, que carrega depois desta parte
+  function daCasa(id) { return !!(R.Casa && R.Casa.ANDARES.indexOf(id) >= 0); }
 
   /* ---------- sprites guardados ---------- */
   var sprites = {};
@@ -228,7 +230,7 @@
   function deslizar(a, b) { var d = b - a; return !U.animar() || Math.abs(d) < 0.5 ? b : a + d * DESLIZE; }
   function ajusteCamera(cam, cena) {
     var v = V();
-    if (!camD || !cena || ANDARES.indexOf(cena.id) < 0) { camD = null; voltando = false; return; }
+    if (!camD || !cena || !daCasa(cena.id)) { camD = null; voltando = false; return; }
     if (voltando) {
       camD.x = deslizar(camD.x, cam.x); camD.y = deslizar(camD.y, cam.y);
       if (camD.x === cam.x && camD.y === cam.y) { camD = null; voltando = false; return; }
@@ -256,7 +258,7 @@
   // peca = item de Reino.Casa.pecas(); fim(como) com como = 'colocou' | 'guardou' | 'cancelou'
   function entrar(peca, fim) {
     var c = R.Cena.atual();
-    if (!c || ANDARES.indexOf(c.id) < 0) { if (fim) fim('cancelou'); return; }
+    if (!c || !daCasa(c.id)) { if (fim) fim('cancelou'); return; }
     ligarPonteiro();
     prenderCamera();
     g = { uid: peca.uid, objeto: peca.objeto, nome: peca.nome, parede: peca.parede, tinha: !!peca.lugar, andar: c.id, x: 0, y: 0, dir: 'baixo', res: null };

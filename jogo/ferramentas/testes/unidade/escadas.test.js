@@ -20,6 +20,10 @@ const CONGELADA = {
   'portugues-1:0': { para: 'portugues', x: 24, y: 26 },   // e de volta, logo abaixo do arco no fundo do saguão
   'casa:0': { para: 'casa-2', x: 2, y: 10 },             // Minha Casa: da Sala de Estar, logo acima do vão no Quarto
   'casa-2:0': { para: 'casa', x: 36, y: 4 },             // e de volta, logo abaixo do arco no canto da Sala de Estar
+  'casa:1': { para: 'casa-garagem', x: 3, y: 4 },         // da Cozinha para a Garagem (19/11), logo abaixo da porta do fundo
+  'casa-garagem:0': { para: 'casa', x: 5, y: 8 },         // e de volta, logo acima da porta de baixo da Cozinha
+  'casa-garagem:1': { para: 'casa-lugares', x: 14, y: 20 },   // o portão da Garagem para a Vila dos Lugares Famosos
+  'casa-lugares:0': { para: 'casa-garagem', x: 17, y: 4 },    // e de volta, na frente do portão
   // Torre dos Números: o arco do saguão (e do ateliê de cada andar) sobe para o vão da 1ª galeria do andar de cima
   'matematica:0': { para: 'matematica-1', x: 3, y: 10 },
   'matematica-1:0': { para: 'matematica-2', x: 3, y: 10 }, 'matematica-1:1': { para: 'matematica', x: 9, y: 3 },
