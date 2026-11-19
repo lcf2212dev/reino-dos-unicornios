@@ -135,7 +135,7 @@
       function cartao(o) {
         var d = o.def, noCarrinho = carrinho[aba][o.id] || 0, venda = aba === 'vender';
         var linhas = moveis
-          ? [Reino.Casa && Reino.Casa.nomeComodo ? Reino.Casa.nomeComodo(d.comodo) : '']
+          ? [d.pais || (Reino.Casa && Reino.Casa.nomeComodo ? Reino.Casa.nomeComodo(d.comodo) : '')]   // a miniatura: o país
           : atributos(d);
         var preco = venda ? '+' + o.preco + ' ⭐' : '⭐ ' + o.preco;
         var rotulo = d.nome + ', ' + (venda ? 'a loja paga ' : 'custa ') + estrelas(o.preco);
