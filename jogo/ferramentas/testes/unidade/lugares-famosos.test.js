@@ -1,5 +1,5 @@
 // Testes de unidade: as 12 miniaturas de lugares famosos do Mercado da Garagem (dados em js/conteudo/casa/lugares.js,
-// desenhos em js/interiores/casa/lugares-a|b.js; pedidos/2026-11-19-garagem-construcoes.md). O jogo inteiro (todos os
+// desenhos em js/interiores/casa/lugares-a|b.js; pedidos/2026-11-19-garagem-lugares.md). O jogo inteiro (todos os
 // `node: true`) num vm, sem navegador nem save: registro, ids, objeto, preço, loja, cômodo, nomes, fora do sorteio e o
 // desenho dentro da pegada (um ctx de mentira que só conta os fillRect).
 // Rodar: node --test jogo/ferramentas/testes/unidade/lugares-famosos.test.js   (tudo: npm test)

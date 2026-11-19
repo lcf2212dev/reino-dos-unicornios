@@ -99,7 +99,7 @@
       // ofertas da aba: compra = aVenda (id, def, preco); venda = os grupos que ela tem (id, def, uids, preco)
       function ofertas() { return aba === 'comprar' ? Vl.aVenda(lojaId) : Vl.compraveis(lojaId); }
       function porId() { var r = {}; ofertas().forEach(function (o) { r[o.id] = o; }); return r; }
-      function limite(o) { return aba === 'comprar' ? max() : o.uids.length; }
+      function limite(o) { return aba === 'comprar' ? (Vl.maxDa ? Vl.maxDa(lojaId) : max()) : o.uids.length; }
       // o carrinho da aba, só com o que ainda vale (a venda some se a peça saiu da mochila/baú)
       function itens() {
         var ofs = porId(), c = carrinho[aba];
@@ -226,6 +226,7 @@
           Reino.Som.tocar('estrela');
           var bau = !venda && r.ganhos && r.ganhos.some(function (g) { return g.onde === 'bau'; });
           recado(venda ? 'Vendido! +' + r.total + ' ⭐'
+            : lojaId === 'lugares' ? 'Comprado! ✨ Já está na Vila dos Lugares Famosos, pelo portão da Garagem.'
             : moveis ? 'Comprado! ✨ Já está guardado para a sua casa.'
             : bau ? 'Comprado! ✨ A mochila encheu: o resto foi para o baú.' : 'Comprado! ✨ Está na sua mochila.');
           if (UI.atualizarHUD) UI.atualizarHUD();

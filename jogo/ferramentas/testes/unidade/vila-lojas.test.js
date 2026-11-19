@@ -189,8 +189,11 @@ test('lugares: o Mercado da Garagem vende só as miniaturas, pelo preço de cada
   const cm = j.lido().casaMoveis;
   assert.strictEqual(cm['loja:vl-mini-a:1'].movel, 'vl-mini-a');
   assert.strictEqual(j.R.CasaMoveis.qtd('vl-mini-b'), 1);
-  const sem = V.comprar('lugares', [{ id: 'vl-mini-b', qtd: 1 }]);
-  assert.ok(!sem.ok && sem.motivo === 'saldo', 'sem saldo não compra');
+  // um de cada: o que ela já tem sai da lista e não se compra de novo; mais de 1 numa compra também não
+  assert.ok(!V.aVenda('lugares').some((o) => o.id === 'vl-mini-b'), 'o que ela já tem sai da lista');
+  assert.strictEqual(V.comprar('lugares', [{ id: 'vl-mini-b', qtd: 1 }]).ok, false, 'não compra de novo');
+  assert.strictEqual(V.maxDa('lugares'), 1);
+  assert.strictEqual(V.maxDa('casa'), j.cfg.maxPorItem);
   igual(V.compraveis('lugares'), []);
 });
 

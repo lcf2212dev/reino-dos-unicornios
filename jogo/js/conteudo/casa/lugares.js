@@ -1,7 +1,7 @@
-/* Casa do jogador: as 12 miniaturas de lugares famosos do Mercado da Garagem (pedidos/2026-11-19-garagem-construcoes.md),
+/* Casa do jogador: as 12 miniaturas de lugares famosos do Mercado da Garagem (pedidos/2026-11-19-garagem-lugares.md),
    maquetes num pedestal de madeira. `loja: 'lugares'`: só se compram, com o `preco` de cada uma em estrelas, e ficam
    fora do sorteio das salas e dos presentes (casa-moveis.js). Viram peça como os enfeites da Casa Bonita (vila.md §4);
-   o resto é como os móveis avulsos (casa.md §12): cômodo `garagem`, mas vão em qualquer cômodo. `pais`: a legenda do
+   não vão para dentro da casa: cada um fica em pé no seu lote da Vila dos Lugares Famosos (casa/vila-lugares.js). `pais`: a legenda do
    cartão. Desenhos em js/interiores/casa/lugares-a.js e -b.js, objeto casa-movel-<id>. Todas são enfeite (sem uso,
    casa.md §13) e não giram. Ids fixos para sempre; nomes até 14 letras, sem emoji. */
 (function () {

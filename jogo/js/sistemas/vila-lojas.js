@@ -26,7 +26,8 @@
     cabecas: { id: 'cabecas', nome: 'Elmos e Chapéus', familias: ['capacete', 'chapeu'], icone: 'item:chapeu-flor' },
     armaduras: { id: 'armaduras', nome: 'Armaduras e Botas', familias: ['armadura', 'botas'], icone: 'item:armadura-colete' },
     // o balcão da Garagem da casa (interiores/casa/garagem.js): as miniaturas de lugares famosos, móveis da casa
-    lugares: { id: 'lugares', nome: 'Mercado de Lugares Famosos', familias: [], icone: '🗽', moveis: true, varios: 'miniaturas' },
+    // unico: um de cada (o lugar fica em pé num lote da Vila dos Lugares Famosos); o que ela já tem sai da lista
+    lugares: { id: 'lugares', nome: 'Mercado de Lugares Famosos', familias: [], icone: '🗽', moveis: true, varios: 'lugares', unico: true },
   };
   var ONDE_VENDE = { mochila: 1, bau: 1 };
 
@@ -34,6 +35,8 @@
   function P() { return R.Progresso; }
   function loja(id) { return Object.prototype.hasOwnProperty.call(LOJAS, id) ? LOJAS[id] : null; }
   function max() { return cfg().maxPorItem || 10; }
+  // quantos de um item cabem numa compra: 1 na loja `unico` (os lugares famosos), senão config.vila.maxPorItem
+  function maxDa(id) { var l = loja(id); return l && l.unico ? 1 : max(); }
 
   /* ---------- o que cada loja vende e compra ---------- */
   // a loja de um móvel da casa: `loja: true` (os enfeites de antes) é a Casa Bonita; senão o id da loja (ou null)
@@ -43,7 +46,8 @@
     var l = loja(id);
     if (!l) return [];
     if (l.moveis) {
-      return (R.moveisCasa || []).filter(function (m) { return lojaDoMovel(m) === id; })
+      var CM = R.CasaMoveis;
+      return (R.moveisCasa || []).filter(function (m) { return lojaDoMovel(m) === id && !(l.unico && CM && CM.qtd(m.id) > 0); })
         .map(function (m) { return { id: m.id, def: m, preco: precoMovel(m) }; });
     }
     var C = R.ItensCatalogo;
@@ -78,7 +82,7 @@
     aVenda(id).forEach(function (o) { ofertas[o.id] = o; });
     for (var i = 0; i < itens.length; i++) {
       var x = itens[i], o = x && ofertas[x.id], q = x && x.qtd;
-      if (!o || visto[x.id] || typeof q !== 'number' || q !== Math.floor(q) || q < 1 || q > max()) return null;
+      if (!o || visto[x.id] || typeof q !== 'number' || q !== Math.floor(q) || q < 1 || q > maxDa(id)) return null;
       visto[x.id] = true;
       r.push({ oferta: o, qtd: q });
     }
@@ -191,7 +195,7 @@
     return Promise.resolve(UI.telaVilaLoja(acao.loja)).then(function () { return 'tchau'; });
   }
 
-  R.VilaLojas = { LOJAS: LOJAS, loja: loja, aVenda: aVenda, compraveis: compraveis, precoVenda: precoVenda, total: total,
+  R.VilaLojas = { LOJAS: LOJAS, loja: loja, maxDa: maxDa, aVenda: aVenda, compraveis: compraveis, precoVenda: precoVenda, total: total,
     totalVenda: totalVenda, comprar: comprar, vender: vender, perguntas: perguntas, pergunta: pergunta };
 
   R.registrarModulo({
