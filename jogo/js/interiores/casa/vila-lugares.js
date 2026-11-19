@@ -3,8 +3,11 @@
    árvores da Vila Arco-Íris), 12 lotes, um por lugar famoso (conteudo/casa/lugares.js, `loja: 'lugares'`): o lugar
    comprado no Mercado da Garagem aparece em pé no lote dele, o desenho da miniatura em escala 2 (pixels inteiros:
    um monumento do tamanho de uma casa); o que falta é um lote vazio com a plaquinha "?". Derivado da compra
-   (CasaMoveis.qtd > 0), nada no save. Tocar num lote ou num lugar: o nome e o país (ou onde comprar) no aviso
-   pequeno, só na tela. A avenida do meio, com a fonte e os bancos, e os caminhos entre as fileiras são corredores.
+   (CasaMoveis.qtd > 0), nada no save. Comprado, dá para entrar nele (pedido de 19/11): a porta na frente do lote (escada
+   `portal` com `aberta`, o capacho e a seta só com ele comprado) ou o toque no lote ou no lugar levam ao interior
+   'casa-lugar-<nome>' (casa/lugares-dentro.js), e a saída de lá volta para a frente do lote. Sem comprar, o toque
+   mostra onde comprar, no aviso pequeno, só na tela. A avenida do meio, com a fonte e os bancos, e os caminhos entre
+   as fileiras são corredores.
    Formato: docs/contratos/interiores.md §3. Confira com node jogo/ferramentas/validar/validar-interiores.js --so casa-lugares --detalhes. */
 (function () {
   var R = window.Reino;
@@ -17,6 +20,12 @@
   // 4 colunas × 3 fileiras de lotes 4 × 2, com a avenida de 5 no meio (x 12 a 16)
   var COLS = [2, 7, 17, 22], FILAS = [5, 10, 15];
   function lote(i) { return { x: COLS[i % 4], y: FILAS[Math.floor(i / 4)] }; }
+  // a porta de cada lote (pedido de 19/11, "permitir entrar nos lugares"): logo na frente dele, do lado da avenida; leva
+  // para dentro do lugar (casa/lugares-dentro.js), só com ele comprado. O interior: 'lugar-x' → 'casa-lugar-x'
+  function porta(i) { var l = lote(i); return { x: l.x + (l.x < 12 ? 2 : 1), y: l.y + 2 }; }
+  function dentro(id) { return 'casa-lugar-' + String(id).replace(/^lugar-/, ''); }
+  var CASA = (R._predios = R._predios || {}).casa = R._predios.casa || {};
+  CASA.dentroDoLugar = dentro;
 
   /* ---------- o chão: grama com os caminhos de pedrinhas (a avenida e as 3 ruas entre as fileiras) ---------- */
   var PEDRAS = ['#e2d4c0', '#d6c4ac', '#ecdfcb'];
@@ -116,20 +125,29 @@
     nome: 'Vila dos Lugares Famosos',
     pacote: 'interior-casa',
     fundo: 'vila',
-    // os lugares comprados, em pé no lote de cada um (derivado da compra; refeito ao entrar e depois de comprar)
+    // os lugares comprados, em pé no lote de cada um, com o capacho na porta (derivado da compra; refeito ao entrar e
+    // depois de comprar)
     objetosExtras: function () {
-      return lugares().map(function (m, i) {
-        var b = I.OBJETOS[m.objeto], l = lote(i);
-        if (!b || !comprado(m.id)) return null;
+      var r = [];
+      lugares().forEach(function (m, i) {
+        var b = I.OBJETOS[m.objeto], l = lote(i), p = porta(i);
+        if (!b || !comprado(m.id)) return;
         var w = b.w * 2, h = b.h * 2;
-        return { tipo: 'casa-lugares-' + m.id, x: l.x + Math.floor((4 - w) / 2), y: l.y + 2 - h, nome: m.nome + (m.pais ? ' (' + m.pais + ')' : ''),
-          acao: { tipo: 'lugaresVer', lugar: m.id } };
-      }).filter(Boolean);
+        r.push({ tipo: 'casa-lugares-' + m.id, x: l.x + Math.floor((4 - w) / 2), y: l.y + 2 - h, nome: m.nome + (m.pais ? ' (' + m.pais + ')' : ''),
+          acao: { tipo: 'lugaresVer', lugar: m.id } }, { tipo: 'vila-capacho', x: p.x, y: p.y });
+      });
+      return r;
     },
     tamanho: { w: 30, h: 23 },
     spawn: { x: 14, y: 20 },
-    // volta para a Garagem pelo arco de baixo; quem chega da Garagem aparece logo acima
-    escadas: [{ x: 14, y: 21, para: 'casa-garagem', sentido: 'portal', seta: 'desce', chegar: { x: 0, y: -1 }, olhar: { x: 0, y: -1 } }],
+    // volta para a Garagem pelo arco de baixo; quem chega da Garagem aparece logo acima. Depois, a porta de cada lote
+    // (aberta só com o lugar comprado: interiores.md §3), pareada com a saída de dentro; quem sai chega logo abaixo
+    escadas: [{ x: 14, y: 21, para: 'casa-garagem', sentido: 'portal', seta: 'desce', chegar: { x: 0, y: -1 }, olhar: { x: 0, y: -1 } }]
+      .concat(L.map(function (m, i) {
+        var p = porta(i);
+        return { x: p.x, y: p.y, para: dentro(m.id), sentido: 'portal', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: -1 },
+          aberta: function () { return comprado(m.id); } };
+      })),
     comodos: [{ id: 'lugares', nome: 'Vila dos Lugares Famosos', placa: 'Lugares Famosos', rect: { x: 1, y: 1, w: 28, h: 21 },
       piso: 'lugares-grama', parede: 'vila-colinas' }],
     portas: [],
@@ -141,10 +159,13 @@
   });
 
   /* ---------- tocar num lote ou num lugar; refazer ao entrar e depois de comprar ---------- */
+  // comprado: entra nele (a mesma chegada da porta do lote, ao lado da saída de dentro); senão, o aviso de onde comprar
   function ver(acao) {
-    var m = R.movelCasa && R.movelCasa(acao && acao.lugar), UI = R.UI;
-    if (!m || !UI || !UI.avisoItem) return Promise.resolve();
+    var m = R.movelCasa && R.movelCasa(acao && acao.lugar), UI = R.UI, II = R.Interiores, Ce = R.Cena;
+    if (!m) return Promise.resolve();
     var tem = comprado(m.id);
+    if (tem && Ce && Ce.irPara && II && II.def(dentro(m.id))) return Ce.irPara(dentro(m.id), null, { x: 0, y: -1 }, 'casa-lugares');
+    if (!UI || !UI.avisoItem) return Promise.resolve();
     UI.avisoItem({ icone: '🗽', texto: tem ? m.nome + (m.pais ? ', ' + m.pais : '') + '!' : m.nome + ': compre no Mercado da Garagem!' });
     return Promise.resolve();
   }

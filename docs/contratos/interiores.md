@@ -69,7 +69,10 @@ Reino.registrarInterior({
   escadas: [{ x, y, para: 'torre-1', chegar: { x: 0, y: 1 }, olhar: { x: 0, y: 1 }, sentido: 'sobe'|'desce' }],
                                       // 'sobe' = arco na parede, 'desce' = vão no chão; pareadas (abaixo);
                                       // 'portal' = nada desenhado (o prédio põe um objeto ali: porta de loja, portal
-                                      // mágico), com a seta de `seta: 'sobe'|'desce'|false` (padrão 'sobe')
+                                      // mágico), com a seta de `seta: 'sobe'|'desce'|false` (padrão 'sobe');
+                                      // `aberta?(P) → bool`: false (ou erro) = fechada, não leva nem mostra a seta
+                                      // (II.escadaAberta; a porta do lote só com o lugar comprado, casa.md §2). O
+                                      // par, a chegada e o validador são os de sempre (ela continua andável)
   comodos: [{
     id: 'galeria1', nome: 'Cartas e Lembranças',
     placa: 'Sala 1 • Cartas e Lembranças',   // placa com a fonte pixel na parede do fundo; aceita {nome}, {a|b} e

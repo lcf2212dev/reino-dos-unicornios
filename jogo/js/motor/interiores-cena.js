@@ -259,7 +259,7 @@
         }
         if (def.saida) setaSaida(bctx, def.saida, t, animar);
         var esc = def.escadas || [];
-        for (var k = 0; k < esc.length; k++) setaEscada(bctx, esc[k], t, animar);
+        for (var k = 0; k < esc.length; k++) if (II.escadaAberta(esc[k])) setaEscada(bctx, esc[k], t, animar);   // fechada: sem seta
       },
       // antes dos personagens: nada (as placas vão por cima, em desenharSobre)
       desenharTela: function () {},
