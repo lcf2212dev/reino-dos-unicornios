@@ -24,8 +24,9 @@ Reino.config = {
   casa: {
     desdeBimestre: 4,
     kits: ['estar', 'jantar', 'cozinha', 'banheiro', 'quarto-jogador', 'quarto-uni'],
-    // os cômodos, na ordem das abas do modo decorar: os dos kits e os que só têm móveis avulsos (o quarto do ET)
-    comodos: ['estar', 'jantar', 'cozinha', 'banheiro', 'quarto-jogador', 'quarto-uni', 'quarto-et'],
+    // os cômodos, na ordem das abas do modo decorar: os dos kits e os que só têm móveis avulsos (o quarto do ET e a
+    // Garagem, das miniaturas do Mercado de Lugares Famosos)
+    comodos: ['estar', 'jantar', 'cozinha', 'banheiro', 'quarto-jogador', 'quarto-uni', 'quarto-et', 'garagem'],
     passoGirar: ['baixo', 'esq', 'cima', 'dir'],
     // a cada sala feita de uma matéria que conta, a tela sorteia este tanto de móveis avulsos (casa.md §12) e ela escolhe 1
     moveisOpcoes: 5,

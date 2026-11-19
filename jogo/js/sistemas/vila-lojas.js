@@ -1,14 +1,18 @@
-/* Vila Arco-Íris: as regras das 4 lojas e a pergunta antes da conversa com o lojista (docs/contratos/vila.md §4, §5).
+/* Vila Arco-Íris: as regras das 4 lojas e a pergunta antes da conversa com o lojista (docs/contratos/vila.md §4, §5),
+   mais o Mercado de Lugares Famosos, o balcão da Garagem da casa (casa.md §2).
    Reino.VilaLojas:
-     LOJAS                       { casa|armas|cabecas|armaduras: { id, nome, familias, icone } }
-     aVenda(loja)                [{ id, def, preco }]: casa = os móveis `loja: true` (config.vila.precoDecor);
-                                 as outras = as peças do catálogo com aquele `loja` (def.preco)
+     LOJAS                       { casa|armas|cabecas|armaduras|lugares: { id, nome, familias, icone, moveis?, varios? } }
+                                 (varios: como a tela chama várias de uma vez; sem ele, "peças")
+     aVenda(loja)                [{ id, def, preco }]: loja de móveis (`moveis: true`: casa, lugares) = os móveis da casa
+                                 daquela loja (`loja: true` é a Casa Bonita; `loja: '<id>'` as outras), pelo `preco` do
+                                 móvel (sem ele, config.vila.precoDecor); as outras = as peças do catálogo com aquele
+                                 `loja` (def.preco)
      compraveis(loja)            [{ id, def, uids, preco }]: as peças dela das famílias da loja (mochila e baú, nunca a
-                                 vestida), por id; casa: nada
+                                 vestida), por id; loja de móveis: nada
      precoVenda(def)             floor(preco × vendaFracao) (mínimo 1); sem preço (drop): vendaDrop[raridade]
      total(loja, itens)          a soma da compra de [{ id, qtd }]
      totalVenda(loja, uids)      a soma da venda
-     comprar(loja, itens)        tudo ou nada: confere o saldo, gasta e dá as peças (casa: CasaMoveis.guardar na chave
+     comprar(loja, itens)        tudo ou nada: confere o saldo, gasta e dá as peças (móveis: CasaMoveis.guardar na chave
                                  'loja:<id>:<n>', n = a próxima livre; peças: Itens.ganhar) → { ok, total, motivo?, falta? }
      vender(loja, uids)          tudo ou nada: Itens.jogarFora + P.ganharEstrelas → { ok, total, motivo? }
      perguntas() / pergunta()    as perguntas do bimestre config.vila.bimestre (filtros do Bosque); sorteio 'vila:pergunta'
@@ -17,10 +21,12 @@
 (function () {
   var R = window.Reino, U = R.util;
   var LOJAS = {
-    casa: { id: 'casa', nome: 'Casa Bonita', familias: [], icone: '🏠' },
+    casa: { id: 'casa', nome: 'Casa Bonita', familias: [], icone: '🏠', moveis: true, varios: 'enfeites' },
     armas: { id: 'armas', nome: 'Forja Brilhante', familias: ['espada'], icone: 'item:espada-madeira' },
     cabecas: { id: 'cabecas', nome: 'Elmos e Chapéus', familias: ['capacete', 'chapeu'], icone: 'item:chapeu-flor' },
     armaduras: { id: 'armaduras', nome: 'Armaduras e Botas', familias: ['armadura', 'botas'], icone: 'item:armadura-colete' },
+    // o balcão da Garagem da casa (interiores/casa/garagem.js): as miniaturas de lugares famosos, móveis da casa
+    lugares: { id: 'lugares', nome: 'Mercado de Lugares Famosos', familias: [], icone: '🗽', moveis: true, varios: 'miniaturas' },
   };
   var ONDE_VENDE = { mochila: 1, bau: 1 };
 
@@ -30,12 +36,15 @@
   function max() { return cfg().maxPorItem || 10; }
 
   /* ---------- o que cada loja vende e compra ---------- */
+  // a loja de um móvel da casa: `loja: true` (os enfeites de antes) é a Casa Bonita; senão o id da loja (ou null)
+  function lojaDoMovel(m) { return m.loja === true ? 'casa' : typeof m.loja === 'string' ? m.loja : null; }
+  function precoMovel(m) { return typeof m.preco === 'number' && m.preco > 0 ? m.preco : cfg().precoDecor; }
   function aVenda(id) {
     var l = loja(id);
     if (!l) return [];
-    if (id === 'casa') {
-      return (R.moveisCasa || []).filter(function (m) { return m.loja; })
-        .map(function (m) { return { id: m.id, def: m, preco: cfg().precoDecor }; });
+    if (l.moveis) {
+      return (R.moveisCasa || []).filter(function (m) { return lojaDoMovel(m) === id; })
+        .map(function (m) { return { id: m.id, def: m, preco: precoMovel(m) }; });
     }
     var C = R.ItensCatalogo;
     return (C ? C.todos() : []).filter(function (d) { return d.loja === id && d.preco > 0; })
@@ -98,7 +107,7 @@
   }
 
   /* ---------- comprar e vender ---------- */
-  // a próxima chave livre 'loja:<id>:<n>' da casa
+  // a próxima chave livre 'loja:<id>:<n>' da casa (a mesma para as lojas de móveis: o id do móvel não se repete)
   function chaveLivre(movelId) {
     var e = P().estado(), c = e && e.casaMoveis && typeof e.casaMoveis === 'object' ? e.casaMoveis : {}, n = 1;
     while (Object.prototype.hasOwnProperty.call(c, 'loja:' + movelId + ':' + n)) n++;
@@ -113,16 +122,16 @@
     if (!Pr.estado()) return { ok: false, motivo: 'sem-save', total: 0 };
     var l = conferirCompra(id, itens);
     if (!l) return { ok: false, motivo: 'itens', total: 0 };
-    var t = l.reduce(function (s, x) { return s + x.oferta.preco * x.qtd; }, 0);
+    var t = l.reduce(function (s, x) { return s + x.oferta.preco * x.qtd; }, 0), moveis = loja(id).moveis;
     var saldo = Pr.estrelas();
     if (saldo < t) return { ok: false, motivo: 'saldo', total: t, falta: t - saldo };
-    if (id === 'casa' && !(R.CasaMoveis && R.CasaMoveis.guardar)) return { ok: false, motivo: 'itens', total: t };
-    if (id !== 'casa' && !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', total: t };
+    if (moveis && !(R.CasaMoveis && R.CasaMoveis.guardar)) return { ok: false, motivo: 'itens', total: t };
+    if (!moveis && !(R.Itens && R.Itens.ganhar)) return { ok: false, motivo: 'itens', total: t };
     if (!Pr.gastarEstrelas(t)) return { ok: false, motivo: 'saldo', total: t, falta: t - Pr.estrelas() };
     var ganhos = [];
     l.forEach(function (x) {
       for (var k = 0; k < x.qtd; k++) {
-        if (id === 'casa') {
+        if (moveis) {
           var chave = chaveLivre(x.oferta.id);
           R.CasaMoveis.guardar(chave, x.oferta.id);
           ganhos.push({ id: x.oferta.id, chave: chave });

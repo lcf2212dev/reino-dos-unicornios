@@ -7,12 +7,13 @@
    tem é ignorada; duas peças no mesmo lugar (dois aparelhos): a mais nova fica, a outra conta como guardada.
    Peça (uid) = '<kit>.<item>.<n>', n de 1 a qtd; móvel avulso (§12, sistemas/casa-moveis.js) = 'movel.<id>.<n>'.
    Abas do modo decorar = os cômodos (config.casa.comodos) com kit ou móvel avulso. A ação 'casaDecorar' é a da
-   caixa de mudança.
+   caixa de mudança. Os andares decoráveis (Casa.ANDARES: térreo, 2º andar e a Garagem) são uma lista só, que
+   sistemas/casa-usos.js e ui/casa-decorar*.js leem daqui.
    node: true: nada de DOM, canvas nem Progresso no carregamento (só o registrarCampo). */
 (function () {
   var R = window.Reino, P = R.Progresso, I = R._progresso;
   var objeto = I.objeto, numeroOu = I.numeroOu;
-  var ANDARES = ['casa', 'casa-2'], MOVEL = 'movel';
+  var ANDARES = Object.freeze(['casa', 'casa-2', 'casa-garagem']), MOVEL = 'movel';
 
   /* ---------- os 3 campos do save ---------- */
   P.registrarCampo('casaBau', {
@@ -364,6 +365,7 @@
 
   R.Casa = {
     FALAS: FALAS,
+    ANDARES: ANDARES,
     ganhou: function () { return !!campo('casaBau').em; },
     abrirBau: function () {
       if (R.Casa.ganhou()) return false;
@@ -383,7 +385,7 @@
     depurar: function () {
       if (!P.estado()) return null;
       return { ganhou: R.Casa.ganhou(), kits: kitsGanhos(), livres: kitsLivres(), pendentes: kitsPendentes(),
-        casa: objetosDoAndar('casa').length, casa2: objetosDoAndar('casa-2').length };
+        casa: objetosDoAndar('casa').length, casa2: objetosDoAndar('casa-2').length, garagem: objetosDoAndar('casa-garagem').length };
     },
   });
 })();

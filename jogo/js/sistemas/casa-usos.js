@@ -14,7 +14,9 @@
    node: true: nada de DOM, Progresso nem Cena no carregamento. */
 (function () {
   var R = window.Reino;
-  var TABELA = {}, ESTADO = {}, TIMERS = {}, ANDARES = ['casa', 'casa-2'];
+  var TABELA = {}, ESTADO = {}, TIMERS = {};
+  // os andares da casa: a lista única de sistemas/casa.js (Casa.ANDARES), lida na hora
+  function andares() { return (R.Casa && R.Casa.ANDARES) || []; }
   var USOS = ['alternar', 'abrir', 'efeito', 'sentar', 'deitar', 'banho', 'chuveiro', 'cozinhar', 'comer', 'beber', 'enfeite'];
   var DURACAO = { sentar: 'sentarMs', deitar: 'deitarMs', banho: 'banhoMs', chuveiro: 'chuveiroMs', cozinhar: 'cozinharMs' };
   var I = R._casaUsos = { st: null };
@@ -68,9 +70,10 @@
   }
   // a peça (com uid) nos andares da casa e o andar dela
   function acharPeca(uid) {
-    for (var i = 0; uid && R.Casa && i < ANDARES.length; i++) {
-      var o = R.Casa.objetosDoAndar(ANDARES[i]).find(function (x) { return x.uid === uid; });
-      if (o) return { o: o, andar: ANDARES[i] };
+    var A = andares();
+    for (var i = 0; uid && R.Casa && i < A.length; i++) {
+      var o = R.Casa.objetosDoAndar(A[i]).find(function (x) { return x.uid === uid; });
+      if (o) return { o: o, andar: A[i] };
     }
     return null;
   }
@@ -112,7 +115,7 @@
       delete TIMERS[uid];
       var a = acharPeca(uid);
       ligar(uid, false, a ? a.andar : null);
-      if (!a && R.Interiores && R.Interiores.refazer) ANDARES.forEach(function (n) { R.Interiores.refazer(n); });
+      if (!a && R.Interiores && R.Interiores.refazer) andares().forEach(function (n) { R.Interiores.refazer(n); });
     }, cfg().efeitoMs);
     return fim({ uso: 'efeito', ligado: true });
   }

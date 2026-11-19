@@ -1,7 +1,8 @@
 /* Vila Arco-Íris: a tela de uma loja, comprar e vender vários de uma vez (docs/contratos/vila.md §4).
    UI.telaVilaLoja(lojaId) → Promise (resolve ao fechar). As regras e o save são do Reino.VilaLojas (sistemas/vila-lojas.js).
-   Topo: o saldo de estrelas e as abas Comprar/Vender (a Casa Bonita só vende: sem abas). Corpo: a grade de cartões
-   (ícone da peça ou a capa do enfeite, nome, raridade, atributos e preço); tocar põe um no carrinho. Carrinho ao lado
+   Topo: o saldo de estrelas e as abas Comprar/Vender (as lojas de móveis da casa, `moveis: true` — a Casa Bonita e o
+   Mercado de Lugares Famosos da Garagem — só vendem: sem abas). Corpo: a grade de cartões (ícone da peça ou a capa do
+   móvel, nome, raridade ou cômodo, atributos e preço); tocar põe um no carrinho. Carrinho ao lado
    (embaixo, no celular), com − e + por item (até config.vila.maxPorItem; na venda, até as que ela tem, com "Vender
    todas"). Rodapé: o total e o botão "Comprar (N ⭐)"/"Vender (+N ⭐)", que pergunta antes (UI.confirmar com gasta);
    sem saldo, "Faltam N estrelas!" e o botão apagado. Depois: som, brilho leve, HUD e a lista de novo.
@@ -34,9 +35,9 @@
     var C = Reino.ItensCatalogo;
     return def && def.raridade && C && C.NOMES_RARIDADE ? C.NOMES_RARIDADE[def.raridade] : '';
   }
-  // o desenho de uma oferta: o ícone da peça ou a capa do enfeite (menor no carrinho)
-  function desenho(loja, def, px) {
-    if (loja === 'casa') {
+  // o desenho de uma oferta: o ícone da peça ou a capa do móvel (menor no carrinho)
+  function desenho(moveis, def, px) {
+    if (moveis) {
       var capa = UI.capaCasa ? UI.capaCasa(def.objeto) : el('span');
       capa.classList.add('vila-capa');
       if (px) capa.style.width = px + 'px';
@@ -58,7 +59,7 @@
     return new Promise(function (resolver) {
       var J = window.Jogador;
       if (J && J.parar) J.parar();
-      var soCompra = lojaId === 'casa';
+      var moveis = !!L.moveis, soCompra = moveis;
       var aba = 'comprar', carrinho = { comprar: {}, vender: {} }, ordem = { comprar: [], vender: [] }, ocupado = false;
       var pn = UI.painel('vila-loja', L.nome, { icone: L.icone, aoFechar: function () { fim(); } });
       pn.tela.classList.add('tela-vila-loja-' + lojaId);
@@ -133,16 +134,16 @@
 
       function cartao(o) {
         var d = o.def, noCarrinho = carrinho[aba][o.id] || 0, venda = aba === 'vender';
-        var linhas = lojaId === 'casa'
+        var linhas = moveis
           ? [Reino.Casa && Reino.Casa.nomeComodo ? Reino.Casa.nomeComodo(d.comodo) : '']
           : atributos(d);
         var preco = venda ? '+' + o.preco + ' ⭐' : '⭐ ' + o.preco;
         var rotulo = d.nome + ', ' + (venda ? 'a loja paga ' : 'custa ') + estrelas(o.preco);
-        var b = el('button.vila-cartao' + (lojaId === 'casa' ? '' : rar(d)) + (noCarrinho ? '.no-carrinho' : ''),
+        var b = el('button.vila-cartao' + (moveis ? '' : rar(d)) + (noCarrinho ? '.no-carrinho' : ''),
           { type: 'button', 'data-id': o.id, 'data-foco': 'cartao:' + o.id, 'aria-label': rotulo, title: d.nome },
-          el('span.vila-cartao-desenho', desenho(lojaId, d)),
+          el('span.vila-cartao-desenho', desenho(moveis, d)),
           el('b.vila-cartao-nome', U.colado(d.nome)),
-          lojaId === 'casa' ? null : el('span.vila-cartao-rar', nomeRaridade(d)),
+          moveis ? null : el('span.vila-cartao-rar', nomeRaridade(d)),
           el('span.vila-cartao-atrib', linhas.filter(Boolean).map(function (t) { return el('span', t); })),
           venda ? el('span.vila-cartao-tem', 'Você tem ' + o.uids.length) : null,
           el('span.vila-cartao-preco', preco),
@@ -160,7 +161,7 @@
           ? el('button.btn-secundario.vila-todas', { type: 'button', 'data-foco': 'todas:' + o.id }, 'Vender todas') : null;
         if (tudo) tudo.addEventListener('click', function () { todas(o.id); });
         return el('div.vila-linha', { 'data-id': o.id },
-          el('span.vila-linha-desenho', desenho(lojaId, o.def, 24)),
+          el('span.vila-linha-desenho', desenho(moveis, o.def, 24)),
           el('span.vila-linha-nome', U.colado(o.def.nome)),
           el('span.vila-linha-qtd', menos, el('b', String(x.qtd)), mais),
           el('span.vila-linha-preco', (venda ? '+' : '') + o.preco * x.qtd + ' ⭐'),
@@ -202,7 +203,7 @@
         var qtd = l.reduce(function (s, x) { return s + x.qtd; }, 0);
         if (!venda && t > P().estrelas()) { Reino.Som.tocar('toque'); repintar(); return; }
         Reino.Som.tocar('toque');
-        var oque = qtd === 1 ? U.colado(l[0].o.def.nome) : qtd + (lojaId === 'casa' ? ' enfeites' : ' peças');
+        var oque = qtd === 1 ? U.colado(l[0].o.def.nome) : qtd + ' ' + (L.varios || 'peças');
         var pergunta = venda ? 'Vender ' + oque + ' por ' + estrelas(t) + '?' : 'Comprar ' + oque + ' por ' + estrelas(t) + '?';
         ocupado = true;
         UI.confirmar(pergunta, venda ? 'Sim, vender! 🪙' : 'Sim, quero! ✨', 'Agora não', true).then(function (sim) {
@@ -225,7 +226,7 @@
           Reino.Som.tocar('estrela');
           var bau = !venda && r.ganhos && r.ganhos.some(function (g) { return g.onde === 'bau'; });
           recado(venda ? 'Vendido! +' + r.total + ' ⭐'
-            : lojaId === 'casa' ? 'Comprado! ✨ Já está guardado para a sua casa.'
+            : moveis ? 'Comprado! ✨ Já está guardado para a sua casa.'
             : bau ? 'Comprado! ✨ A mochila encheu: o resto foi para o baú.' : 'Comprado! ✨ Está na sua mochila.');
           if (UI.atualizarHUD) UI.atualizarHUD();
           repintar();

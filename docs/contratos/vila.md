@@ -16,7 +16,7 @@ itens de uma vez**.
 | sair para outro tile do mapa | `Cena.sair(chegada)` (`cena-e-motor.md`) |
 | 100 peças de equipamento das lojas | `js/conteudo/itens/loja-moldes.js` (gerador de moldes/ícones), `loja-armas.js`, `loja-cabecas.js`, `loja-armaduras.js` |
 | 50 enfeites da casa | `js/conteudo/casa/moveis-loja.js` (dados), desenhos em `js/interiores/casa/moveis-loja-a|b|c.js` |
-| regras das lojas | `js/sistemas/vila-lojas.js` (`Reino.VilaLojas`, módulo `'vila-lojas'`) |
+| regras das lojas | `js/sistemas/vila-lojas.js` (`Reino.VilaLojas`, módulo `'vila-lojas'`); também o Mercado de Lugares Famosos da Garagem da casa (`casa.md` §2) |
 | telas | `js/ui/vila-pergunta.js` (`UI.perguntaVila`), `js/ui/vila-loja.js` (`UI.telaVilaLoja`), `css/ui-vila.css` |
 | a Vila e as lojas | `js/interiores/vila/` (`falas.js` com os 4 lojistas, `fundo.js`, `objetos*.js`, `vila.js`, `lojas.js`) |
 | o portal no Bosque | `js/interiores/bosque/portal-vila.js` + a escada no fim de `bosque.js` |
@@ -44,7 +44,8 @@ itens de uma vez**.
     `chegar: { x: 0, y: 1 }` ↔ saída da loja em (8, 10) `seta: 'desce'`, `chegar: { x: 0, y: -1 }`.
 - Lojistas (`Reino.registrarPersonagem`, com voz): `lavanda` "Dona Lavanda" (casa), `bigorna` "Seu Bigorna" (armas),
   `plumita` "Madame Plumita" (cabecas), `ferrolho` "Capitão Ferrolho" (armaduras). Ação `{ tipo: 'vilaLoja', loja }`.
-- Lojas (`loja`): `casa`, `armas`, `cabecas`, `armaduras`.
+- Lojas (`loja`): `casa`, `armas`, `cabecas`, `armaduras` e `lugares` (o Mercado de Lugares Famosos, no balcão da Garagem
+  da casa, fora da Vila: sem lojista e sem a pergunta antes).
 - Peças: `loja: 'armas'|'cabecas'|'armaduras'`, `preco` (estrelas), `arenas: []` (não caem de monstro). Enfeites:
   `Reino.registrarMovelCasa({ …, loja: true })`, objeto `casa-movel-<id>`.
 - Casa Mal-Assombrada: 6 jaulas `vila-assombrada-jaula` (2 × 2, sólidas), uma por monstro de matéria
@@ -62,9 +63,10 @@ itens de uma vez**.
 `maxPorItem`, `chegadaVila`, `chegadaCidade`, `teleportadoraMapa`.
 
 ## 4. Lojas
-- Casa Bonita: só compra; o enfeite vira peça da casa com `CasaMoveis.guardar('loja:<id>:<n>', id)` (n = a próxima
-  livre). Os móveis `loja: true` ficam fora do sorteio das salas e dos presentes (`casa-moveis.js:sorteaveis`). Sem casa,
-  a peça espera. Nada novo no save.
+- Lojas de móveis (`moveis: true`: a Casa Bonita e o Mercado de Lugares Famosos): só compra; o móvel vira peça da casa
+  com `CasaMoveis.guardar('loja:<id>:<n>', id)` (n = a próxima livre). A Casa Bonita vende os móveis `loja: true`
+  (`config.vila.precoDecor`); o Mercado, os `loja: 'lugares'` pelo `preco` de cada um. Os móveis de loja ficam fora do
+  sorteio das salas e dos presentes (`casa-moveis.js:sorteaveis`). Sem casa, a peça espera. Nada novo no save.
 - As outras três vendem as 40 (ou 20) peças delas e compram de volta qualquer peça das famílias delas (armas: espadas;
   cabecas: capacete e chapéu; armaduras: armadura e botas) da mochila ou do baú, nunca a vestida. Preço de venda:
   `floor(preco × vendaFracao)` (mínimo 1) ou `vendaDrop[raridade]` para as que não têm preço.

@@ -17,7 +17,8 @@ virado para onde quiser.
 | desenho nas 4 direções | `Reino.CasaArte.virado` em `js/interiores/casa/virar.js` |
 | dados dos kits | `js/conteudo/casa/kits-a.js` (estar, jantar, cozinha), `kits-b.js` (banheiro, quarto-jogador, quarto-uni) |
 | desenho dos móveis | `js/interiores/casa/moveis-<kit>.js` |
-| o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `guardados.js`, `casa.js`, `andar2.js`, `fora.js`, `lugar.js`) |
+| o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `guardados.js`, `casa.js`, `andar2.js`, `garagem-objetos.js`, `garagem.js`, `fora.js`, `lugar.js`) |
+| as miniaturas de lugares famosos (o Mercado da Garagem) | `js/conteudo/casa/lugares.js` (dados, `loja: 'lugares'`, `preco`), desenhos em `js/interiores/casa/lugares-a|b.js`; a loja: `vila.md` §4 |
 | save, regras, ação da caixa | `js/sistemas/casa.js` (`Reino.Casa`) |
 | motor | `js/motor/interiores-cena.js` (`refazer`, `objetosExtras`), `interiores-placas.js` (`{nome}`, `{uni}`), validador `jogo/ferramentas/validar/validar-interiores.js` (`decoravel`) |
 | telas | `js/ui/bau-casa.js`, `ui/casa-kits.js`, `ui/casa-falas.js` (as falas das duas, `node: true`), `ui/casa-decorar.js` e `ui/casa-decorar-fantasma.js` (+ CSS `ui-bau-casa.css`, `ui-casa-kits.css`, `ui-casa-decorar.css`) |
@@ -25,10 +26,16 @@ virado para onde quiser.
 
 ## 2. Ids
 - Lugar `casa` ("Minha Casa"), `rect {x:46,y:33,w:6,h:5}`, porta em (49,37), sprite `casa`.
-- Interiores: `casa` (térreo, `entrada: true`, `pacote: 'interior-casa'`) e `casa-2` (em cima, mesmo pacote).
+- Interiores: `casa` (térreo, `entrada: true`, `pacote: 'interior-casa'`), `casa-2` (em cima, mesmo pacote) e
+  `casa-garagem` "Garagem" (pedido de 19/11; mesmo pacote, sem saída para o mapa: a casa é a mesma). Os três são
+  decoráveis: `Reino.Casa.ANDARES` é a lista única (o modo decorar e os usos leem dela).
+- A Garagem: porta de baixo da Cozinha (escada `sentido: 'portal'`, `seta: 'desce'`, em (5, 9) do térreo) ↔ porta do
+  fundo da Garagem (3, 3), chegando em (3, 4). Um cômodo `garagem` (piso `pedra`, parede `tijolo`) com o balcão do
+  Mercado de Lugares Famosos (`casa-garagem-balcao`, ação `{ tipo: 'vilaLoja', loja: 'lugares' }`), a bancada, o
+  painel de ferramentas, o portão, o carro, a bicicleta, os pneus e a prateleira; o resto do chão é livre para os móveis.
 - Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador`, `quarto-uni` e
-  `quarto-et` (o Quarto do ET, do amigo da viagem de foguete: só móveis avulsos, sem kit). Ordem das abas:
-  `config.casa.comodos`.
+  `quarto-et` (o Quarto do ET, do amigo da viagem de foguete: só móveis avulsos, sem kit); em `casa-garagem`, a
+  `garagem` (só móveis avulsos, sem kit). Ordem das abas: `config.casa.comodos`.
 - Kits (ordem de `config.casa.kits`): `estar`, `jantar`, `cozinha`, `banheiro`, `quarto-jogador`, `quarto-uni`.
 - Objetos: `casa-<nome>` para os do prédio (ex.: `casa-caixa`, a caixa de mudança); `casa-<kit>-<item>` para os móveis.
 - Baú de Guardados (`casa-guardados`, 2×1, ação `guardados`): fixo na Sala de Estar em (26,3), ao lado da caixa; guarda os
@@ -119,7 +126,7 @@ Três campos novos (`Reino.Progresso.registrarCampo`, `save-e-mescla.md` §11), 
 | `comodoEm(andar, x, y)` | o cômodo do tile, ou `null` |
 
 ## 8. Onde um móvel pode ficar
-1. A pegada inteira dentro de UM cômodo da casa (`casa` ou `casa-2`). Móvel de chão: fora das 2 fileiras da parede.
+1. A pegada inteira dentro de UM cômodo da casa (um dos `Casa.ANDARES`: `casa`, `casa-2` ou `casa-garagem`). Móvel de chão: fora das 2 fileiras da parede.
    Móvel de parede: só nas 2 fileiras da parede do fundo.
 2. Sem sobrepor outro móvel, objeto fixo, porta, escada, tapete de saída ou `spawn`. Tapete (`plano`) pode ficar
    embaixo de móvel, e um móvel pode ficar em cima de um tapete.

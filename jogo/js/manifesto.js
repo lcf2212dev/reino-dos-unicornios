@@ -787,6 +787,8 @@
       { js: 'js/interiores/casa/guardados.js', grupo: 'interiores', node: true }, // o Baú de Guardados da casa e a ação 'guardados' (itens.md §7)
       { js: 'js/interiores/casa/casa.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/garagem-objetos.js', grupo: 'interiores', node: true }, // a Garagem da casa (pedido de 19/11): os objetos e o interior, com o balcão do Mercado de Lugares Famosos
+      { js: 'js/interiores/casa/garagem.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/icones.js', grupo: 'interiores', node: true }, // Bosque dos Fantasmas (bosque.md): ícones, o interior de céu aberto, o portal no mapa e o lugar (o último prédio)
