@@ -127,6 +127,7 @@
     if (p.length !== 3) return null;
     if (p[0] === MOVEL) {   // móvel avulso: tantas peças quantas salas o escolheram
       item = R.movelCasa && R.movelCasa(p[1]);
+      if (item && !daCasa(item)) return null;   // os lugares famosos ficam na Vila dos Lugares (casa/vila-lugares.js)
       max = item && R.CasaMoveis ? R.CasaMoveis.qtd(item.id) : 0;
     } else {
       if (kitsGanhos().indexOf(p[0]) < 0) return null;
@@ -269,8 +270,11 @@
   // abas do modo decorar: os cômodos (na ordem de config.casa.comodos) com o kit ganho ou algum móvel avulso
   function moveisDe(comodo) {
     var CM = R.CasaMoveis;
-    return (R.moveisCasa || []).filter(function (m) { return (!comodo || m.comodo === comodo) && CM && CM.qtd(m.id) > 0; });
+    return (R.moveisCasa || []).filter(function (m) { return daCasa(m) && (!comodo || m.comodo === comodo) && CM && CM.qtd(m.id) > 0; });
   }
+  // os móveis que vão para dentro da casa: todos, menos os lugares famosos do Mercado (`loja: 'lugares'`), que ficam em
+  // pé na Vila dos Lugares Famosos, cada um no seu lote (pedido de 19/11)
+  function daCasa(m) { return !!m && m.loja !== 'lugares'; }
   function comodos() { return cfg().comodos || cfg().kits; }
   function abas() {
     var ganhos = kitsGanhos();

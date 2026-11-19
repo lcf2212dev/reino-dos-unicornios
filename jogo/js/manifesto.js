@@ -792,6 +792,7 @@
       { js: 'js/interiores/casa/andar2.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/garagem-objetos.js', grupo: 'interiores', node: true }, // a Garagem da casa (pedido de 19/11): os objetos e o interior, com o balcão do Mercado de Lugares Famosos
       { js: 'js/interiores/casa/garagem.js', grupo: 'interiores', node: true },
+      { js: 'js/interiores/casa/vila-lugares.js', grupo: 'interiores', node: true }, // a Vila dos Lugares Famosos, pelo portão da Garagem: os lugares comprados no Mercado, um por lote
       { js: 'js/interiores/casa/fora.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/casa/lugar.js', grupo: 'interiores', node: true },
       { js: 'js/interiores/bosque/icones.js', grupo: 'interiores', node: true }, // Bosque dos Fantasmas (bosque.md): ícones, o interior de céu aberto, o portal no mapa e o lugar (o último prédio)

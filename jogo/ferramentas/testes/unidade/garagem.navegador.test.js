@@ -1,7 +1,8 @@
 // A Garagem da casa e o Mercado de Lugares Famosos (pedido de 19/11; docs/contratos/casa.md §2, vila.md §4): a porta de
 // baixo da Cozinha (térreo) leva à Garagem (interior 'casa-garagem') e a porta do fundo da Garagem volta para a
-// Cozinha; tocar no balcão abre a loja "Mercado de Lugares Famosos" (só compra, miniaturas com o preço de cada uma);
-// uma miniatura comprada vira móvel da casa e pode ficar na Garagem (Casa.colocar; regras do casa.md §8).
+// Cozinha; tocar no balcão abre a loja "Mercado de Lugares Famosos" (só compra, com o preço de cada lugar); o portão
+// leva à Vila dos Lugares Famosos ('casa-lugares'), onde o lugar comprado aparece em pé no lote dele (não vira móvel
+// da casa); a Garagem é decorável (um enfeite da Casa Bonita fica lá; regras do casa.md §8).
 // Anda de verdade (tecla de seta), no jogo congelado; servidor e banco de TESTE novos (cenario.js); save sintético.
 const { test } = require('node:test');
 const assert = require('assert');
@@ -62,10 +63,10 @@ test('garagem: porta da Cozinha e volta, o balcão abre o Mercado de Lugares Fam
     await c.js('Reino.UI.fecharTodas(); 1');
     await c.avancar(300);
 
-    // uma miniatura (ou, sem miniaturas, um enfeite sólido de chão da Casa Bonita: tapete pode ficar embaixo de objeto fixo) vira móvel da casa e fica na Garagem
+    // um enfeite sólido de chão da Casa Bonita (tapete pode ficar embaixo de objeto fixo) fica na Garagem
     const pos = await c.js(`(() => { const Ca = Reino.Casa, M = Reino.CasaMoveis;
       if (!Ca.ganhou()) Ca.abrirBau();
-      const m = Reino.moveisCasa.find((x) => x.loja === 'lugares') || Reino.moveisCasa.find((x) => x.loja === true && !x.parede && !(Reino.Interiores.OBJETOS[x.objeto] || {}).plano);
+      const m = Reino.moveisCasa.find((x) => x.loja === true && !x.parede && !(Reino.Interiores.OBJETOS[x.objeto] || {}).plano);
       M.guardar('loja:' + m.id + ':1', m.id);
       const uid = 'movel.' + m.id + '.1';
       for (let y = 4; y <= 11; y++) for (let x = 2; x <= 19; x++) {
@@ -80,10 +81,35 @@ test('garagem: porta da Cozinha e volta, o balcão abre o Mercado de Lugares Fam
     assert.strictEqual(pos.comodo, 'garagem');
     // a regra de lugar vale lá: em cima do balcão, não
     const emCima = await c.js(`(() => { const o = Reino.Interiores.def('casa-garagem').objetos.find((x) => x.acao && x.acao.loja === 'lugares');
-      const m = Reino.moveisCasa.find((x) => x.loja === 'lugares') || Reino.moveisCasa.find((x) => x.loja === true && !x.parede && !(Reino.Interiores.OBJETOS[x.objeto] || {}).plano);
+      const m = Reino.moveisCasa.find((x) => x.loja === true && !x.parede && !(Reino.Interiores.OBJETOS[x.objeto] || {}).plano);
       Reino.CasaMoveis.guardar('loja:' + m.id + ':2', m.id);
       return Reino.Casa.podeColocar('movel.' + m.id + '.2', 'casa-garagem', o.x, o.y + 1, 'baixo').ok; })()`);
     assert.strictEqual(emCima, false, 'não fica em cima do balcão');
+
+    // o portão da Garagem leva à Vila dos Lugares Famosos e o arco de baixo volta
+    const p = await c.js(`(() => { const g = Reino.Interiores.def('casa-garagem').escadas.find((e) => e.para === 'casa-lugares'),
+      v = Reino.Interiores.def('casa-lugares').escadas.find((e) => e.para === 'casa-garagem'); return { g: [g.x, g.y], v: [v.x, v.y] }; })()`);
+    await c.ir('casa-garagem');
+    onde = await pisar(p.g[0], p.g[1] + 1, 'cima');
+    assert.strictEqual(onde.cena, 'casa-lugares', 'o portão leva à Vila dos Lugares Famosos: ' + JSON.stringify(onde));
+    onde = await pisar(p.v[0], p.v[1] - 1, 'baixo');
+    assert.strictEqual(onde.cena, 'casa-garagem', 'o arco volta para a Garagem');
+
+    // comprar um lugar: ele aparece em pé no lote dele, na Vila; não vira móvel da casa
+    const lug = await c.js(`(() => { const V = Reino.VilaLojas, m = Reino.moveisCasa.find((x) => x.loja === 'lugares');
+      if (!m) return null;
+      Reino.Progresso.ganharEstrelas(m.preco);
+      const r = V.comprar('lugares', [{ id: m.id, qtd: 1 }]);
+      Reino.Interiores.refazer('casa-lugares');
+      const vila = Reino.Interiores.def('casa-lugares').objetosExtras();
+      return { ok: r.ok, id: m.id, naVila: vila.some((o) => o.tipo === 'casa-lugares-' + m.id),
+        lotes: Reino.Interiores.def('casa-lugares').objetos.filter((o) => o.tipo === 'casa-lugares-lote').length,
+        naCasa: Reino.Casa.pecas().some((x) => x.uid.indexOf('.' + m.id + '.') >= 0) }; })()`);
+    assert.ok(lug, 'há lugares famosos');
+    assert.deepStrictEqual({ ok: lug.ok, naVila: lug.naVila, naCasa: lug.naCasa }, { ok: true, naVila: true, naCasa: false });
+    assert.strictEqual(lug.lotes, 12, 'um lote por lugar');
+    await c.ir('casa-lugares');
+    await c.avancar(300);
     assert.deepStrictEqual(c.erros, []);
   } finally { await c.fechar(); }
 });

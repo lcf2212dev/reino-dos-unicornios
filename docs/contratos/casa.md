@@ -18,7 +18,7 @@ virado para onde quiser.
 | dados dos kits | `js/conteudo/casa/kits-a.js` (estar, jantar, cozinha), `kits-b.js` (banheiro, quarto-jogador, quarto-uni) |
 | desenho dos móveis | `js/interiores/casa/moveis-<kit>.js` |
 | o prédio | `js/interiores/casa/` (`falas.js`, `objetos.js`, `guardados.js`, `casa.js`, `andar2.js`, `garagem-objetos.js`, `garagem.js`, `fora.js`, `lugar.js`) |
-| as miniaturas de lugares famosos (o Mercado da Garagem) | `js/conteudo/casa/lugares.js` (dados, `loja: 'lugares'`, `preco`), desenhos em `js/interiores/casa/lugares-a|b.js`; a loja: `vila.md` §4 |
+| os lugares famosos (o Mercado da Garagem e a Vila dos Lugares Famosos) | `js/conteudo/casa/lugares.js` (dados, `loja: 'lugares'`, `preco`, `pais`), desenhos em `js/interiores/casa/lugares-a|b.js`, a vila em `js/interiores/casa/vila-lugares.js`; a loja: `vila.md` §4 |
 | save, regras, ação da caixa | `js/sistemas/casa.js` (`Reino.Casa`) |
 | motor | `js/motor/interiores-cena.js` (`refazer`, `objetosExtras`), `interiores-placas.js` (`{nome}`, `{uni}`), validador `jogo/ferramentas/validar/validar-interiores.js` (`decoravel`) |
 | telas | `js/ui/bau-casa.js`, `ui/casa-kits.js`, `ui/casa-falas.js` (as falas das duas, `node: true`), `ui/casa-decorar.js` e `ui/casa-decorar-fantasma.js` (+ CSS `ui-bau-casa.css`, `ui-casa-kits.css`, `ui-casa-decorar.css`) |
@@ -33,6 +33,13 @@ virado para onde quiser.
   fundo da Garagem (3, 3), chegando em (3, 4). Um cômodo `garagem` (piso `pedra`, parede `tijolo`) com o balcão do
   Mercado de Lugares Famosos (`casa-garagem-balcao`, ação `{ tipo: 'vilaLoja', loja: 'lugares' }`), a bancada, o
   painel de ferramentas, o portão, o carro, a bicicleta, os pneus e a prateleira; o resto do chão é livre para os móveis.
+- A Vila dos Lugares Famosos (`casa-lugares`, mesmo pacote; céu aberto com a parede `vila-colinas` e o fundo `vila`): o
+  portão da Garagem (escada `portal` em (17, 3)) ↔ o arco de baixo da vila (14, 21), chegando em (14, 20). 12 lotes
+  `casa-lugares-lote` (4 × 2), um por lugar, na ordem de `lugares.js`; o lugar comprado aparece em pé no lote
+  (`objetosExtras`, objeto `casa-lugares-<id>`: o desenho da miniatura em escala 2, inteira), derivado de
+  `CasaMoveis.qtd(id) > 0`, refeito ao entrar e depois de comprar. Os lugares NÃO são peças da casa
+  (`Casa.pecas`/abas ignoram `loja: 'lugares'`). Tocar no lote ou no lugar: o nome e o país no aviso pequeno
+  (ação `lugaresVer`, só na tela).
 - Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador`, `quarto-uni` e
   `quarto-et` (o Quarto do ET, do amigo da viagem de foguete: só móveis avulsos, sem kit); em `casa-garagem`, a
   `garagem` (só móveis avulsos, sem kit). Ordem das abas: `config.casa.comodos`.
