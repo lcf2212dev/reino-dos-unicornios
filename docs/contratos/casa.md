@@ -38,8 +38,15 @@ virado para onde quiser.
   `casa-lugares-lote` (4 × 2), um por lugar, na ordem de `lugares.js`; o lugar comprado aparece em pé no lote
   (`objetosExtras`, objeto `casa-lugares-<id>`: o desenho da miniatura em escala 2, inteira), derivado de
   `CasaMoveis.qtd(id) > 0`, refeito ao entrar e depois de comprar. Os lugares NÃO são peças da casa
-  (`Casa.pecas`/abas ignoram `loja: 'lugares'`). Tocar no lote ou no lugar: o nome e o país no aviso pequeno
-  (ação `lugaresVer`, só na tela).
+  (`Casa.pecas`/abas ignoram `loja: 'lugares'`). Tocar no lote ou no lugar (ação `lugaresVer`): comprado, entra nele;
+  senão, "compre no Mercado da Garagem!" no aviso pequeno, só na tela.
+- Por dentro dos lugares (pedido de 19/11, `casa/lugares-dentro.js`): um interior por lugar, `casa-lugar-<nome>`
+  (`lugar-torre-eiffel` → `casa-lugar-torre-eiffel`; `Reino._predios.casa.dentroDoLugar`), mesmo pacote, 16 × 12 com um
+  cômodo de 14 × 10, montado de um tema (piso, parede, paleta, objetos; os temáticos são `casa-dentro-*`). A porta de cada
+  lote é a escada `portal` logo na frente dele (escadas 1 a 12 da vila, na ordem de `lugares.js`), com `aberta`: só com o
+  lugar comprado ela leva e mostra a seta e o capacho (`interiores.md` §3). O par dela é a saída de dentro, a escada
+  `portal` (8, 10): entra-se logo acima dela e volta-se logo abaixo da porta do lote. Dois objetos falam uma curiosidade;
+  a maquete do lugar mostra o nome e o país (ação `lugarMaquete`, só na tela). Teste: `lugares-dentro.navegador.test.js`.
 - Cômodos: no térreo `estar`, `jantar`, `cozinha`, `banheiro`; em `casa-2` os quartos `quarto-jogador`, `quarto-uni` e
   `quarto-et` (o Quarto do ET, do amigo da viagem de foguete: só móveis avulsos, sem kit); em `casa-garagem`, a
   `garagem` (só móveis avulsos, sem kit). Ordem das abas: `config.casa.comodos`.

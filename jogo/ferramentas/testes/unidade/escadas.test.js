@@ -52,6 +52,14 @@ const CONGELADA = {
   'neblina:0': { para: 'bosque', x: 52, y: 32 },
   'orvalho:0': { para: 'bosque', x: 8, y: 40 },
 };
+// Vila dos Lugares Famosos (casa.md §2): a porta de cada lote (escada 1 a 12, aberta só com o lugar comprado) chega
+// logo acima da saída de dentro do lugar (8, 9); a saída de dentro volta para logo abaixo da porta do lote
+[['monte-fuji', 4, 7], ['piramides', 9, 7], ['big-ben', 18, 7], ['torre-pisa', 23, 7], ['torre-eiffel', 4, 12], ['liberdade', 9, 12],
+  ['cristo', 18, 12], ['pao-de-acucar', 23, 12], ['muralha', 4, 17], ['cataratas', 9, 17], ['taj-mahal', 18, 17], ['sao-basilio', 23, 17]]
+  .forEach(([id, x, y], i) => {
+    CONGELADA[`casa-lugares:${i + 1}`] = { para: `casa-lugar-${id}`, x: 8, y: 9 };
+    CONGELADA[`casa-lugar-${id}:0`] = { para: 'casa-lugares', x, y: y + 1 };
+  });
 TORRE.forEach((id, i) => {
   let k = 0;
   if (i < TORRE.length - 1) CONGELADA[`${id}:${k++}`] = { para: TORRE[i + 1], x: 3, y: 10 };   // sobe: à direita do vão

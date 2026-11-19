@@ -2,7 +2,7 @@
    o caminho até lá e o que acontece (falas dos objetos, ações, conversa com o NPC).
    Veio de motor/interiores.js (as funções de dentro de criarCena). Cada função recebe E, o estado
    de UMA cena (montado em interiores-cena.js): { def, g, npcs, objs, cena, pintorAtual, retratos,
-   mascaras, ... }. Registra em Reino._interiores: alvoEm, alvoPerto, quemEm, gatilhoEm.
+   mascaras, ... }. Registra em Reino._interiores: alvoEm, alvoPerto, quemEm, gatilhoEm, escadaAberta.
    Só roda quando chamado (nada de DOM no carregamento). */
 (function () {
   var R = window.Reino;
@@ -25,12 +25,17 @@
     }
     return null;
   }
+  // escada com `aberta(P)` (interiores.md §3) que diz não, ou falha: fechada (não leva, sem seta); sem ela, sempre aberta
+  function escadaAberta(e) {
+    if (!e || typeof e.aberta !== 'function') return true;
+    try { return !!e.aberta(progresso()); } catch (err) { return false; }
+  }
   function gatilhoEm(E, x, y) {
     if (E.def.saida && E.def.saida.x === x && E.def.saida.y === y) return { id: 'saida:' + E.def.id, tipo: 'saida', x: x, y: y };
     var esc = E.def.escadas || [];
     for (var i = 0; i < esc.length; i++) {
       var e = esc[i];
-      if (e.x === x && e.y === y) return { id: 'escada:' + E.def.id + ':' + i, tipo: 'escada', x: x, y: y, para: e.para, chegada: e.chegada, olhar: e.olhar || { x: 0, y: 1 }, de: E.def.id };
+      if (e.x === x && e.y === y && escadaAberta(e)) return { id: 'escada:' + E.def.id + ':' + i, tipo: 'escada', x: x, y: y, para: e.para, chegada: e.chegada, olhar: e.olhar || { x: 0, y: 1 }, de: E.def.id };
     }
     return null;
   }
@@ -307,6 +312,6 @@
     return aqui ? alvoObjeto(E, aqui, tile, d0) : null;
   }
 
-  II.alvoEm = alvoEm; II.alvoPerto = alvoPerto; II.quemEm = quemEm; II.gatilhoEm = gatilhoEm;
+  II.alvoEm = alvoEm; II.alvoPerto = alvoPerto; II.quemEm = quemEm; II.gatilhoEm = gatilhoEm; II.escadaAberta = escadaAberta;
   II.chegadaVindoDe = chegadaVindoDe; II.chegadaDaEscada = chegadaDaEscada;
 })();

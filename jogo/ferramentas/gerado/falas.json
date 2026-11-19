@@ -40590,6 +40590,447 @@
    "fala": "Ela já viu muitos fantasmas."
   },
   {
+   "chave": "30b86bc5z",
+   "voz": "narradora",
+   "texto": "O Monte Fuji é um vulcão!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O Monte Fuji é um vulcão!"
+  },
+  {
+   "chave": "7b16d21dx",
+   "voz": "narradora",
+   "texto": "É o mais alto do Japão.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "É o mais alto do Japão."
+  },
+  {
+   "chave": "1473e335s",
+   "voz": "narradora",
+   "texto": "Hora do chá verde!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Hora do chá verde!"
+  },
+  {
+   "chave": "e7e19c9811",
+   "voz": "narradora",
+   "texto": "No Japão se toma muito chá.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "No Japão se toma muito chá."
+  },
+  {
+   "chave": "3d5306b9u",
+   "voz": "narradora",
+   "texto": "Olha os hieróglifos!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Olha os hieróglifos!"
+  },
+  {
+   "chave": "d4bf2d3414",
+   "voz": "narradora",
+   "texto": "Era a escrita do Egito antigo.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Era a escrita do Egito antigo."
+  },
+  {
+   "chave": "443b72b2v",
+   "voz": "narradora",
+   "texto": "O sarcófago do faraó!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O sarcófago do faraó!"
+  },
+  {
+   "chave": "c7b4a02az",
+   "voz": "narradora",
+   "texto": "Faraó era o rei do Egito.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Faraó era o rei do Egito."
+  },
+  {
+   "chave": "558b440e12",
+   "voz": "narradora",
+   "texto": "O relógio, visto por dentro!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O relógio, visto por dentro!"
+  },
+  {
+   "chave": "ef381aa0w",
+   "voz": "narradora",
+   "texto": "Ele tem 4 mostradores.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ele tem 4 mostradores."
+  },
+  {
+   "chave": "a0ee656fp",
+   "voz": "narradora",
+   "texto": "O sino se chama",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O sino se chama"
+  },
+  {
+   "chave": "cc13a17ae",
+   "voz": "ingles",
+   "texto": "Big Ben",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Big Ben"
+  },
+  {
+   "chave": "bc56f323z",
+   "voz": "narradora",
+   "texto": "Ele toca de hora em hora.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ele toca de hora em hora."
+  },
+  {
+   "chave": "2258f0a3w",
+   "voz": "narradora",
+   "texto": "Uma escada em caracol!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Uma escada em caracol!"
+  },
+  {
+   "chave": "a9c84810w",
+   "voz": "narradora",
+   "texto": "São quase 300 degraus!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "São quase 300 degraus!"
+  },
+  {
+   "chave": "593cb682w",
+   "voz": "narradora",
+   "texto": "Ela é uma torre torta!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ela é uma torre torta!"
+  },
+  {
+   "chave": "5106de7c11",
+   "voz": "narradora",
+   "texto": "O chão embaixo dela é mole.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O chão embaixo dela é mole."
+  },
+  {
+   "chave": "18758acby",
+   "voz": "narradora",
+   "texto": "O elevador sobe a torre!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O elevador sobe a torre!"
+  },
+  {
+   "chave": "fea5d3d811",
+   "voz": "narradora",
+   "texto": "Ela tem mais de 300 metros!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ela tem mais de 300 metros!"
+  },
+  {
+   "chave": "44c9de6cw",
+   "voz": "narradora",
+   "texto": "Um croissant de Paris!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Um croissant de Paris!"
+  },
+  {
+   "chave": "0a4ddd03y",
+   "voz": "narradora",
+   "texto": "A torre é toda de ferro!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "A torre é toda de ferro!"
+  },
+  {
+   "chave": "9534294614",
+   "voz": "narradora",
+   "texto": "A tocha de verdade da estátua!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "A tocha de verdade da estátua!"
+  },
+  {
+   "chave": "b1bc858711",
+   "voz": "narradora",
+   "texto": "Ela foi presente da França.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ela foi presente da França."
+  },
+  {
+   "chave": "7d7ee341v",
+   "voz": "narradora",
+   "texto": "A coroa tem 7 pontas!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "A coroa tem 7 pontas!"
+  },
+  {
+   "chave": "7ada69a913",
+   "voz": "narradora",
+   "texto": "Ela é de cobre e ficou verde.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ela é de cobre e ficou verde."
+  },
+  {
+   "chave": "897a4f89x",
+   "voz": "narradora",
+   "texto": "Que vista linda do Rio!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Que vista linda do Rio!"
+  },
+  {
+   "chave": "031ca4e6x",
+   "voz": "narradora",
+   "texto": "O Cristo tem 30 metros!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O Cristo tem 30 metros!"
+  },
+  {
+   "chave": "1d213f0510",
+   "voz": "narradora",
+   "texto": "Uma capelinha bem pequena!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Uma capelinha bem pequena!"
+  },
+  {
+   "chave": "6eec27e9z",
+   "voz": "narradora",
+   "texto": "Ela fica no pé do Cristo.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ela fica no pé do Cristo."
+  },
+  {
+   "chave": "1516bb04y",
+   "voz": "narradora",
+   "texto": "O bondinho anda no cabo!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O bondinho anda no cabo!"
+  },
+  {
+   "chave": "a54e4c22x",
+   "voz": "narradora",
+   "texto": "Ele passeia desde 1912!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ele passeia desde 1912!"
+  },
+  {
+   "chave": "8e7dfd3bw",
+   "voz": "narradora",
+   "texto": "Olha o mar lá embaixo!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Olha o mar lá embaixo!"
+  },
+  {
+   "chave": "3da9882ax",
+   "voz": "narradora",
+   "texto": "O morro tem 396 metros!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O morro tem 396 metros!"
+  },
+  {
+   "chave": "b41f8306x",
+   "voz": "narradora",
+   "texto": "Olha a muralha lá fora!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Olha a muralha lá fora!"
+  },
+  {
+   "chave": "5852667411",
+   "voz": "narradora",
+   "texto": "Ela tem mais de 2 mil anos!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ela tem mais de 2 mil anos!"
+  },
+  {
+   "chave": "46d527bav",
+   "voz": "narradora",
+   "texto": "O vigia olhava daqui!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "O vigia olhava daqui!"
+  },
+  {
+   "chave": "68d4c65d11",
+   "voz": "narradora",
+   "texto": "A muralha protegia a China.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "A muralha protegia a China."
+  },
+  {
+   "chave": "36010aaav",
+   "voz": "narradora",
+   "texto": "Que barulhão de água!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Que barulhão de água!"
+  },
+  {
+   "chave": "1d8ea101y",
+   "voz": "narradora",
+   "texto": "São cerca de 275 quedas!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "São cerca de 275 quedas!"
+  },
+  {
+   "chave": "92e85a4315",
+   "voz": "narradora",
+   "texto": "Olha um quati de rabo listrado!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Olha um quati de rabo listrado!"
+  },
+  {
+   "chave": "419c0ebd10",
+   "voz": "narradora",
+   "texto": "Ele mora perto das quedas.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ele mora perto das quedas."
+  },
+  {
+   "chave": "fa57067fx",
+   "voz": "narradora",
+   "texto": "Tudo aqui é de mármore!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Tudo aqui é de mármore!"
+  },
+  {
+   "chave": "7eac15b2z",
+   "voz": "narradora",
+   "texto": "Um rei fez para a rainha.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Um rei fez para a rainha."
+  },
+  {
+   "chave": "bd2fdc24w",
+   "voz": "narradora",
+   "texto": "Um pavão bem colorido!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Um pavão bem colorido!"
+  },
+  {
+   "chave": "0a30f792v",
+   "voz": "narradora",
+   "texto": "Ele é a ave da Índia!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Ele é a ave da Índia!"
+  },
+  {
+   "chave": "c8b0544by",
+   "voz": "narradora",
+   "texto": "Cada cúpula tem uma cor!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Cada cúpula tem uma cor!"
+  },
+  {
+   "chave": "744c5b4110",
+   "voz": "narradora",
+   "texto": "A catedral fica em Moscou.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "A catedral fica em Moscou."
+  },
+  {
+   "chave": "f129d1a812",
+   "voz": "narradora",
+   "texto": "Bonecas uma dentro da outra!",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "Bonecas uma dentro da outra!"
+  },
+  {
+   "chave": "b4ad874312",
+   "voz": "narradora",
+   "texto": "São as matrioscas da Rússia.",
+   "pacotes": [
+    "interior-casa"
+   ],
+   "fala": "São as matrioscas da Rússia."
+  },
+  {
    "chave": "db1a1b871r",
    "voz": "npc-serena",
    "texto": "Em breve teremos novos conteúdos do quarto bimestre!",
